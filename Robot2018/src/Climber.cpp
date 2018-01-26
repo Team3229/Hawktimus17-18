@@ -16,8 +16,3 @@ void Climber::Climb()
 	std::cout << "Climb()" << std::endl;
 	myClimber->Set(CLIMBER_POWER);
 }
-
-void Climber::safetyClimber()
-{
-
-}

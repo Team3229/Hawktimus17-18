@@ -13,10 +13,14 @@
 #define GYRO_GAIN 0.259
 #define COMP_RATIO 0.1111
 #define TURN_POWER 0.47
+#define LIFT_POWER 0.8
+#define CONVEYOR_POWER 1.0
 
 //Constants for port numbers and PWMs
 #define LEFT_MOTOR_PWM 0
 #define RIGHT_MOTOR_PWM 1
+#define LIFT_PWM 2
+#define CONVEYOR_PWM 3
 #define GYRO_SPI_PORT 0
 
 //FRC library includes
@@ -25,20 +29,26 @@
 #include <math.h>
 #include <RobotDrive.h>
 #include <AnalogGyro.h>
+#include <Spark.h>
 
 class ArcadeDrive
 {
 public:
 	ArcadeDrive();
+	~ArcadeDrive();
 	void ResetHeading();
 	void Stop();
 	void Drive(double Y, double X);
 	void DriveStraight();
 	void DriveTurn (int angle);
+	void MoveLift(int angle);
+	void LiftStop();
 
 private:
 	frc::RobotDrive myDriveTrain {LEFT_MOTOR_PWM, RIGHT_MOTOR_PWM};
 	frc::AnalogGyro gyro { GYRO_SPI_PORT };
+	frc::Spark * lift = new Spark{LIFT_PWM};
+	frc::Spark * conveyor = new Spark{CONVEYOR_PWM};
 };
 
 #endif /* SRC_ARCADEDRIVE_H_ */

@@ -9,6 +9,11 @@ ArcadeDrive::ArcadeDrive()
 	myDriveTrain.SetExpiration(SAFETY_TIMEOUT);
 }
 
+ArcadeDrive::~ArcadeDrive()
+{
+	delete lift;
+	delete conveyor;
+}
 
 void ArcadeDrive::ResetHeading()
 {
@@ -129,4 +134,21 @@ void ArcadeDrive::DriveTurn (int angle)
 
 		i++; //Increase the iteration
 	}
+}
+
+void ArcadeDrive::MoveLift(int angle)
+{
+		if(angle == 0)
+		{
+			lift->Set(LIFT_POWER);
+		}
+		else if(angle == 180)
+		{
+			lift->Set(-LIFT_POWER);
+		}
+}
+
+void ArcadeDrive::LiftStop()
+{
+	lift->StopMotor();
 }

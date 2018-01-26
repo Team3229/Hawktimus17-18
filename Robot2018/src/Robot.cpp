@@ -28,6 +28,21 @@ private:
 	//Instantiate Chasis (drive train)
 	ArcadeDrive chasis{};
 
+	//Counter for safety wait.
+	int count = 0;
+
+	//Allows us to wait for a certain number of iterations to climb.
+	bool safetyWait()
+	{
+		if(count < 25) //Test to see if the count is less than 25, meaning we CANNOT go.
+		{
+			count++; //Increase count to count to 25 iterations
+			return false; //We can't go
+		}
+		else
+			return true; //We have reached our time, we can go.
+	}
+
 public:
 
 	//Runs once on first boot of Robot
@@ -84,16 +99,31 @@ public:
 		}
 
 		//Climber (right hand "bumper" button)
-		if (xbox.GetBumper(GenericHID::kRightHand)) //Map the right hand "bumper" (trigger) button to the climber PWM.
+		if (xbox.GetBumper(GenericHID::kRightHand)) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
 		{
-			climberMotor.Climb(); //button pressed
+			if(safetyWait()) //If we have exceeded our wait period.
+			{
+				climberMotor.Climb(); //Climb
+			}
 		}
 		else
 		{
 			climberMotor.Stop(); //button released
+			count = 0;
 		}
 
-
+		if(xbox.GetPOV(0) != -1)
+		{
+			if(safetyWait())
+			{
+				chasis.MoveLift(xbox.GetPOV(0));
+			}
+		}
+		else
+		{
+			count = 0;
+			chasis.LiftStop();
+		}
 
 		Wait(0.05);
 	}

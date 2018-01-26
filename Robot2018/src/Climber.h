@@ -16,7 +16,6 @@ public:
 	Climber();
 	void Stop();
 	void Climb();
-	void safetyClimber();
 
 	~Climber()
 	{
