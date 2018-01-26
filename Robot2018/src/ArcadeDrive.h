@@ -13,8 +13,11 @@
 #define GYRO_GAIN 0.259
 #define COMP_RATIO 0.1111
 #define TURN_POWER 0.47
+
+//Constants for other systems.
 #define LIFT_POWER 0.8
-#define CONVEYOR_POWER 1.0
+#define CONVEYOR_FORWARD_POWER 0.5
+#define CONVEYOR_BACKWARD_POWER -0.8
 
 //Constants for port numbers and PWMs
 #define LEFT_MOTOR_PWM 0
@@ -43,6 +46,8 @@ public:
 	void DriveTurn (int angle);
 	void MoveLift(int angle);
 	void LiftStop();
+	void MoveConveyor(bool direction);
+	void ConveyorStop();
 
 private:
 	frc::RobotDrive myDriveTrain {LEFT_MOTOR_PWM, RIGHT_MOTOR_PWM};

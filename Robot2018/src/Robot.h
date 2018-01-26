@@ -19,9 +19,9 @@
 //Includes from the frc namespace
 #include <IterativeRobot.h>
 #include <XboxController.h>
-#include <Spark.h>
 #include <LiveWindow/LiveWindow.h>
 #include <Timer.h> //For wait function
+#include <Joystick.h>
 
 //Includes from programmer-defined files.
 #include <Climber.h>

@@ -152,3 +152,16 @@ void ArcadeDrive::LiftStop()
 {
 	lift->StopMotor();
 }
+
+void ArcadeDrive::MoveConveyor(bool direction)
+{
+	if(direction)
+		conveyor->Set(CONVEYOR_FORWARD_POWER);
+	else
+		conveyor->Set(CONVEYOR_BACKWARD_POWER);
+}
+
+void ArcadeDrive::ConveyorStop()
+{
+	conveyor->StopMotor();
+}

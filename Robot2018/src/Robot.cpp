@@ -28,6 +28,9 @@ private:
 	//Instantiate Chasis (drive train)
 	ArcadeDrive chasis{};
 
+	//Instantiate Joysticks for mapping Right Trigger and Left Trigger
+	Joystick rightTrigger{3}, leftTrigger{2};
+
 	//Counter for safety wait.
 	int count = 0;
 
@@ -112,6 +115,7 @@ public:
 			count = 0;
 		}
 
+		//Mapping up DPAD button
 		if(xbox.GetPOV(0) != -1)
 		{
 			if(safetyWait())
@@ -123,6 +127,46 @@ public:
 		{
 			count = 0;
 			chasis.LiftStop();
+		}
+
+		//Mapping Down DPAD button
+		if(xbox.GetPOV(180) != -1)
+		{
+			if(safetyWait())
+			{
+				chasis.MoveLift(xbox.GetPOV(180));
+			}
+		}
+		else
+		{
+			count = 0;
+			chasis.LiftStop();
+		}
+
+		//Map Right Trigger
+		if(rightTrigger.GetTriggerPressed())
+		{
+			if(safetyWait())
+			{
+				chasis.MoveConveyor(true);
+			}
+			else
+			{
+				count = 0;
+				chasis.ConveyorStop();
+			}
+		}
+
+		//Map Left Trigger
+		if(leftTrigger.GetTriggerPressed())
+		{
+			if(safetyWait())
+				chasis.MoveConveyor(false);
+		}
+		else
+		{
+			count = 0;
+			chasis.ConveyorStop();
 		}
 
 		Wait(0.05);
