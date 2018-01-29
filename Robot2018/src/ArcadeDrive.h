@@ -7,7 +7,7 @@
 #include <string>
 
 //Constants for driving.
-#define SAFETY_TIMEOUT 0.500
+#define SAFETY_TIMEOUT 0.01 //Changed to 10 milliseconds as specified in guide
 #define MAX_POWER 0.8
 #define AUTO_POWER 0.60
 #define GYRO_GAIN 0.259
@@ -33,6 +33,9 @@
 #include <RobotDrive.h>
 #include <AnalogGyro.h>
 #include <Spark.h>
+#include <RobotDrive.h>
+#include "ctre/Phoenix.h"
+//#include "WPI_TalonSRX.h" CTRE guide says is required.  Error "Unresolved inclusion"
 
 class ArcadeDrive
 {
@@ -50,10 +53,29 @@ public:
 	void ConveyorStop();
 
 private:
-	frc::RobotDrive myDriveTrain {LEFT_MOTOR_PWM, RIGHT_MOTOR_PWM};
-	frc::AnalogGyro gyro { GYRO_SPI_PORT };
-	frc::Spark * lift = new Spark{LIFT_PWM};
-	frc::Spark * conveyor = new Spark{CONVEYOR_PWM};
+	WPI_TalonSRX * masterLeft = new WPI_TalonSRX(1);
+	WPI_TalonSRX * masterRight = new WPI_TalonSRX(2);
+	WPI_TalonSRX * slaveLeft = new WPI_TalonSRX(3);
+	WPI_TalonSRX * slaveRight = new WPI_TalonSRX(4);
+
+	frc::RobotDrive * myDriveTrain = new RobotDrive(masterLeft, masterRight, slaveLeft, slaveRight);
+
+	/* IN CASE ROBOTDRIVE DOSN'T WORK:
+	 *
+	 * motorcontrol::ControlMode percent = ControlMode::PercentOutput;  //For brevity
+	 * masterLeft->Set(percent, 0); //For stopping
+	 * masterRight->Set(percent, 0); //For stopping
+	 *
+	 * masterLeft->Set(percent, powerLeft);
+	 * masterRight->Set(percent, powerRight);
+	 *
+	 * powerLeft and powerRight will have to be determined by a function that calculates how much power each side needs to have
+	 * in order to go in the direction the driver wants. (Vectors and Trignometry!  Yay!)
+	 */
+
+	frc::AnalogGyro gyro { GYRO_SPI_PORT }; //Instantiate gyro and initialize its port
+	frc::Spark * lift = new Spark{LIFT_PWM}; //Instantiate a spark for the lift
+	frc::Spark * conveyor = new Spark{CONVEYOR_PWM}; //Instantiate a spark for the conveyor.
 };
 
 #endif /* SRC_ARCADEDRIVE_H_ */

@@ -6,13 +6,18 @@ ArcadeDrive::ArcadeDrive()
 	gyro.SetSensitivity(GYRO_GAIN);
 
 	//Set the safety timer on the motor system
-	myDriveTrain.SetExpiration(SAFETY_TIMEOUT);
+	myDriveTrain->SetExpiration(SAFETY_TIMEOUT);
 }
 
 ArcadeDrive::~ArcadeDrive()
 {
 	delete lift;
 	delete conveyor;
+	delete masterLeft;
+	delete masterRight;
+	delete slaveLeft;
+	delete slaveRight;
+	delete myDriveTrain;
 }
 
 void ArcadeDrive::ResetHeading()
@@ -23,7 +28,7 @@ void ArcadeDrive::ResetHeading()
 
 void ArcadeDrive::Stop()
 {
-	myDriveTrain.Drive(0, 0);
+	myDriveTrain->Drive(0, 0);
 	Wait(0.05);
 }
 
@@ -62,8 +67,7 @@ void ArcadeDrive::Drive (double Y, double X)
 		}
 	}
 
-	//Drive
-	myDriveTrain.ArcadeDrive(Y, -X, false);  //Drive the robot forward, passing in the correct values for the speed to each PWM.  X and Y have been enforced.
+
 }
 
 //Drives Straight only in autonomous
@@ -82,7 +86,7 @@ void ArcadeDrive::DriveStraight()
 	//Adjust X value to compensate for any heading discrepency.
 	X = heading * COMP_RATIO;
 
-	myDriveTrain.ArcadeDrive(AUTO_POWER, X);
+	myDriveTrain->ArcadeDrive(AUTO_POWER, X);
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
@@ -107,7 +111,7 @@ void ArcadeDrive::DriveTurn (int angle)
 	//Repeat until turn angle is achieved (max 20 iterations)
 	while((! angle_achieved) && (i < max_iterations))
 	{
-		myDriveTrain.ArcadeDrive(AUTO_POWER, X); //Drive forward at a power of 0.6 and a turn of either -30 or 30 degrees
+		myDriveTrain->ArcadeDrive(AUTO_POWER, X); //Drive forward at a power of 0.6 and a turn of either -30 or 30 degrees
 		Wait(0.025);
 
 		//Check if robot has achieved desired angle
@@ -136,31 +140,36 @@ void ArcadeDrive::DriveTurn (int angle)
 	}
 }
 
+//Moves the lift system up and down
 void ArcadeDrive::MoveLift(int angle)
 {
+	//Check POV pressed by testing angle
 		if(angle == 0)
 		{
-			lift->Set(LIFT_POWER);
+			lift->Set(LIFT_POWER); //Go up
 		}
 		else if(angle == 180)
 		{
-			lift->Set(-LIFT_POWER);
+			lift->Set(-LIFT_POWER); //Go down
 		}
 }
 
+//Stops the lift
 void ArcadeDrive::LiftStop()
 {
 	lift->StopMotor();
 }
 
+//Moves the conveyor up or down
 void ArcadeDrive::MoveConveyor(bool direction)
 {
-	if(direction)
+	if(direction) //If true, move the conveyor forward.
 		conveyor->Set(CONVEYOR_FORWARD_POWER);
-	else
+	else //Otherwise move backwardds
 		conveyor->Set(CONVEYOR_BACKWARD_POWER);
 }
 
+/*Stops the conveyor*/
 void ArcadeDrive::ConveyorStop()
 {
 	conveyor->StopMotor();

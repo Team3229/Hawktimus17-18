@@ -1,8 +1,7 @@
 /*
  * File:			Robot.cpp
- * Author:			Neil Anderson
- * Version:			1.0
- * Last Modified:	01/17/18
+ * Author(s):		Programming Subteam
+ * Last Modified:	01/28/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
@@ -105,9 +104,7 @@ public:
 		if (xbox.GetBumper(GenericHID::kRightHand)) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
 		{
 			if(safetyWait()) //If we have exceeded our wait period.
-			{
 				climberMotor.Climb(); //Climb
-			}
 		}
 		else
 		{
@@ -119,49 +116,43 @@ public:
 		if(xbox.GetPOV(0) != -1)
 		{
 			if(safetyWait())
-			{
 				chasis.MoveLift(xbox.GetPOV(0));
-			}
 		}
 		else
 		{
 			count = 0;
-			chasis.LiftStop();
+			chasis.LiftStop(); //Stop moving the lift
 		}
 
 		//Mapping Down DPAD button
 		if(xbox.GetPOV(180) != -1)
 		{
 			if(safetyWait())
-			{
 				chasis.MoveLift(xbox.GetPOV(180));
-			}
 		}
 		else
 		{
 			count = 0;
-			chasis.LiftStop();
+			chasis.LiftStop(); //Stop moving the lift
 		}
 
 		//Map Right Trigger
-		if(rightTrigger.GetTriggerPressed())
+		if(rightTrigger.GetTriggerPressed()) //If the trigger is pressed
 		{
 			if(safetyWait())
-			{
-				chasis.MoveConveyor(true);
-			}
+				chasis.MoveConveyor(true); //Move the conveyor forward (true)
 			else
 			{
 				count = 0;
-				chasis.ConveyorStop();
+				chasis.ConveyorStop(); //Stop conveyor
 			}
 		}
 
 		//Map Left Trigger
-		if(leftTrigger.GetTriggerPressed())
+		if(leftTrigger.GetTriggerPressed()) //If the trigger is pressed
 		{
 			if(safetyWait())
-				chasis.MoveConveyor(false);
+				chasis.MoveConveyor(false); //Move the conveyor backwards (false).
 		}
 		else
 		{
