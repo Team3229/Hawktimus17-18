@@ -2,12 +2,14 @@
  * File:			Autonomous.cpp
  * Author:			Neil Anderson
  * Version:			1.0
- * Last Modified:	01/16/18
+ * Last Modified:	01/30/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
  * This file defines all methods of the autonomous class, which defines all methods that drive the robot while in autonomous mode.
  */
+
+// When adding this to a project rename the files to Autonomous.cpp and Autonomous.h to fix errors
 
 #include <Autonomous.h>
 
@@ -99,8 +101,9 @@ int waitYes = 1;
 
 int *waitSelected = &waitNo;
 
-enum wait {N, Y}; // enums for waiting before autonomous
-wait wait = N; // Default is no wait
+// WILL NEED THESE LATER
+// enum wait {N, Y}; // enums for waiting before autonomous
+// wait wait = N; // Default is no wait
 
 void Autonomous::WaitSelectInit()
 {
@@ -126,6 +129,10 @@ void Autonomous::DoAutonomousInit()
 	std::cout << "Auto Selected: " << autoSelected << std::endl; //Output to the console what the user selected for autonomous.
 
 	//Decide what to do based on the user's selection (autoSelected is a pointer, hence the use of the & operator).
+	if (autoSelected == &Default)
+	{
+		position = D; //Sets the default position which makes robot do nothing
+	}
 	if (autoSelected == &Center)
 	{
 		position = C; //Set position equal to C (enum) if the user selects "center".
@@ -154,6 +161,11 @@ void Autonomous::DoAutonomousPeriodic(ArcadeDrive * chasis)
 	{
 		switch(position) //Based on the already defined position of the robot, decide which action to take.
 		{
+		case D:
+			chasis->Stop();
+			autoDone=true;
+			break;
+
 		case C: //If the robot is in the center...
 			if(moveTimer.Get() == 0) //Find out if the timer is at 0 or not. If it is, prepare the robot to start moving.
 			{
