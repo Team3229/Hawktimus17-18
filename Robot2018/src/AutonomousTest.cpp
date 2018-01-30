@@ -13,9 +13,9 @@
 
 // 4 choosers to determine what the robot will do
 frc::SendableChooser<int *> autoChooser; //An object of the SendableChooser class, which allows the programmer to add options to the "Select Autonomous..." menu on the SmartDashboard
-frc::SendableChooser<int *> crossOverChooser; //An object of the SendableChooser class, which allows the programmer to add options to the "Select Autonomous..." menu on the SmartDashboard
-frc::SendableChooser<int *> targetChooser; //An object of the SendableChooser class, which allows the programmer to add options to the "Select Autonomous..." menu on the SmartDashboard
-frc::SendableChooser<int *> waitChooser; //An object of the SendableChooser class, which allows the programmer to add options to the "Select Autonomous..." menu on the SmartDashboard
+frc::SendableChooser<int *> crossOverChooser; // Creates chooser for whether to cross over or not
+frc::SendableChooser<int *> targetChooser; // Creates chooser to pick target
+frc::SendableChooser<int *> waitChooser; // Creates chooser to determine if the robot will wait first
 
 ///four constant strings which define the options presented to the user for selecting the autonomouse mode.
 const std::string autoDefault = "Default";
@@ -30,8 +30,8 @@ const std::string crossOverYes = "Yes";
 
 // Wait for x amount of seconds before starting auto
 // Shoud probably be reworked with a boolean
-const std::string waitGo = "Go";
-const std::string waitWait = "Wait";
+const std::string waitStringNo = "No";
+const std::string waitStringYes = "Yes";
 
 // Last set of options
 const std::string targetSwitch = "Switch";
@@ -50,7 +50,7 @@ enum positions {D, C, R, L}; //An enumeration that will aid in deciding which au
 positions position = D; //A variable of that enumeration that is initialized to C by default.
 
 //BASICALLY A DYNAMIC VERSION OF VISUAL BASIC
-void Autonomous::AutoSelectInit() //A method that adds certain autonomous mode options to the SmartDashboard
+void Autonomous::AutoSelectInit() // A method that adds certain autonomous mode options to the SmartDashboard
 {
 	//Display the Autonomous Selection Options on Driver Station
 	autoChooser.AddDefault(autoDefault, &Default); //Adds the default option
@@ -60,19 +60,19 @@ void Autonomous::AutoSelectInit() //A method that adds certain autonomous mode o
 	frc::SmartDashboard::PutData("Auto Mode", &autoChooser); //Labels the dropdown box.
 }
 
-int No = 0;
-int Yes = 1;
+int xOverNo = 0;
+int xOverYes = 1;
 
-int *crossOverSelected = &No; // Holds the crossing over option from dashboard
+int *crossOverSelected = &xOverNo; // Holds the crossing over option from dashboard
 
-enum crossingOver {Y, N}; //Enumberation for crossing over selection
+enum crossingOver {N, Y}; //Enumberation for crossing over selection
 crossingOver crossingOver = N; //Default option
 
 void Autonomous::CrossOverSelectInit() // Method to ask the driver if they wish to cross over or not
 {
 	//Displays yes or no for crossing over
-	crossOverChooser.AddDefault(crossOverNo, &No); // Default option is no
-	crossOverChooser.AddObject(crossOverYes, &Yes); // Adds yes option
+	crossOverChooser.AddDefault(crossOverNo, &xOverNo); // Default option is no
+	crossOverChooser.AddObject(crossOverYes, &xOverYes); // Adds yes option
 	frc::SmartDashboard::PutData("Crossing Over?", &crossOverChooser); //Labels the dropdown box.
 }
 
@@ -94,16 +94,19 @@ void Autonomous::TargetSelectInit()
 	frc::SmartDashboard::PutData("Target", &targetChooser); // Lables target box
 }
 
-int Go = 0;
-int Wait = 1;
+int waitNo = 0;
+int waitYes = 1;
 
-int *waitSelected = &Go;
+int *waitSelected = &waitNo;
+
+enum wait {N, Y}; // enums for waiting before autonomous
+wait wait = N; // Default is no wait
 
 void Autonomous::WaitSelectInit()
 {
 	// Displays 2 options, to wait or not to wait
-	waitChooser.AddDefault(waitGo, &Go);
-	waitChooser.AddObject(waitWait, &Wait);
+	waitChooser.AddDefault(waitStringNo, &waitNo);
+	waitChooser.AddObject(waitStringYes, &waitYes);
 	frc::SmartDashboard::PutData("Wait?", &waitChooser); // Labels to wait or not chooser
 }
 
@@ -115,16 +118,6 @@ int turn_angle;  //Will hold the direction angle that the robot needs to turn.  
 bool autoDone = false; //Will hold if the current process is finished or not.
 
 Autonomous::Autonomous() {} //Default Constructor
-
-//BASICALLY A DYNAMIC VERSION OF VISUAL BASIC
-void Autonomous::AutoSelectInit() //A method that adds certain autonomous mode options to the SmartDashboard
-{
-	//Display the Autonomous Selection Options on Driver Station
-	autoChooser.AddDefault(autoCenter, &Center); //Adds the center option
-	autoChooser.AddObject(autoLeft, &Left); //Adds the left option
-	autoChooser.AddObject(autoRight, &Right); //Adds the right option
-	frc::SmartDashboard::PutData("Auto Mode", &autoChooser); //Labels the dropdown box.
-}
 
 void Autonomous::DoAutonomousInit()
 {
