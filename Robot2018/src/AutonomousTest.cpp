@@ -120,16 +120,16 @@ Autonomous::Autonomous() {} //Default Constructor
 void Autonomous::AutoSelectInit() //A method that adds certain autonomous mode options to the SmartDashboard
 {
 	//Display the Autonomous Selection Options on Driver Station
-	chooser.AddDefault(autoCenter, &Center); //Adds the center option
-	chooser.AddObject(autoLeft, &Left); //Adds the left option
-	chooser.AddObject(autoRight, &Right); //Adds the right option
-	frc::SmartDashboard::PutData("Auto Mode", &chooser); //Labels the dropdown box.
+	autoChooser.AddDefault(autoCenter, &Center); //Adds the center option
+	autoChooser.AddObject(autoLeft, &Left); //Adds the left option
+	autoChooser.AddObject(autoRight, &Right); //Adds the right option
+	frc::SmartDashboard::PutData("Auto Mode", &autoChooser); //Labels the dropdown box.
 }
 
 void Autonomous::DoAutonomousInit()
 {
 	//Get the Autonomous Selection from the Driver Station
-	autoSelected = chooser.GetSelected(); //Set autoSelected (a pointer) to whatever the user selects from the dropdown menu.
+	autoSelected = autoChooser.GetSelected(); //Set autoSelected (a pointer) to whatever the user selects from the dropdown menu.
 	std::cout << "Auto Selected: " << autoSelected << std::endl; //Output to the console what the user selected for autonomous.
 
 	//Decide what to do based on the user's selection (autoSelected is a pointer, hence the use of the & operator).
