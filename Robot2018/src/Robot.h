@@ -23,7 +23,7 @@
 #include <Timer.h> //For wait function
 #include <Joystick.h>
 #include <ctre/Phoenix.h>
-
+#include <WPILib.h> //for the switch
 
 //Includes from programmer-defined files.
 #include <Climber.h>

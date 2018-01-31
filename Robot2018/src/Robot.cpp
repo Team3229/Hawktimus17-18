@@ -18,8 +18,14 @@ private:
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
 
+	// creates the ultra object
+	Ultrasonic *ultra;
+
 	//Instantiate Climber
 	Climber climberMotor{};
+
+	//Instantiates switch FUNCTION NOT WORKING
+	DigitalInput *limitSwitch;
 
 	//Instantiate Autonomous mode
 	Autonomous autoMode{};
@@ -54,6 +60,9 @@ public:
 
 		//Display the Autonomous Selection Options on Driver Station
 		autoMode.AutoSelectInit();
+
+		//Creates the switch
+		limitSwitch = new DigitalInput(1);
 	}
 
 	//Runs once when Autonomous starts
@@ -74,6 +83,13 @@ public:
 		autoMode.DoAutonomousPeriodic(&chasis);
 	}
 
+	//Initializes the ultrasonic sensor
+	void UltrasonicInit()
+	{
+		ultra = new Ultrasonic(1, 1); // assigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
+		ultra->SetAutomaticMode(true); // turns on automatic mode
+	}
+
 	//Runs once Teleop starts
 	void TeleopInit()
 	{
@@ -83,6 +99,9 @@ public:
 	//Runs continually during Teleop
 	void TeleopPeriodic()
 	{
+		//Gets the ultrasonic sensor range
+		int range = ultra->GetRangeInches(); // reads the range on the ultrasonic sensor
+
 		double Y, X; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
 
@@ -171,6 +190,15 @@ public:
 		//Removed "lw->Run()".  Error message stated that it was deprecated and no longer necessary.
 	}
 
+	// code to test the functionality of the limit switch NOT WORKING
+	void OperatorControl()
+ 	{
+ 		while (limitSwitch->Get())
+ 		{
+ 			std::cout << "Switch is pressed" << std::endl;
+ 			Wait(1);
+ 		}
+    }
 };
 
 START_ROBOT_CLASS(Robot);

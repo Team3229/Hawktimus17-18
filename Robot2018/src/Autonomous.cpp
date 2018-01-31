@@ -165,10 +165,24 @@ void Autonomous::DoAutonomousPeriodic(ArcadeDrive * chasis)
 			chasis->Stop();
 			autoDone=true;
 			break;
-
-
-
-
+		case C:
+			switch(crossingOver)
+			{
+			case N:
+				break;
+			case Y:
+				break;
+			}
+			break;
+		case L:
+			switch(crossingOver)
+			{
+			case N:
+				break;
+			case Y:
+				break;
+			}
+			break;
 		}
 	}
 }
