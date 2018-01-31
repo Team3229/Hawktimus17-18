@@ -2,12 +2,14 @@
  * File:			Autonomous.h
  * Author:			Neil Anderson
  * Version:			1.0
- * Last Modified:	01/16/18
+ * Last Modified:	01/30/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
  * This file defines all necessary methods prototype for the autonomous class, which drives the robot in autonomous mode.
  * */
+
+// When adding this to a project rename the files to Autonomous.cpp and Autonomous.h to fix errors
 
 #ifndef SRC_AUTONOMOUS_H_
 #define SRC_AUTONOMOUS_H_
@@ -31,6 +33,7 @@
 #define LEFT_TURN 30
 #define RIGHT_TURN -30
 #define MOVEMENT3_TIMER 3.25
+#define AUTO_WAIT_TIME 3.0
 
 //Class "outline" and method prototypes
 class Autonomous
@@ -38,6 +41,9 @@ class Autonomous
 public:
 	Autonomous();
 	void AutoSelectInit();
+	void CrossOverSelectInit();
+	void TargetSelectInit();
+	void WaitSelectInit();
 	void DoAutonomousInit();
 	void DoAutonomousPeriodic(ArcadeDrive * chasis);
 };
