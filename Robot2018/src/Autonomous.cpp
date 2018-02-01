@@ -51,17 +51,7 @@ int *autoSelected = &Default; //Will hold the option the user selected from the 
 enum positions {D, C, R, L}; //An enumeration that will aid in deciding which autonomous mode the user selected, by only allowing for three possibilities.
 positions position = D; //A variable of that enumeration that is initialized to C by default.
 
-//BASICALLY A DYNAMIC VERSION OF VISUAL BASIC
-void Autonomous::AutoSelectInit() // A method that adds certain autonomous mode options to the SmartDashboard
-{
-	//Display the Autonomous Selection Options on Driver Station
-	autoChooser.AddDefault(autoDefault, &Default); //Adds the default option
-	autoChooser.AddObject(autoCenter, &Center); //Adds the center option
-	autoChooser.AddObject(autoLeft, &Left); //Adds the left option
-	autoChooser.AddObject(autoRight, &Right); //Adds the right option
-	frc::SmartDashboard::PutData("Auto Mode", &autoChooser); //Labels the dropdown box.
-}
-
+//Stuff for crossing over
 int xOverNo = 0;
 int xOverYes = 1;
 
@@ -70,14 +60,7 @@ int *crossOverSelected = &xOverNo; // Holds the crossing over option from dashbo
 enum crossingOver {N, Y}; //Enumberation for crossing over selection
 crossingOver crossingOver = N; //Default option
 
-void Autonomous::CrossOverSelectInit() // Method to ask the driver if they wish to cross over or not
-{
-	//Displays yes or no for crossing over
-	crossOverChooser.AddDefault(crossOverNo, &xOverNo); // Default option is no
-	crossOverChooser.AddObject(crossOverYes, &xOverYes); // Adds yes option
-	frc::SmartDashboard::PutData("Crossing Over?", &crossOverChooser); //Labels the dropdown box.
-}
-
+//Target options
 int Switch = 0;
 int Scale = 1;
 int Baseline = 2;
@@ -87,15 +70,7 @@ int *targetSelected = &Switch; // Holds the target option from the dashboard
 enum target {SW, SC, BL}; // Enumerations for target options
 target target = SW; // Default option is switch
 
-void Autonomous::TargetSelectInit()
-{
-	//Displays the 3 target options
-	targetChooser.AddDefault(targetSwitch, &Switch);
-	targetChooser.AddObject(targetScale, &Scale);
-	targetChooser.AddObject(targetBaseline, &Baseline);
-	frc::SmartDashboard::PutData("Target", &targetChooser); // Lables target box
-}
-
+//Wait options
 int waitNo = 0;
 int waitYes = 1;
 
@@ -105,20 +80,39 @@ int *waitSelected = &waitNo;
 // enum wait {N, Y}; // enums for waiting before autonomous
 // wait wait = N; // Default is no wait
 
-void Autonomous::WaitSelectInit()
-{
-	// Displays 2 options, to wait or not to wait
-	waitChooser.AddDefault(waitStringNo, &waitNo);
-	waitChooser.AddObject(waitStringYes, &waitYes);
-	frc::SmartDashboard::PutData("Wait?", &waitChooser); // Labels to wait or not chooser
-}
-
 //VARIABLES FOR AUTONOMOUS PERIODIC EXECUTION
 enum autoStates {M1, M2, M3, M4, M5}; //An enumeration that defines the movement the robot is currently doing.
 autoStates autoState = M1; //Initialized a variable of this enumeration
 Timer moveTimer; //A timer object used for timing the movements of the robot.
 int turn_angle;  //Will hold the direction angle that the robot needs to turn.  Will be passed to the gyro object.
 bool autoDone = false; //Will hold if the current process is finished or not.
+
+//BASICALLY A DYNAMIC VERSION OF VISUAL BASIC
+void Autonomous::AutoSelectInit() // A method that adds certain autonomous mode options to the SmartDashboard
+{
+	//Display the Autonomous Selection Options on Driver Station
+	autoChooser.AddDefault(autoDefault, &Default); //Adds the default option
+	autoChooser.AddObject(autoCenter, &Center); //Adds the center option
+	autoChooser.AddObject(autoLeft, &Left); //Adds the left option
+	autoChooser.AddObject(autoRight, &Right); //Adds the right option
+	frc::SmartDashboard::PutData("Auto Mode", &autoChooser); //Labels the dropdown box.
+
+	//Displays yes or no for crossing over
+	crossOverChooser.AddDefault(crossOverNo, &xOverNo); // Default option is no
+	crossOverChooser.AddObject(crossOverYes, &xOverYes); // Adds yes option
+	frc::SmartDashboard::PutData("Crossing Over?", &crossOverChooser); //Labels the dropdown box.
+
+	//Displays the 3 target options
+	targetChooser.AddDefault(targetSwitch, &Switch);
+	targetChooser.AddObject(targetScale, &Scale);
+	targetChooser.AddObject(targetBaseline, &Baseline);
+	frc::SmartDashboard::PutData("Target", &targetChooser); // Lables target box
+
+	// Displays 2 options, to wait or not to wait
+	waitChooser.AddDefault(waitStringNo, &waitNo);
+	waitChooser.AddObject(waitStringYes, &waitYes);
+	frc::SmartDashboard::PutData("Wait?", &waitChooser); // Labels to wait or not chooser
+}
 
 Autonomous::Autonomous() {} //Default Constructor
 
