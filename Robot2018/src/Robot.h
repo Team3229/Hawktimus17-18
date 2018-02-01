@@ -23,14 +23,12 @@
 #include <Timer.h> //For wait function
 #include <Joystick.h>
 #include <ctre/Phoenix.h>
-#include <WPILib.h> //for the switch
+
 
 //Includes from programmer-defined files.
-#include <Climber.h>
-#include <ArcadeDrive.h>
-#include <Autonomous.h>
-
-#define XBOX_USB_PORT 0 //Defines the port for the XBox controller
-#define DEAD_BAND 0.1 //Sets the dead band for the XBox controller.
+#include "Climber.h"
+#include "ArcadeDrive.h"
+#include "Autonomous.h"
+#include "Camera.h"
 
 #endif /* SRC_ROBOT_H_ */

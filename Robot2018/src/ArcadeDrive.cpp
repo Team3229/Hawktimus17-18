@@ -5,19 +5,22 @@ ArcadeDrive::ArcadeDrive()
 	//Initialize the gyro sensitivity
 	gyro.SetSensitivity(GYRO_GAIN);
 
-	//Set the safety timer on the motor system
-	myDriveTrain->SetExpiration(SAFETY_TIMEOUT);
-}
+	//Instantiate motors.
+	leftLead.reset(new WPI_TalonSRX(LEFT_LEAD_ID));
+	rightLead.reset(new WPI_TalonSRX(RIGHT_LEAD_ID));
+	leftFollower.reset(new WPI_TalonSRX(LEFT_FOLLOWER_ID));
+	rightFollower.reset(new WPI_TalonSRX(RIGHT_FOLLOWER_ID));
 
-ArcadeDrive::~ArcadeDrive()
-{
-	delete lift;
-	delete conveyor;
-	delete masterLeft;
-	delete masterRight;
-	delete slaveLeft;
-	delete slaveRight;
-	delete myDriveTrain;
+	//Instantiate DriveTrain
+	diffDrive.reset(new frc::DifferentialDrive(*leftLead, *rightLead));
+
+	//Implement drive train safety
+	diffDrive->SetExpiration(SAFETY_TIMEOUT); //Set safety
+	diffDrive->SetMaxOutput(0.8);
+
+	//Set followers
+	leftFollower->Set(ControlMode::Follower, LEFT_LEAD_ID); //L2 follows L1
+	rightFollower->Set(ControlMode::Follower, RIGHT_LEAD_ID); //R2 follows R1
 }
 
 void ArcadeDrive::ResetHeading()
@@ -28,12 +31,12 @@ void ArcadeDrive::ResetHeading()
 
 void ArcadeDrive::Stop()
 {
-	myDriveTrain->Drive(0, 0);
+	diffDrive->ArcadeDrive(0, 0);
 	Wait(0.05);
 }
 
 
-void ArcadeDrive::Drive (double Y, double X)
+void ArcadeDrive::Drive (float Y, float X)
 {
 	//Apply smothing curve to acceleration
 	Y = (pow(MAX_POWER, Y) * Y);
@@ -67,110 +70,15 @@ void ArcadeDrive::Drive (double Y, double X)
 		}
 	}
 
-
+	diffDrive->ArcadeDrive(-Y, X);
 }
 
 //Drives Straight only in autonomous
 void ArcadeDrive::DriveStraight()
 {
-	double X = 0;
-	double heading = 0;
-
-	//Check if robot has veered right or left
-	heading = gyro.GetAngle();
-	if (heading > 180)
-	{
-		heading = heading - 360;
-	}
-
-	//Adjust X value to compensate for any heading discrepency.
-	X = heading * COMP_RATIO;
-
-	myDriveTrain->ArcadeDrive(AUTO_POWER, X);
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void ArcadeDrive::DriveTurn (int angle)
 {
-	double X = 0; //Signals the drive angle
-	double heading = 0; //Holds the current angle
-	int max_iterations = 20; //Basically a "time-out" counter
-	int i = 0; //Counts iterations
-	bool angle_achieved = false;
-
-	//Adjust X value to compensate to change heading, set the angle.
-	if (angle > 0) //Right turn
-	{
-		X = TURN_POWER;
-	}
-	else // Left Turn
-	{
-		X = 0 - TURN_POWER;
-	}
-
-	//Repeat until turn angle is achieved (max 20 iterations)
-	while((! angle_achieved) && (i < max_iterations))
-	{
-		myDriveTrain->ArcadeDrive(AUTO_POWER, X); //Drive forward at a power of 0.6 and a turn of either -30 or 30 degrees
-		Wait(0.025);
-
-		//Check if robot has achieved desired angle
-		heading = gyro.GetAngle(); //Find the angle the robot is curretly at.
-		if(heading > 180)
-		{
-			heading = heading - 360; //If robot becomes overcompensated, find the terminal angle for the current angle and turn there.
-		}
-
-		if (angle < 0)
-		{
-			if(heading <= angle)
-			{
-				angle_achieved = true;
-			}
-		}
-		else
-		{
-			if(heading >= angle)
-			{
-				angle_achieved = true;
-			}
-		}
-
-		i++; //Increase the iteration
-	}
-}
-
-//Moves the lift system up and down
-void ArcadeDrive::MoveLift(int angle)
-{
-	//Check POV pressed by testing angle
-		if(angle == 0)
-		{
-			lift->Set(LIFT_POWER); //Go up
-		}
-		else if(angle == 180)
-		{
-			lift->Set(-LIFT_POWER); //Go down
-		}
-}
-
-//Stops the lift
-void ArcadeDrive::LiftStop()
-{
-	lift->StopMotor();
-}
-
-//Moves the conveyor up or down
-void ArcadeDrive::MoveConveyor(bool direction)
-{
-	if(direction) //If true, move the conveyor forward.
-		conveyor->Set(CONVEYOR_FORWARD_POWER);
-	else //Otherwise move backwardds
-		conveyor->Set(CONVEYOR_BACKWARD_POWER);
-}
-
-/*Stops the conveyor*/
-void ArcadeDrive::ConveyorStop()
-{
-	conveyor->StopMotor();
 }
