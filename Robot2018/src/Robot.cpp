@@ -18,13 +18,13 @@ private:
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
 
-	// creates the ultra object
+	//Instantiate ultrasonic sensor as a pointer
 	Ultrasonic *ultra;
 
 	//Instantiate Climber
 	Climber climberMotor{};
 
-	//Instantiates switch FUNCTION NOT WORKING
+	//Instantiates switch as a pointer
 	DigitalInput *limitSwitch;
 
 	//Instantiate Autonomous mode
@@ -99,7 +99,6 @@ public:
 	//Runs continually during Teleop
 	void TeleopPeriodic()
 	{
-		//Gets the ultrasonic sensor range
 		int range = ultra->GetRangeInches(); // reads the range on the ultrasonic sensor
 
 		double Y, X; //An x and y coordinate.
@@ -190,8 +189,16 @@ public:
 		//Removed "lw->Run()".  Error message stated that it was deprecated and no longer necessary.
 	}
 
-	// code to test the functionality of the limit switch NOT WORKING
-	void OperatorControl()
+	void TestUltra()
+	{
+		//Spits out ultrasonic reading every 2 seconds
+		int testRange = ultra->GetRangeInches(); // reads the range on the ultrasonic sensor
+		std::cout << "Range: " << testRange << std::endl; // outputs range to console
+		Wait(2.0);
+	}
+
+	// code to test the functionality of the limit switch
+	void SwitchControl()
  	{
  		while (limitSwitch->Get())
  		{
