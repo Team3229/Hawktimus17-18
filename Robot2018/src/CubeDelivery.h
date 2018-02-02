@@ -26,7 +26,7 @@ public:
 	~CubeDelivery();
 	void Lift(const bool &directon);
 	void StopLift();
-	void Conveyor(const float Y);
+	void Conveyor(const float conveyorPower);
 	void StopConveyor();
 
 private:
