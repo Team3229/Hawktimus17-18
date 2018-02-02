@@ -24,9 +24,9 @@ class CubeDelivery
 public:
 	CubeDelivery();
 	~CubeDelivery();
-	void Lift();
+	void Lift(const bool &directon);
 	void StopLift();
-	void Conveyor(float Y);
+	void Conveyor(const float Y);
 	void StopConveyor();
 
 private:
@@ -39,6 +39,8 @@ private:
 	const float TOPSWITCH_DIO = 0; //Digital input
 	const float BOTTOMSWITCH_DIO = 1; //Digital input
 	const float MAX_POWER = 0.6; //Maximum allowed motor power for the 2 sparks
+	const float CONVEYOR_POWER = 0.6; //Conveyor power
+	const float LIFT_POWER = 0.6; //Lift power
 	const float LIFT_PWM = 0; //Placeholder
 	const float CONVEYOR_PWM = 0; //Placeholder
 };

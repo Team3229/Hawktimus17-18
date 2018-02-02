@@ -25,10 +25,17 @@ CubeDelivery::~CubeDelivery()
 	delete myConveyor;
 }
 
-void CubeDelivery::Conveyor(float Y)
+void CubeDelivery::Conveyor(const float Y)
 {
 	//Conveyor
-
+	if (Y == 0) //Check POV pressed by testing angle
+	{
+		myLift->Set(LIFT_POWER); //Go forward
+	}
+	else if (Y == 180) //Joystick pushed down
+	{
+		myLift->Set(-LIFT_POWER); //Go backwards
+	}
 }
 
 void CubeDelivery::StopConveyor()
@@ -37,10 +44,17 @@ void CubeDelivery::StopConveyor()
 	myConveyor->StopMotor();
 }
 
-void CubeDelivery::Lift()
+void CubeDelivery::Lift(const bool &direction)
 {
-	//Lift
+	//Move the lifter
+	if ((direction == true) && topSwitch->Get()) //True = move the lift up as long as top switch isn't pressed
+	{
 
+	}
+	else if (direction == false && bottomSwitch->Get()) //Flase = move the lift down as long as bottom switch isn't pressed
+	{
+
+	}
 }
 
 void CubeDelivery::StopLift()
