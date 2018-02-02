@@ -12,9 +12,9 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <Math.h>
 
 //frc includes
-#include <XboxController.h>
 #include <Timer.h>
 #include <WPILib.h>
 #include <Spark.h>
@@ -24,9 +24,9 @@ class CubeDelivery
 public:
 	CubeDelivery();
 	~CubeDelivery();
-	void Lift(const bool &directon);
+	void Lift(const bool directon);
 	void StopLift();
-	void Conveyor(const float conveyorPower);
+	void Conveyor(double &conveyorPower);
 	void StopConveyor();
 
 private:
@@ -36,13 +36,13 @@ private:
 	frc::Spark * myLift; //Instantiate motor for the lift
 	frc::Spark * myConveyor; //Instantiate motor for the conveyor
 
-	const float TOPSWITCH_DIO = 0; //Digital input
-	const float BOTTOMSWITCH_DIO = 1; //Digital input
-	const float MAX_POWER = 0.6; //Maximum allowed motor power for the 2 sparks
-	const float CONVEYOR_POWER = 0.6; //Conveyor power
+	const float TOPSWITCH_DIO = 0; //Digital input for top switch
+	const float BOTTOMSWITCH_DIO = 1; //Digital input for bottom switch
+	const float MAX_POWER = 0.6; //Maximum allowed motor power for the sparks
 	const float LIFT_POWER = 0.6; //Lift power
-	const float LIFT_PWM = 0; //Placeholder
-	const float CONVEYOR_PWM = 0; //Placeholder
+	const float CONVEYOR_POWER = 0.6; //Conveyor power NOT USED
+	const float LIFT_PWM = 0; //PWM for lift motor NOT CORRECT
+	const float CONVEYOR_PWM = 0; //PWM for conveyor NOT CORRECT
 };
 
 #endif /* SRC_CUBEDELIVERY_H_ */
