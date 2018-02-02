@@ -123,17 +123,15 @@ public:
 			//CubeSystem
 		}
 
-		//Map Left Trigger
-		/*if(leftTrigger.GetTriggerPressed()) //If the trigger is pressed
+
+		if(xbox.GetTriggerAxis(GenericHID::kRightHand)) //If the trigger is pressed
 		{
-			if(safetyWait())
-				chasis.MoveConveyor(false); //Move the conveyor backwards (false).
+			//Cube System
 		}
 		else
 		{
-			count = 0;
-			chasis.ConveyorStop();
-		}*/
+			//Cube System
+		}
 
 		Wait(0.05);
 	}
