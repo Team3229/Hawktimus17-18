@@ -1,3 +1,15 @@
+/*
+ * File:			ArcadeDrive.h
+ * Author:			Hayden Mann
+ * Last Modified:	02/02/18
+ * Team:			Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Defines the class and necessary includes for the ArcadeDrive.cpp file.  The ArcadeDrive class defines
+ * all methods and instance variables necessary for driving the robot in either TeleOp or Autonomous modes,
+ * using arcade drive.
+ */
+
 #ifndef SRC_ARCADEDRIVE_H_
 #define SRC_ARCADEDRIVE_H_
 
@@ -5,25 +17,25 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <Math.h>
 
 //FRC library includes
 #include <Timer.h>
 #include <GenericHID.h>
-#include <math.h>
 #include <AnalogGyro.h>
-#include <Spark.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
+//#include "WPI_TalonSRX.h"
 
 class ArcadeDrive
 {
 public:
 	ArcadeDrive();
-	void ResetHeading();
-	void Stop();
-	void Drive(float Y, float X);
-	void DriveStraight();
-	void DriveTurn (int angle);
+	void ResetHeading(); //Resets the gyro
+	void Stop(); //Stops driving the talons.
+	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
+	void DriveStraight(); //Used for driving the robot straight during autonomous
+	void DriveTurn (const int& angle); //Used for driving the robot at an angle during autonomous.
 
 private:
 	//Constants for driving

@@ -1,12 +1,11 @@
 /*
  * File:			Robot.h
- * Author:			Neil Anderson
- * Version:			1.0
- * Last Modified:	01/16/18
+ * Author:			Hayden Mannn
+ * Last Modified:	02/02/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
- * This file defines all necessary macro constants for the Robot.cpp file as well as includes all necessary external libraries.
+ * This file contains the necessary includes that are needed to execute the code written in Robot.cpp.  It does NOT define the class itself.
  */
 
 #ifndef SRC_ROBOT_H_
@@ -30,5 +29,6 @@
 #include "ArcadeDrive.h"
 #include "Autonomous.h"
 #include "Camera.h"
+#include "CubeDelivery.h"
 
 #endif /* SRC_ROBOT_H_ */

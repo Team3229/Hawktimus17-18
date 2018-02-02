@@ -1,11 +1,11 @@
 /*
  * File:			Robot.cpp
- * Author(s):		Programming Subteam
- * Last Modified:	01/28/18
+ * Author(s):		Hayden Mann
+ * Last Modified:	02/02/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
- * Contains the default class for the Robot where First will run all of its required methods.
+ * Contains the default class for running the robot through the roboRIO for the 2018 build season
  */
 
 #include <Robot.h>
@@ -13,8 +13,6 @@
 class Robot : public frc::IterativeRobot
 {
 private:
-	frc::LiveWindow* lw = LiveWindow::GetInstance();
-
 	//Constants for controller
 	const float DEAD_BAND_LEFT = 0.1;
 	const float DEAD_BAND_RIGHT = 0.75;
@@ -34,6 +32,9 @@ private:
 
 	//Instantiate camera
 	Camera driveCam{};
+
+	//Instantiate object to control conveyor and lift system.
+	CubeDelivery gettinPoints{};
 
 public:
 
@@ -74,10 +75,8 @@ public:
 	//Runs continually during Teleop
 	void TeleopPeriodic()
 	{
-		float leftY, leftX, rightY; //An x and y coordinate.
+		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
-
-		//frc::Scheduler::GetInstance()->Run();
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.
@@ -95,7 +94,7 @@ public:
 		//Climber (right hand "bumper" button)
 		if (xbox.GetBumper(GenericHID::kRightHand)) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
 		{
-				climberMotor.Climb(); //Climb
+			climberMotor.Climb(); //Climb
 		}
 		else
 		{
@@ -106,31 +105,32 @@ public:
 		rightY = xbox.GetY(GenericHID::kRightHand);
 		if(abs(rightY) > DEAD_BAND_RIGHT)
 		{
-			//CubeSystem
+			gettinPoints.Conveyor(rightY);
 		}
 		else
 		{
-			//CubeSystem
+			gettinPoints.StopConveyor();
 		}
 
 		//Map Right Trigger for lift system.
 		if(xbox.GetTriggerAxis(GenericHID::kRightHand)) //If the trigger is pressed
 		{
-			//CubeSystem
+			gettinPoints.Lift(true); //Move lift system up.
 		}
 		else
 		{
-			//CubeSystem
+			gettinPoints.StopLift();
 		}
 
 
-		if(xbox.GetTriggerAxis(GenericHID::kRightHand)) //If the trigger is pressed
+		//Map left trigger for lift system.
+		if(xbox.GetTriggerAxis(GenericHID::kLeftHand)) //If the trigger is pressed
 		{
-			//Cube System
+			gettinPoints.Lift(false); //Move lift system down.
 		}
 		else
 		{
-			//Cube System
+			gettinPoints.StopLift();
 		}
 
 		Wait(0.05);
@@ -140,8 +140,6 @@ public:
 	void TestPeriodic()
 	{
 		std::cout << "TestPeriodic()" << std::endl;
-
-		//Removed "lw->Run()".  Error message stated that it was deprecated and no longer necessary.
 	}
 
 };

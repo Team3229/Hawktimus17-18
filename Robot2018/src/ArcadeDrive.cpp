@@ -1,7 +1,21 @@
+/*
+ * File:			ArcadeDrive.h
+ * Author:			Hayden Mann
+ * Last Modified:	02/02/18
+ * Team:			Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Defines the prototypes of the ArcadeDrive class defined in ArcadeDrive.h.  The ArcadeDrive class contains
+ * signatures for all methods and instance variables necessary for driving the robot in either
+ * TeleOp or Autonomous modes, using arcade drive and TalonSRX's.
+ */
+
 #include <ArcadeDrive.h>
 
 ArcadeDrive::ArcadeDrive()
 {
+	using namespace std;
+
 	//Initialize the gyro sensitivity
 	gyro.SetSensitivity(GYRO_GAIN);
 
@@ -36,7 +50,7 @@ void ArcadeDrive::Stop()
 }
 
 
-void ArcadeDrive::Drive (float Y, float X)
+void ArcadeDrive::Drive (double& Y, double& X)
 {
 	//Apply smothing curve to acceleration
 	Y = (pow(MAX_POWER, Y) * Y);
@@ -79,6 +93,6 @@ void ArcadeDrive::DriveStraight()
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
-void ArcadeDrive::DriveTurn (int angle)
+void ArcadeDrive::DriveTurn (const int& angle)
 {
 }
