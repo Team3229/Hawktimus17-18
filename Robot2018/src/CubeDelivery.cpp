@@ -1,8 +1,12 @@
 /*
- * CubeDelivery.cpp
+ * File Name:                        CubeDelivery.cpp
+ * Author(s):                        Luke Simone
+ * Last Modified:                    2/2/2018
+ * Team:                             Hawktimus Prime - 3229
  *
- *  Created on: Feb 1, 2018
- *      Author: luke
+ * File Description:
+ * Contains the CubeDelivery class which is used to control the lift system which uses
+ * limit switches, as well as control the conveyor system.
  */
 
 #include <CubeDelivery.h>

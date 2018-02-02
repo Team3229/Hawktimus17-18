@@ -1,8 +1,12 @@
 /*
- * CubeDelivery.h
+ * File Name:                        CubeDelivery.h
+ * Author(s):                        Luke Simone
+ * Last Modified:                    2/2/2018
+ * Team:                             Hawktimus Prime - 3229
  *
- *  Created on: Feb 1, 2018
- *      Author: luke
+ * File Description:
+ * Defines the class and the necissary includes used by CubeDelivery.cpp,
+ * instantiates the switches and motors, and defines needed constants.
  */
 
 #ifndef SRC_CUBEDELIVERY_H_
@@ -33,16 +37,19 @@ private:
 	DigitalInput * topSwitch; //Instantiate switch at top of the robot
 	DigitalInput * bottomSwitch; //Instantiate switch at bottom of the robot
 
-	frc::Spark * myLift; //Instantiate motor for the lift
-	frc::Spark * myConveyor; //Instantiate motor for the conveyor
+	frc::Spark * myLift; //Instantiate lift motor
+	frc::Spark * myConveyor; //Instantiate conveyor motor
 
-	const float TOPSWITCH_DIO = 0; //Digital input for top switch
-	const float BOTTOMSWITCH_DIO = 1; //Digital input for bottom switch
-	const float MAX_POWER = 0.6; //Maximum allowed motor power for the sparks
-	const float LIFT_POWER = 0.6; //Lift power
-	const float CONVEYOR_POWER = 0.6; //Conveyor power NOT USED
-	const float LIFT_PWM = 0; //PWM for lift motor NOT CORRECT
-	const float CONVEYOR_PWM = 1; //PWM for conveyor NOT CORRECT
+	//Constants for PWM ports
+	const float TOPSWITCH_DIO = 0;
+	const float BOTTOMSWITCH_DIO = 1;
+	const float LIFT_PWM = 0;
+	const float CONVEYOR_PWM = 1;
+
+	//Constants for power and max power
+	const float MAX_POWER = 0.6;
+	const float LIFT_POWER = 0.6;
+	const float CONVEYOR_POWER = 0.6; //NOT CURRENTLY USED
 };
 
 #endif /* SRC_CUBEDELIVERY_H_ */
