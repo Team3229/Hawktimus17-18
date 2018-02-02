@@ -23,16 +23,11 @@ class CubeDelivery
 {
 public:
 	CubeDelivery();
+	~CubeDelivery();
 	void Lift();
-	void Conveyor();
-
-	~CubeDelivery()
-	{
-		delete topSwitch;
-		delete bottomSwitch;
-		delete myLift;
-		delete myConveyor;
-	}
+	void StopLift();
+	void Conveyor(float Y);
+	void StopConveyor();
 
 private:
 	DigitalInput * topSwitch; //Instantiate switch at top of the robot
@@ -41,11 +36,11 @@ private:
 	frc::Spark * myLift; //Instantiate motor for the lift
 	frc::Spark * myConveyor; //Instantiate motor for the conveyor
 
-	const float MAX_POWER = 0.6;
-	const float LIFT_PWM = 0;
-	const float CONVEYOR_PWM = 0;
-	//float Y;
+	const float TOPSWITCH_DIO = 0; //Digital input
+	const float BOTTOMSWITCH_DIO = 1; //Digital input
+	const float MAX_POWER = 0.6; //Maximum allowed motor power for the 2 sparks
+	const float LIFT_PWM = 0; //Placeholder
+	const float CONVEYOR_PWM = 0; //Placeholder
 };
-
 
 #endif /* SRC_CUBEDELIVERY_H_ */
