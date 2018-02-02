@@ -42,7 +42,7 @@ private:
 	const float LIFT_POWER = 0.6; //Lift power
 	const float CONVEYOR_POWER = 0.6; //Conveyor power NOT USED
 	const float LIFT_PWM = 0; //PWM for lift motor NOT CORRECT
-	const float CONVEYOR_PWM = 0; //PWM for conveyor NOT CORRECT
+	const float CONVEYOR_PWM = 1; //PWM for conveyor NOT CORRECT
 };
 
 #endif /* SRC_CUBEDELIVERY_H_ */
