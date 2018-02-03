@@ -31,7 +31,7 @@ public:
 	void ResetLift();
 	void Lift(const bool directon);
 	void StopLift();
-	void Conveyor(double conveyorPower);
+	void Conveyor(double& conveyorPower);
 	void StopConveyor();
 
 private:

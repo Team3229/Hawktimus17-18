@@ -92,7 +92,7 @@ public:
 		}
 
 		//Climber (right hand "bumper" button)
-		if (xbox.GetBumper(GenericHID::kRightHand)) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
+		if (xbox.GetYButton()) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
 		{
 			climberMotor.Climb(); //Climb
 		}
@@ -102,34 +102,22 @@ public:
 		}
 
 		//Map right joystick for the conveyor
-		rightY = xbox.GetY(GenericHID::kRightHand);
+		rightY = xbox.GetRawAxis(5);
 		if(abs(rightY) > DEAD_BAND_RIGHT)
 		{
 			gettinPoints.Conveyor(rightY);
 		}
-		else
+		/*else
 		{
 			gettinPoints.StopConveyor();
-		}
-
-		//Map Right Trigger for lift system.
-		/*while(xbox.GetTriggerAxis(GenericHID::kRightHand))
-		{
-			gettinPoints.Lift(true); //Move lift system up.
 		}*/
 
-		if(xbox.GetRawAxis(3) < 0)
+		//Map the left and right bumper to the climbers
+		if(xbox.GetBumper(GenericHID::kRightHand))
 		{
 			gettinPoints.Lift(true);
 		}
-		else
-		{
-			gettinPoints.StopLift();
-		}
-
-
-		//Map left trigger for lift system.
-		if(xbox.GetRawAxis(3) > 0) //If the trigger is pressed
+		else if(xbox.GetBumper(GenericHID::kLeftHand))
 		{
 			gettinPoints.Lift(false); //Move lift system down.
 		}

@@ -39,10 +39,10 @@ void CubeDelivery::ResetLift()
 
 }
 
-void CubeDelivery::Conveyor(double conveyorPower)
+void CubeDelivery::Conveyor(double& conveyorPower)
 {
 	conveyorPower = (pow(MAX_POWER, conveyorPower) * conveyorPower); //Applies smoothing curve to conveyor motor
-	myLift->Set(-conveyorPower); //Moves conveyor based on conveyorPower
+	myConveyor->Set(-conveyorPower); //Moves conveyor based on conveyorPower
 }
 
 void CubeDelivery::StopConveyor()
