@@ -1,7 +1,7 @@
 /*
  * File Name:                        CubeDelivery.h
  * Author(s):                        Luke Simone
- * Last Modified:                    2/2/2018
+ * Last Modified:                    2/3/2018
  * Team:                             Hawktimus Prime - 3229
  *
  * File Description:
@@ -28,12 +28,15 @@ class CubeDelivery
 public:
 	CubeDelivery();
 	~CubeDelivery();
+	void ResetLift();
 	void Lift(const bool directon);
 	void StopLift();
 	void Conveyor(double &conveyorPower);
 	void StopConveyor();
 
 private:
+	Timer resetTimer(); //Creates a timer that we'll use for resetting the lift
+
 	DigitalInput * topSwitch; //Instantiate switch at top of the robot
 	DigitalInput * bottomSwitch; //Instantiate switch at bottom of the robot
 

@@ -1,12 +1,12 @@
 /*
  * File Name:                        CubeDelivery.cpp
  * Author(s):                        Luke Simone
- * Last Modified:                    2/2/2018
+ * Last Modified:                    2/3/2018
  * Team:                             Hawktimus Prime - 3229
  *
  * File Description:
  * Contains the CubeDelivery class which is used to control the lift system which uses
- * limit switches, as well as control the conveyor system.
+ * limit switches, as well as control the conveyor system. Currently working on lift reset system.
  */
 
 #include <CubeDelivery.h>
@@ -27,6 +27,16 @@ CubeDelivery::~CubeDelivery()
 	delete bottomSwitch;
 	delete myLift;
 	delete myConveyor;
+}
+
+void CubeDelivery::ResetLift()
+{
+	while (!bottomSwitch->Get()) //Moves the lift to its lowest point
+	{
+		myLift->Set(-LIFT_POWER);
+	}
+
+
 }
 
 void CubeDelivery::Conveyor(double &conveyorPower)
