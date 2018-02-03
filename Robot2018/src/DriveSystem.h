@@ -25,7 +25,6 @@
 #include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
-//#include "WPI_TalonSRX.h"
 
 class DriveSystem
 {

@@ -6,7 +6,7 @@
 #include <string>
 
 // Constants for Camera Settings
-#define SIZE 0 // 640 x 480
+#define SIZE 1080 // 640 x 480
 #define FPS 12
 #define BRIGHTNESS 40
 

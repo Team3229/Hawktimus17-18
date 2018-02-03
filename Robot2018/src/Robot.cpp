@@ -15,7 +15,7 @@ class Robot : public frc::IterativeRobot
 private:
 	//Constants for controller
 	const float DEAD_BAND_LEFT = 0.1;
-	const float DEAD_BAND_RIGHT = 0.75;
+	const float DEAD_BAND_RIGHT = 0.075;
 	const int XBOX_USB_PORT = 0;
 
 	//Instantiate XBOX Controller
@@ -113,9 +113,14 @@ public:
 		}
 
 		//Map Right Trigger for lift system.
-		if(xbox.GetTriggerAxis(GenericHID::kRightHand)) //If the trigger is pressed
+		/*while(xbox.GetTriggerAxis(GenericHID::kRightHand))
 		{
 			gettinPoints.Lift(true); //Move lift system up.
+		}*/
+
+		if(xbox.GetRawAxis(3) < 0)
+		{
+			gettinPoints.Lift(true);
 		}
 		else
 		{
@@ -124,7 +129,7 @@ public:
 
 
 		//Map left trigger for lift system.
-		if(xbox.GetTriggerAxis(GenericHID::kLeftHand)) //If the trigger is pressed
+		if(xbox.GetRawAxis(3) > 0) //If the trigger is pressed
 		{
 			gettinPoints.Lift(false); //Move lift system down.
 		}

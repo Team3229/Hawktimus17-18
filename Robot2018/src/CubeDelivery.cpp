@@ -39,7 +39,7 @@ void CubeDelivery::ResetLift()
 
 }
 
-void CubeDelivery::Conveyor(double &conveyorPower)
+void CubeDelivery::Conveyor(double conveyorPower)
 {
 	conveyorPower = (pow(MAX_POWER, conveyorPower) * conveyorPower); //Applies smoothing curve to conveyor motor
 	myLift->Set(-conveyorPower); //Moves conveyor based on conveyorPower
@@ -54,13 +54,13 @@ void CubeDelivery::StopConveyor()
 void CubeDelivery::Lift(const bool direction)
 {
 	//Move the lifter
-	if ((direction == true) && !topSwitch->Get()) //True = up as long as top switch isn't pressed
+	if ((direction == true)) //True = up as long as top switch isn't pressed
 	{
-		myLift->Set(LIFT_POWER); //Moves lift up
+		myLift->Set(-LIFT_POWER); //Moves lift up
 	}
-	else if ((direction == false) && !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
+	else if ((direction == false)) //False = down as long as bottom switch isn't pressed
 	{
-		myLift->Set(-LIFT_POWER); //Moves lift down
+		myLift->Set(LIFT_POWER); //Moves lift down
 	}
 }
 
