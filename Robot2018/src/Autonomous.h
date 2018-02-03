@@ -25,7 +25,7 @@
 #include <Timer.h>
 
 //Includes from programmer defined classes.
-#include <ArcadeDrive.h>
+#include <DriveSystem.h>
 
 //Constants for Autonomous
 #define CENTER_TIMER 4.0
@@ -45,7 +45,7 @@ public:
 	void TargetSelectInit();
 	void WaitSelectInit();
 	void DoAutonomousInit();
-	void DoAutonomousPeriodic(ArcadeDrive * chasis);
+	void DoAutonomousPeriodic(DriveSystem * chasis);
 };
 
 #endif /* SRC_AUTONOMOUS_H_ */

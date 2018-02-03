@@ -148,7 +148,7 @@ void Autonomous::DoAutonomousInit()
 }
 
 //Controls the movements of the robot during autonomous and implements methods of the ArcadeDrive class in order for the RoboRIO to send signals to the sparc controllers.
-void Autonomous::DoAutonomousPeriodic(ArcadeDrive * chasis)
+void Autonomous::DoAutonomousPeriodic(DriveSystem * chasis)
 {
 	//While autonomous movements are not done (because it is re-entrant)
 	if(! autoDone)
