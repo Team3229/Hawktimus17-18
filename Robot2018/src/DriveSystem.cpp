@@ -12,7 +12,7 @@
 
 #include <DriveSystem.h>
 
-ArcadeDrive::ArcadeDrive()
+DriveSystem::DriveSystem()
 {
 	using namespace std;
 
@@ -37,20 +37,20 @@ ArcadeDrive::ArcadeDrive()
 	rightFollower->Set(ControlMode::Follower, RIGHT_LEAD_ID); //R2 follows R1
 }
 
-void ArcadeDrive::ResetHeading()
+void DriveSystem::ResetHeading()
 {
 	//Reset the gyro so zero angle is straight ahead
 	gyro.Reset();
 }
 
-void ArcadeDrive::Stop()
+void DriveSystem::Stop()
 {
 	diffDrive->ArcadeDrive(0, 0);
 	Wait(0.05);
 }
 
 
-void ArcadeDrive::Drive (double& Y, double& X)
+void DriveSystem::Drive (double& Y, double& X)
 {
 	//Apply smothing curve to acceleration
 	Y = (pow(MAX_POWER, Y) * Y);
@@ -88,11 +88,11 @@ void ArcadeDrive::Drive (double& Y, double& X)
 }
 
 //Drives Straight only in autonomous
-void ArcadeDrive::DriveStraight()
+void DriveSystem::DriveStraight()
 {
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
-void ArcadeDrive::DriveTurn (const int& angle)
+void DriveSystem::DriveTurn (const int& angle)
 {
 }

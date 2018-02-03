@@ -27,10 +27,10 @@
 #include "ctre/Phoenix.h"
 //#include "WPI_TalonSRX.h"
 
-class ArcadeDrive
+class DriveSystem
 {
 public:
-	ArcadeDrive();
+	DriveSystem();
 	void ResetHeading(); //Resets the gyro
 	void Stop(); //Stops driving the talons.
 	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
