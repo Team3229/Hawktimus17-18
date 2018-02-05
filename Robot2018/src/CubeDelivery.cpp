@@ -31,12 +31,11 @@ CubeDelivery::~CubeDelivery()
 
 void CubeDelivery::ResetLift()
 {
-	while (!bottomSwitch->Get()) //Moves the lift to its lowest point
+	if (!bottomSwitch->Get()) //Moves the lift to its lowest point
 	{
 		myLift->Set(-LIFT_POWER);
 	}
-
-
+	//Not finished here
 }
 
 void CubeDelivery::Conveyor(double& conveyorPower)
