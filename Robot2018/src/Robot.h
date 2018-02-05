@@ -23,7 +23,7 @@
 #include <Joystick.h>
 #include <ctre/Phoenix.h>
 #include <DriveSystem.h>
-
+#include <AnalogInput.h>
 
 //Includes from programmer-defined files.
 #include "Climber.h"

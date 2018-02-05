@@ -52,7 +52,7 @@ void CubeDelivery::StopConveyor()
 
 void CubeDelivery::Lift(const bool direction)
 {
-	//Move the lifter
+	//Move the lifter corrently doesnt have switch integration
 	if ((direction == true)) //True = up as long as top switch isn't pressed
 	{
 		myLift->Set(-LIFT_POWER); //Moves lift up

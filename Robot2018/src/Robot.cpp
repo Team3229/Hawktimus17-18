@@ -27,6 +27,9 @@ private:
 	//Instantiate Autonomous mode
 	Autonomous autoMode{};
 
+	//Instantiate ultrasonic sensor
+	Ultrasonic *ultra;
+
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
 
@@ -46,6 +49,10 @@ public:
 		//Display the Autonomous Selection Options on Driver Station
 		autoMode.AutoSelectInit();
 
+		//ultrasonic stuff FOR TESTING NOT WORKING
+		ultra = new Ultrasonic(1, 1); // assigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
+		ultra->SetEnabled(true);
+		ultra->SetAutomaticMode(true); // turns on automatic mode
 	}
 
 	//Runs once when Autonomous starts
@@ -77,6 +84,10 @@ public:
 	{
 		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
+
+		//Ultrasonic output FOR TESTING
+		int range = ultra->GetRangeInches(); // reads the range on the ultrasonic sensor
+		std::cout << "Ultrasonic range: " << range << std::endl;
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.
