@@ -107,10 +107,10 @@ public:
 		{
 			gettinPoints.Conveyor(rightY);
 		}
-		/*else
+		else
 		{
 			gettinPoints.StopConveyor();
-		}*/
+		}
 
 		//Map the left and right bumper to the climbers
 		if(xbox.GetBumper(GenericHID::kRightHand))
