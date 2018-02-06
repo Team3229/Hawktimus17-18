@@ -5,9 +5,6 @@
 #include <memory>
 #include <string>
 
-#define CLIMBER_POWER 1.0
-#define CLIMBER_PWM 2
-
 #include <Spark.h>
 
 class Climber
@@ -24,6 +21,8 @@ public:
 
 private:
 	frc::Spark * myClimber;
+	const double CLIMBER_POWER = 1.0;
+	const int CLIMBER_PWM = 2;
 };
 
 #endif /* SRC_CLIMBER_H_ */
