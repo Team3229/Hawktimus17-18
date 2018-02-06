@@ -5,22 +5,12 @@
 #include <memory>
 #include <string>
 
-// Constants for Camera Settings
-#define SIZE 0.5 // 640 x 480
-#define FPS 12
-#define BRIGHTNESS 40
-
-// Constants for Pan/Tilt Servos
-#define PAN_SERVO_PWM 3
-#define TILT_SERVO_PWM 4
-#define INITIAL_PAN 0.2
-#define INITIAL_TILT 0.5
-#define PANTILT_RATE 0.05
-
+//frc includes
 #include <GenericHID.h>
 #include <math.h>
 #include <Servo.h>
 #include <CameraServer.h>
+#include <cscore_oo.h>
 
 class Camera
 {
@@ -32,6 +22,22 @@ public:
 private:
 	frc::Servo * panServo;
 	frc::Servo * tiltServo;
+	cs::VideoSource camera;
+
+	// Constants for Camera Settings
+	const int FPS = 12;
+	const int BRIGHTNESS = 40;
+
+	// Constants for Pan/Tilt Servos
+	const int PAN_SERVO_PWM = 3;
+	const int TILT_SERVO_PWM = 4;
+	const float INITIAL_PAN = 0.2;
+	const float INITIAL_TILT = 0.5;
+	const float PANTILT_RATE = 0.05;
+
+	//camera resolution test
+	const int width = 1920;
+	const int height = 1080;
 };
 
 #endif /* SRC_CAMERA_H_ */
