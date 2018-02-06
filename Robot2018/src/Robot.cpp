@@ -17,6 +17,10 @@ private:
 	const float DEAD_BAND_LEFT = 0.1;
 	const float DEAD_BAND_RIGHT = 0.075;
 	const int XBOX_USB_PORT = 0;
+	const int ULTRASONIC_PORT = 0;
+	const int GYRO_SPI_PORT = 1;
+	const float GYRO_GAIN = 0.259;
+	static constexpr double ValueToInches = 0.125;
 
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
@@ -27,9 +31,6 @@ private:
 	//Instantiate Autonomous mode
 	Autonomous autoMode{};
 
-	//Instantiate ultrasonic sensor
-	Ultrasonic *ultra;
-
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
 
@@ -38,6 +39,12 @@ private:
 
 	//Instantiate object to control conveyor and lift system.
 	CubeDelivery gettinPoints{};
+
+	//Instantiate ultrasonic sensor
+	//AnalogInput ultra{ULTRASONIC_PORT};
+
+	//Instantiate gyro
+	//ADXRS450_Gyro * gyro = new ADXRS450_Gyro();
 
 public:
 
@@ -49,10 +56,14 @@ public:
 		//Display the Autonomous Selection Options on Driver Station
 		autoMode.AutoSelectInit();
 
+		//Gyro stuff
+		/* gyro->SetSensitivity(GYRO_GAIN);
+		gyro->Reset();
+
 		//ultrasonic stuff FOR TESTING NOT WORKING
 		ultra = new Ultrasonic(1, 1); // assigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
 		ultra->SetEnabled(true);
-		ultra->SetAutomaticMode(true); // turns on automatic mode
+		ultra->SetAutomaticMode(true); // turns on automatic mode */
 	}
 
 	//Runs once when Autonomous starts
@@ -84,10 +95,6 @@ public:
 	{
 		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
-
-		//Ultrasonic output FOR TESTING
-		int range = ultra->GetRangeInches(); // reads the range on the ultrasonic sensor
-		std::cout << "Ultrasonic range: " << range << std::endl;
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.
@@ -138,6 +145,14 @@ public:
 		}
 
 		Wait(0.05);
+
+		//Ultrasonic output FOR TESTING
+		/* double currentDistance = ultra.GetValue() * ValueToInches;
+		std::cout << "Ultrasonic distance: " << currentDistance << std::endl;
+
+		//Gyro testing area
+		int currentAngle = gyro->GetAngle();
+		std::cout << "Gyro reading: " << currentAngle << std::endl; */
 	}
 
 	//Test mode

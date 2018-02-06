@@ -24,6 +24,7 @@
 #include <ctre/Phoenix.h>
 #include <DriveSystem.h>
 #include <AnalogInput.h>
+#include <ADXRS450_Gyro.h>
 
 //Includes from programmer-defined files.
 #include "Climber.h"
