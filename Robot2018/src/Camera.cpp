@@ -11,7 +11,7 @@ Camera::Camera()
 	cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
 
 	// Set the camera settings
-	CameraServer::GetInstance()->SetSize(SIZE);
+	//CameraServer::GetInstance()->SetSize(SIZE);
 	camera.SetFPS(FPS);
 	camera.SetWhiteBalanceAuto();
 	camera.SetExposureAuto();
