@@ -20,9 +20,6 @@
 #include <XboxController.h>
 #include <LiveWindow/LiveWindow.h>
 #include <Timer.h> //For wait function
-#include <Joystick.h>
-#include <ctre/Phoenix.h>
-#include <DriveSystem.h>
 #include <AnalogInput.h>
 #include <ADXRS450_Gyro.h>
 

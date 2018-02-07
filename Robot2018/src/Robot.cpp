@@ -8,7 +8,7 @@
  * Contains the default class for running the robot through the roboRIO for the 2018 build season
  */
 
-#include <Robot.h>
+#include "Robot.h"
 
 class Robot : public frc::IterativeRobot
 {
@@ -17,10 +17,10 @@ private:
 	const float DEAD_BAND_LEFT = 0.1;
 	const float DEAD_BAND_RIGHT = 0.075;
 	const int XBOX_USB_PORT = 0;
-	const int ULTRASONIC_PORT = 0;
+	const int ULTRASONIC_PORT = 2;
 	const int GYRO_SPI_PORT = 1;
 	const float GYRO_GAIN = 0.259;
-	static constexpr double ValueToInches = 0.125;
+	static constexpr double ValueToInches = 0.125; //Because 8 units per inch of reading 52 MINIMUM (6.5 inches)
 
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
@@ -29,7 +29,7 @@ private:
 	Climber climberMotor{};
 
 	//Instantiate Autonomous mode
-	Autonomous autoMode{};
+	//Autonomous autoMode{};
 
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
@@ -53,35 +53,14 @@ public:
 	{
 		std::cout << "RobotInit()" << std::endl;
 
-		//Display the Autonomous Selection Options on Driver Station
-		autoMode.AutoSelectInit();
-
 		//Gyro stuff
 		/* gyro->SetSensitivity(GYRO_GAIN);
 		gyro->Reset();
 
-		//ultrasonic stuff FOR TESTING NOT WORKING
+		//ultrasonic stuff
 		ultra = new Ultrasonic(1, 1); // assigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
 		ultra->SetEnabled(true);
 		ultra->SetAutomaticMode(true); // turns on automatic mode */
-	}
-
-	//Runs once when Autonomous starts
-	void AutonomousInit() override //Override - Adds virtuality to the base class and will override any function with the same name, streamlining our method to the top of the method hierarchy.
-	{
-		std::cout << "AutonomousInit()" << std::endl;
-
-		//Get the Autonomous Selection from the Driver Station
-		autoMode.DoAutonomousInit();
-	}
-
-	//Runs continually during Autonomous
-	void AutonomousPeriodic()
-	{
-		std::cout << "AutonomousPeriodic()" << std::endl;
-
-		//While autonomous movements are not done (because it is re-entrant)
-		//autoMode.DoAutonomousPeriodic(&chasis);
 	}
 
 	//Runs once Teleop starts
@@ -95,6 +74,14 @@ public:
 	{
 		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
+
+		//Ultrasonic output WORKING
+		/* double currentDistance = ultra.GetValue() * ValueToInches;
+		std::cout << "Ultrasonic distance: " << currentDistance << std::endl; */
+
+		//Gyro testing area WORKING
+		/* int currentAngle = gyro->GetAngle();
+		std::cout << "Gyro reading: " << currentAngle << std::endl; */
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.
@@ -145,14 +132,6 @@ public:
 		}
 
 		Wait(0.05);
-
-		//Ultrasonic output FOR TESTING
-		/* double currentDistance = ultra.GetValue() * ValueToInches;
-		std::cout << "Ultrasonic distance: " << currentDistance << std::endl;
-
-		//Gyro testing area
-		int currentAngle = gyro->GetAngle();
-		std::cout << "Gyro reading: " << currentAngle << std::endl; */
 	}
 
 	//Test mode
@@ -160,7 +139,6 @@ public:
 	{
 		std::cout << "TestPeriodic()" << std::endl;
 	}
-
 };
 
 START_ROBOT_CLASS(Robot);
