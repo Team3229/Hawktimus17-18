@@ -1,51 +1,57 @@
- /*
- * File:			Autonomous.h
- * Author:			Neil Anderson
- * Version:			1.0
- * Last Modified:	01/30/18
- * Team:			Hawktimus Prime - 3229
- *
- * File Description:
- * This file defines all necessary methods prototype for the autonomous class, which drives the robot in autonomous mode.
- * */
+#ifndef SRC_AUTONOMOUS_H
+#define SRC_AUTONOMOUS_H
 
-// When adding this to a project rename the files to Autonomous.cpp and Autonomous.h to fix errors
-
-#ifndef SRC_AUTONOMOUS_H_
-#define SRC_AUTONOMOUS_H_
-
-//Standard library includes
+//Standard Includes
 #include <iostream>
-#include <memory>
 #include <string>
+#include <Math.h>
 
-//FRC library includes
-#include <SmartDashboard/SendableChooser.h>
-#include <SmartDashboard/SmartDashboard.h>
+//FRC-Defined includes
+#include <ADXRS450_Gyro.h>
 #include <Timer.h>
+#include <SmartDashboard/SendableChooser.h>
+#include <AnalogInput.h>
 
-//Includes from programmer defined classes.
-#include <DriveSystem.h>
+//Programmer-Defined Includes
+#include "DriveSystem.h"
 
-//Constants for Autonomous
-#define CENTER_TIMER 4.0
-#define MOVEMENT1_TIMER 1.3
-#define LEFT_TURN 30
-#define RIGHT_TURN -30
-#define MOVEMENT3_TIMER 3.25
-#define AUTO_WAIT_TIME 3.0
-
-//Class "outline" and method prototypes
 class Autonomous
 {
+private:
+	//Constants for driving
+	const double TURN_ANGLE = 30;
+	const double DRIVE_DISTANCE = 0.0;
+	const int BASELINE = 8;
+
+	//Constants for ports
+	const int ULTRA_PORT = 2;
+
+	ADXRS450_Gyro * gyro; //Instantiates gyro
+	frc::SendableChooser<int> * chooser; //Receiving from the smart dashboard
+	Timer movementTimer(); //For tracking movements.
+	AnalogInput * ultra; //Gets input from distance sensor on AnalogPort
+
+	//Enums from dashboard
+	enum Position {C, L, R}; //For determining which station we are at
+	enum Target {E, S, B, D}; //For determining which action we want to take.
+	enum Delay {Yes, No}; //For determining if delay
+
+	//Initializations of enums
+	Position start;
+	Target procedure;
+	Delay wait;
+
+	char switchColor; //Color of the switch
+
 public:
 	Autonomous();
-	void AutoSelectInit();
-	void CrossOverSelectInit();
-	void TargetSelectInit();
-	void WaitSelectInit();
-	void DoAutonomousInit();
-	void DoAutonomousPeriodic(DriveSystem * chasis);
+	~Autonomous();
+	void AutoInit(std::string colors);
+	void ReadStation();
+	void AutoPeriodic();
+	void Exchange();
+	void Switch ();
+	void Baseline();
 };
 
-#endif /* SRC_AUTONOMOUS_H_ */
+#endif /*SRC_AUTONOMOUS_H*/
