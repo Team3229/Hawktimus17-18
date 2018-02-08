@@ -14,8 +14,6 @@
 
 DriveSystem::DriveSystem()
 {
-	//using namespace std;
-
 	//Initialize the gyro sensitivity
 	gyro.SetSensitivity(GYRO_GAIN);
 
@@ -55,7 +53,7 @@ void DriveSystem::ResetHeading()
 void DriveSystem::Stop()
 {
 	diffDrive->ArcadeDrive(0, 0);
-	Wait(0.05);
+	frc::Wait(0.05);
 }
 
 

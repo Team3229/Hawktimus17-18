@@ -29,7 +29,7 @@ private:
 	Climber climberMotor{};
 
 	//Instantiate Autonomous mode
-	//Autonomous autoMode{};
+    Autonomous autoMode{};
 
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
@@ -40,28 +40,32 @@ private:
 	//Instantiate object to control conveyor and lift system.
 	CubeDelivery gettinPoints{};
 
-	//Instantiate ultrasonic sensor
-	//AnalogInput ultra{ULTRASONIC_PORT};
-
-	//Instantiate gyro
-	//ADXRS450_Gyro * gyro = new ADXRS450_Gyro();
-
 public:
 
 	//Runs once on first boot of Robot
 	void RobotInit()
 	{
 		std::cout << "RobotInit()" << std::endl;
-
-		//Gyro stuff
-		/* gyro->SetSensitivity(GYRO_GAIN);
-		gyro->Reset();
-
-		//ultrasonic stuff
-		ultra = new Ultrasonic(1, 1); // assigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
-		ultra->SetEnabled(true);
-		ultra->SetAutomaticMode(true); // turns on automatic mode */
 	}
+
+	//Runs once when Autonomous starts
+	void AutonomousInit() override //Override - overrides the base class's autonomous given an object with polymorphic behaviors
+	{
+		std::cout << "AutonomousInit()" << std::endl;
+
+		//Get the Autonomous Selection from the Driver Station, pass in Game string for random colors.
+		autoMode.AutoInit(frc::DriverStation::GetInstance().GetGameSpecificMessage());
+	}
+
+	//Runs continually during Autonomous
+	void AutonomousPeriodic()
+	{
+		std::cout << "AutonomousPeriodic()" << std::endl;
+
+		//While autonomous movements are not done (because it is re-entrant)
+		autoMode.AutoPeriodic(chasis);
+	}
+
 
 	//Runs once Teleop starts
 	void TeleopInit()
@@ -74,14 +78,6 @@ public:
 	{
 		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
-
-		//Ultrasonic output WORKING
-		/* double currentDistance = ultra.GetValue() * ValueToInches;
-		std::cout << "Ultrasonic distance: " << currentDistance << std::endl; */
-
-		//Gyro testing area WORKING
-		/* int currentAngle = gyro->GetAngle();
-		std::cout << "Gyro reading: " << currentAngle << std::endl; */
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.

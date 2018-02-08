@@ -23,7 +23,7 @@ void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
 	AddOptions();
-	ReadStation();
+	//ReadStation();
 }
 
 void Autonomous::AutoPeriodic(DriveSystem& chasis) { /*Runs either exchange, switch, or baseline based on enums*/}
@@ -61,7 +61,28 @@ void Autonomous::AddOptions()
 	delayChooser->AddObject("Yes", &Yes);
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
-void Autonomous::ReadStation()
+/*void Autonomous::ReadStation()
 {
+	//Check selection of starting station;
+	switch(*(targetChooser->GetSelected()))
+	{
+	case 0: //User specifies Default
+		start = Target::D;
+		break;
 
-}
+	case 1: //User specifices they want the exchange
+		 start = Position::E;
+		 break;
+
+	case 2:
+		start = Target::SW;
+		break;
+
+	case 3:
+		start = Target::SC;
+		break;
+
+	case 4:
+		start = Target::B;
+	}
+}*/

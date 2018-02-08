@@ -25,7 +25,6 @@
 #include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
-#include <WPILib.h>
 
 class DriveSystem
 {
@@ -48,7 +47,7 @@ private:
 	const float TURN_POWER = 0.47;
 
 	//Constants for ports and unique id
-	const unsigned int GYRO_SPI_PORT = 0;
+	const int GYRO_SPI_PORT = 0;
 	const unsigned int LEFT_LEAD_ID = 1;
 	const unsigned int RIGHT_LEAD_ID = 2;
 	const unsigned int LEFT_FOLLOWER_ID = 3;
