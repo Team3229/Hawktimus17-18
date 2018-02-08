@@ -14,7 +14,7 @@
 
 DriveSystem::DriveSystem()
 {
-	using namespace std;
+	//using namespace std;
 
 	//Initialize the gyro sensitivity
 	gyro.SetSensitivity(GYRO_GAIN);
@@ -26,7 +26,7 @@ DriveSystem::DriveSystem()
 	rightFollower = new WPI_TalonSRX(RIGHT_FOLLOWER_ID);
 
 	//Instantiate DriveTrain
-	diffDrive = new DifferentialDrive(*leftLead, *rightLead);
+	diffDrive = new frc::DifferentialDrive(*leftLead, *rightLead);
 
 	//Implement drive train safety
 	diffDrive->SetExpiration(SAFETY_TIMEOUT); //Set safety
@@ -35,6 +35,15 @@ DriveSystem::DriveSystem()
 	//Set followers
 	leftFollower->Set(ControlMode::Follower, LEFT_LEAD_ID); //L2 follows L1
 	rightFollower->Set(ControlMode::Follower, RIGHT_LEAD_ID); //R2 follows R1
+}
+
+DriveSystem::~DriveSystem()
+{
+	delete leftLead;
+	delete rightLead;
+	delete leftFollower;
+	delete rightFollower;
+	delete diffDrive;
 }
 
 void DriveSystem::ResetHeading()

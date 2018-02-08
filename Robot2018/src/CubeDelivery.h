@@ -46,8 +46,8 @@ private:
 	//Constants for PWM ports
 	const float TOPSWITCH_DIO = 0;
 	const float BOTTOMSWITCH_DIO = 1;
-	const float LIFT_PWM = 5;
-	const float CONVEYOR_PWM = 7;
+	const float LIFT_PWM = 2;
+	const float CONVEYOR_PWM = 0;
 
 	//Constants for power and max power
 	const float MAX_POWER = 0.6;

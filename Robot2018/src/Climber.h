@@ -22,7 +22,7 @@ public:
 private:
 	frc::Spark * myClimber;
 	const double CLIMBER_POWER = 1.0;
-	const int CLIMBER_PWM = 2;
+	const int CLIMBER_PWM = 1;
 };
 
 #endif /* SRC_CLIMBER_H_ */

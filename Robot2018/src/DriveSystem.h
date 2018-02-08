@@ -25,11 +25,13 @@
 #include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
+#include <WPILib.h>
 
 class DriveSystem
 {
 public:
 	DriveSystem();
+	~DriveSystem();
 	void ResetHeading(); //Resets the gyro
 	void Stop(); //Stops driving the talons.
 	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
@@ -38,7 +40,7 @@ public:
 
 private:
 	//Constants for driving
-	const float SAFETY_TIMEOUT = 0.01;
+	const float SAFETY_TIMEOUT = 0.5;
 	const float MAX_POWER = 0.8;
 	const float AUTO_POWER = 0.60;
 	const float GYRO_GAIN = 0.259;
@@ -46,7 +48,7 @@ private:
 	const float TURN_POWER = 0.47;
 
 	//Constants for ports and unique id
-	const int GYRO_SPI_PORT = 0;
+	const unsigned int GYRO_SPI_PORT = 0;
 	const unsigned int LEFT_LEAD_ID = 1;
 	const unsigned int RIGHT_LEAD_ID = 2;
 	const unsigned int LEFT_FOLLOWER_ID = 3;
