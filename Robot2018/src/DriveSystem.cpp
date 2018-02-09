@@ -17,22 +17,29 @@ DriveSystem::DriveSystem()
 	//Initialize the gyro sensitivity
 	gyro.SetSensitivity(GYRO_GAIN);
 
-	//Instantiate motors.
+	//Instantiate motor controllers
 	leftLead = new WPI_TalonSRX(LEFT_LEAD_ID);
 	rightLead = new WPI_TalonSRX(RIGHT_LEAD_ID);
 	leftFollower = new WPI_TalonSRX(LEFT_FOLLOWER_ID);
 	rightFollower = new WPI_TalonSRX(RIGHT_FOLLOWER_ID);
+
+	//Reset the controllers
+	leftLead->Set(ControlMode::PercentOutput, 0);
+	rightLead->Set(ControlMode::PercentOutput, 0);
+	leftFollower->Set(ControlMode::PercentOutput, 0);
+	leftFollower->Set(ControlMode::PercentOutput, 0);
+
+	//Set followers
+	leftFollower->Follow(*leftLead);
+	rightFollower->Follow(*rightLead);
 
 	//Instantiate DriveTrain
 	diffDrive = new frc::DifferentialDrive(*leftLead, *rightLead);
 
 	//Implement drive train safety
 	diffDrive->SetExpiration(SAFETY_TIMEOUT); //Set safety
-	diffDrive->SetMaxOutput(MAX_POWER);
+	diffDrive->SetMaxOutput(MAX_OUTPUT);
 
-	//Set followers
-	leftFollower->Set(ControlMode::Follower, LEFT_LEAD_ID); //L2 follows L1
-	rightFollower->Set(ControlMode::Follower, RIGHT_LEAD_ID); //R2 follows R1
 }
 
 DriveSystem::~DriveSystem()
@@ -59,7 +66,7 @@ void DriveSystem::Stop()
 
 void DriveSystem::Drive (double& Y, double& X)
 {
-	//Apply smothing curve to acceleration
+	//Apply smoothing curve to acceleration
 	Y = (pow(MAX_POWER, Y) * Y);
 
 	//Flip the Y value because of the RobotDrive.Drive function

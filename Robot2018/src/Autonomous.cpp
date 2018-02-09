@@ -7,6 +7,8 @@ Autonomous::Autonomous()
 	positionChooser = new frc::SendableChooser<int*>();
 	targetChooser = new frc::SendableChooser<int*>();
 	delayChooser = new frc::SendableChooser<int*>();
+
+	AddOptions();
 }
 
 Autonomous::~Autonomous()
@@ -22,7 +24,7 @@ Autonomous::~Autonomous()
 void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
-	AddOptions();
+
 	//ReadStation();
 }
 

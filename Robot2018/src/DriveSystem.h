@@ -40,6 +40,7 @@ public:
 private:
 	//Constants for driving
 	const float SAFETY_TIMEOUT = 0.5;
+	const float MAX_OUTPUT = 1.0;
 	const float MAX_POWER = 0.8;
 	const float AUTO_POWER = 0.60;
 	const float GYRO_GAIN = 0.259;
