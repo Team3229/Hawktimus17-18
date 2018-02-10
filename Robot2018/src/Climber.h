@@ -30,7 +30,7 @@ public:
 
 private:
 	frc::Spark * myClimber;
-	const double CLIMBER_POWER = 1.0;
+	const double CLIMBER_POWER = -1.0; //More effective going backwards
 	const int CLIMBER_PWM = 1;
 };
 

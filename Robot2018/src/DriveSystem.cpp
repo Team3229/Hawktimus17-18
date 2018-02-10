@@ -29,9 +29,15 @@ DriveSystem::DriveSystem()
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 
-	//Inverts same side motors
-	//rightFollower->SetInverted(true);
-	//leftFollower->SetInverted(true);
+	//Sets smoothing curve to talons
+	leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
+	rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+
+	//Inverts same side motors NOT NEEDED
+	/* rightFollower->SetInverted(true);
+	leftFollower->SetInverted(true); */
 
 	//Clears sticky faults
 	leftLead->ClearStickyFaults(0);

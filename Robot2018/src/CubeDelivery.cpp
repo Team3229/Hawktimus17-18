@@ -40,6 +40,7 @@ void CubeDelivery::ResetLift()
 
 void CubeDelivery::Conveyor(double& conveyorPower)
 {
+	std::cout << "Conveyor()" << std::endl;
 	conveyorPower = (pow(MAX_POWER, conveyorPower) * conveyorPower); //Applies smoothing curve to conveyor motor
 	myConveyor->Set(-conveyorPower); //Moves conveyor based on conveyorPower
 }
@@ -53,6 +54,7 @@ void CubeDelivery::StopConveyor()
 void CubeDelivery::Lift(const bool direction)
 {
 	//Move the lifter corrently doesnt have switch integration
+	std::cout << "Lift()" << std::endl;
 	if ((direction == true)) //True = up as long as top switch isn't pressed
 	{
 		myLift->Set(-LIFT_POWER); //Moves lift up

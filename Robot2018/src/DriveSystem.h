@@ -54,6 +54,7 @@ private:
 	const unsigned int RIGHT_FOLLOWER_ID = 4;
 
 	//Constants for driving
+	const float SMOOTH_TIME = 0.5; //Sets time in seconds the motors take to get from neutral to full power
 	const float SAFETY_TIMEOUT = 0.5;
 	const float MAX_OUTPUT = 1.0;
 	const float MAX_POWER = 0.8;

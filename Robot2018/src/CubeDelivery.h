@@ -51,7 +51,7 @@ private:
 
 	//Constants for power and max power
 	const float MAX_POWER = 0.6;
-	const float LIFT_POWER = 0.6;
+	const float LIFT_POWER = 1.0;
 	const float CONVEYOR_POWER = 0.6; //NOT CURRENTLY USED
 };
 
