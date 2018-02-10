@@ -9,7 +9,7 @@
  * limit switches, as well as control the conveyor system. Currently working on lift reset system.
  */
 
-#include <CubeDelivery.h>
+#include "CubeDelivery.h"
 
 CubeDelivery::CubeDelivery()
 {

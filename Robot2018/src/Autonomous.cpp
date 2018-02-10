@@ -63,7 +63,7 @@ void Autonomous::AddOptions()
 	delayChooser->AddObject("Yes", &Yes);
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
-/*void Autonomous::ReadStation()
+/* void Autonomous::ReadStation()
 {
 	//Check selection of starting station;
 	switch(*(targetChooser->GetSelected()))
@@ -86,5 +86,6 @@ void Autonomous::AddOptions()
 
 	case 4:
 		start = Target::B;
+		break;
 	}
-}*/
+} */
