@@ -35,6 +35,11 @@ private:
 
 	//Constants for ports
 	const int ULTRA_PORT = 2;
+	//const int GYRO_PORT = 1; //Green gyro
+
+	//Sensor constants
+	const float GYRO_GAIN = 0.259;
+	static constexpr double ValueToInches = 0.125; //Because 8 units per inch of reading 52 MINIMUM (6.5 inches)
 
 	ADXRS450_Gyro * gyro; //Instantiates gyro
 	Timer movementTimer(); //For tracking movements.

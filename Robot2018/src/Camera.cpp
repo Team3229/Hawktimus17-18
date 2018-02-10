@@ -1,3 +1,12 @@
+/*
+ * File:		Camera.cpp
+ * Author:		Programming Subteam
+ * Team:		Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Controls the camera on the driver station.
+ */
+
 #include "Camera.h"
 using namespace frc;
 

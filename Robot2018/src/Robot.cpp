@@ -6,6 +6,8 @@
  *
  * File Description:
  * Contains the default class for running the robot through the roboRIO for the 2018 build season
+ *
+ * Connect to robot: roborio-3229-FRC.local
  */
 
 #include "Robot.h"

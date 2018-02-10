@@ -1,6 +1,6 @@
 /*
  * File:			Robot.h
- * Author:			Hayden Mannn
+ * Author:			Hayden Mann
  * Last Modified:	02/02/18
  * Team:			Hawktimus Prime - 3229
  *

@@ -1,3 +1,12 @@
+/*
+ * File:		Climber.h
+ * Author:		Programming Subteam
+ * Team:		Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Header file for Climber.cpp
+ */
+
 #ifndef SRC_CLIMBER_H_
 #define SRC_CLIMBER_H_
 

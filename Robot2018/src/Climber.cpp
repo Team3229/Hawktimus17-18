@@ -1,3 +1,12 @@
+/*
+ * File:		Climber.cpp
+ * Author:		Programming Subteam
+ * Team:		Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Controls the climber.
+ */
+
 #include "Climber.h"
 
 Climber::Climber()

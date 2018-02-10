@@ -1,8 +1,17 @@
+/*
+ * File:		Autonomous.cpp
+ * Author:		Programming Subteam
+ * Team:		Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Contains the code to be executed for autonomous mode.
+ */
+
 #include "Autonomous.h"
 
 Autonomous::Autonomous()
 {
-	gyro = new ADXRS450_Gyro();
+	gyro = new ADXRS450_Gyro(); //Green gyro
 	ultra = new AnalogInput(ULTRA_PORT);
 	positionChooser = new frc::SendableChooser<int*>();
 	targetChooser = new frc::SendableChooser<int*>();

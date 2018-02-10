@@ -1,3 +1,12 @@
+/*
+ * File:		Camera.h
+ * Author:		Programming Subteam
+ * Team:		Hawktimus Prime - 3229
+ *
+ * File Description:
+ * Header file for Camera.cpp
+ */
+
 #ifndef SRC_CAMERA_H_
 #define SRC_CAMERA_H_
 

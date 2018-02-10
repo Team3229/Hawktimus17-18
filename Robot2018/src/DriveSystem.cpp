@@ -1,18 +1,16 @@
 /*
- * File:			ArcadeDrive.h
+ * File:			ArcadeDrive.cpp
  * Author:			Hayden Mann
  * Last Modified:	02/03/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
- * Defines the prototypes of the ArcadeDrive class defined in ArcadeDrive.h.  The ArcadeDrive class contains
- * signatures for all methods and instance variables necessary for driving the robot in either
- * TeleOp or Autonomous modes, using arcade drive and TalonSRX's.
+ * Contains the code for arcade drive and talons.
  *
  * Connect to robot: roborio-3229-FRC.local
  */
 
-#include "DriveSystem.h"
+#include <DriveSystem.h>
 
 DriveSystem::DriveSystem()
 {
