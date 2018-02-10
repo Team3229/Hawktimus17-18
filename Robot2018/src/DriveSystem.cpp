@@ -29,6 +29,16 @@ DriveSystem::DriveSystem()
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 
+	//Inverts same side motors
+	//rightFollower->SetInverted(true);
+	//leftFollower->SetInverted(true);
+
+	//Clears sticky faults
+	leftLead->ClearStickyFaults(0);
+	rightLead->ClearStickyFaults(0);
+	leftFollower->ClearStickyFaults(0);
+	rightFollower->ClearStickyFaults(0);
+
 	//Set followers
 	leftFollower->Follow(*leftLead);
 	rightFollower->Follow(*rightLead);
@@ -98,6 +108,7 @@ void DriveSystem::Drive (double& Y, double& X)
 		}
 	}
 
+	std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
 	diffDrive->ArcadeDrive(Y, X);
 }
 

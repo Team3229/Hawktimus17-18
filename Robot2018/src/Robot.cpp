@@ -19,10 +19,6 @@ private:
 	const float DEAD_BAND_LEFT = 0.1;
 	const float DEAD_BAND_RIGHT = 0.075;
 	const int XBOX_USB_PORT = 0;
-	const int ULTRASONIC_PORT = 2;
-	const int GYRO_SPI_PORT = 1;
-	const float GYRO_GAIN = 0.259;
-	static constexpr double ValueToInches = 0.125; //Because 8 units per inch of reading 52 MINIMUM (6.5 inches)
 
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
@@ -85,7 +81,7 @@ public:
 		//Get both the x and y coordinates from the left joystick.
 		leftY = xbox.GetY(GenericHID::kLeftHand);
 		leftX = xbox.GetX(GenericHID::kLeftHand);
-		if(abs(leftX) > DEAD_BAND_LEFT && abs(leftY) > DEAD_BAND_LEFT)
+		if(abs(leftX) > DEAD_BAND_LEFT || abs(leftY) > DEAD_BAND_LEFT)
 		{
 			chasis.Drive(leftY, leftX);
 		}
