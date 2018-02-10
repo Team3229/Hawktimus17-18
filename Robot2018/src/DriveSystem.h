@@ -24,6 +24,7 @@
 #include <GenericHID.h>
 #include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
+#include “WPILib.h”
 #include "ctre/Phoenix.h"
 
 class DriveSystem
