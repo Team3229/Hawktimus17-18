@@ -24,7 +24,6 @@
 #include <GenericHID.h>
 #include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
-#include “WPILib.h”
 #include "ctre/Phoenix.h"
 
 class DriveSystem
@@ -51,8 +50,8 @@ private:
 	//Constants for ports and unique id
 	const int GYRO_SPI_PORT = 0;
 	const unsigned int LEFT_LEAD_ID = 1;
-	const unsigned int RIGHT_LEAD_ID = 2;
-	const unsigned int LEFT_FOLLOWER_ID = 3;
+	const unsigned int RIGHT_LEAD_ID = 3;
+	const unsigned int LEFT_FOLLOWER_ID = 2;
 	const unsigned int RIGHT_FOLLOWER_ID = 4;
 
 	//TalonSRX's

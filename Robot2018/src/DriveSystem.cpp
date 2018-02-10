@@ -8,6 +8,8 @@
  * Defines the prototypes of the ArcadeDrive class defined in ArcadeDrive.h.  The ArcadeDrive class contains
  * signatures for all methods and instance variables necessary for driving the robot in either
  * TeleOp or Autonomous modes, using arcade drive and TalonSRX's.
+ *
+ * Connect to robot: roborio-3229-FRC.local
  */
 
 #include <DriveSystem.h>
