@@ -33,8 +33,16 @@ public:
 	void Conveyor(double& conveyorPower);
 	void StopConveyor();
 
+	//Automated functions
+	void PushCube();
+	void LiftToScale();
+	void LiftToSwitch();
+
 private:
-	Timer resetTimer(); //Creates a timer that we'll use for resetting the lift
+	frc::Timer pushTime{}; //Creates a timer for pushing the cube
+	frc::Timer resetTime{}; //Creates a timer that we'll use for resetting the lift
+	frc::Timer switchTime{}; //Creates timer for lifting the lift to the switch
+	frc::Timer scaleTime{}; //Creates timer for lifting to the scale
 
 	DigitalInput * topSwitch; //Instantiate switch at top of the robot
 	DigitalInput * bottomSwitch; //Instantiate switch at bottom of the robot
@@ -51,7 +59,12 @@ private:
 	//Constants for power and max power
 	const float MAX_POWER = 0.6;
 	const float LIFT_POWER = 1.0;
-	const float CONVEYOR_POWER = 0.6; //NOT CURRENTLY USED
+	const float CONVEYOR_POWER = -0.6;
+
+	//Time constants PLACEHOLDERS
+	const float PUSH_TIME = 1.0; //Time the conveyor will run to push the cube out
+	const float SC_LIFT_TIME = 1.0; //Time it takes to move lift from lowest to the height of the scale
+	const float SW_LIFT_TIME = 1.0; //Time it takes to move lift from lowest point to the height of the switch
 };
 
 #endif /* SRC_CUBEDELIVERY_H_ */

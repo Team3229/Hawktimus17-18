@@ -31,11 +31,15 @@ CubeDelivery::~CubeDelivery()
 
 void CubeDelivery::ResetLift()
 {
+	std::cout << "ResetLift()" << std::endl;
 	if (!bottomSwitch->Get()) //Moves the lift to its lowest point
 	{
 		myLift->Set(-LIFT_POWER);
 	}
-	//Not finished here
+	else
+	{
+		StopLift();
+	}
 }
 
 void CubeDelivery::Conveyor(double& conveyorPower)
@@ -53,13 +57,12 @@ void CubeDelivery::StopConveyor()
 
 void CubeDelivery::Lift(const bool direction)
 {
-	//Move the lifter corrently doesnt have switch integration
 	std::cout << "Lift()" << std::endl;
-	if ((direction == true)) //True = up as long as top switch isn't pressed
+	if ((direction == true) && !topSwitch->Get()) //True = up as long as top switch isn't pressed
 	{
 		myLift->Set(-LIFT_POWER); //Moves lift up
 	}
-	else if ((direction == false)) //False = down as long as bottom switch isn't pressed
+	else if ((direction == false) && !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
 	{
 		myLift->Set(LIFT_POWER); //Moves lift down
 	}
@@ -69,4 +72,82 @@ void CubeDelivery::StopLift()
 {
 	//Stops lift when button is not pressed
 	myLift->StopMotor();
+}
+
+void CubeDelivery::PushCube()
+{
+	//Reusable function for autonomous to push the cube out off of the conveyor
+	static int iterations = 0;
+
+	//Timer portion for pushing the cube out
+	if (iterations == 0)
+	{
+		pushTime.Reset();
+		pushTime.Start();
+		iterations++;
+	}
+	else if (pushTime.Get() < PUSH_TIME) //If the timer is less than the push time left
+	{
+		std::cout << "PushCube()" << std::endl;
+		myConveyor->Set(CONVEYOR_POWER); //Moves conveyor to push cube out
+	}
+	else if (pushTime.Get() > PUSH_TIME) //If the timer is greater than the push time left
+	{
+		StopConveyor();
+		iterations = 0;
+	}
+}
+
+void CubeDelivery::LiftToScale()
+{
+	//Reusable function for autonomous to move the lift to the height of the scale
+	static int iterations = 0;
+
+	//Gets lift down to the lowest point
+	ResetLift();
+
+	//Timer portion of moving the lift to the scale height
+	if (iterations == 0)
+	{
+		scaleTime.Reset();
+		scaleTime.Start();
+		iterations++;
+	}
+	else if (scaleTime.Get() < SC_LIFT_TIME) //If the timer is less than scale time left
+	{
+		std::cout << "LiftToScale()" << std::endl;
+		myLift->Set(-LIFT_POWER); //Move lift up
+	}
+	else if (scaleTime.Get() > SC_LIFT_TIME) //If the timer has passed the scale time left
+	{
+		StopLift();
+		iterations = 0;
+	}
+}
+
+void CubeDelivery::LiftToSwitch()
+{
+	//Reusable function for autonomous to move the lift to the height of the switch
+	static int iterations = 0;
+
+	//Gets lift down to the lowest point
+	ResetLift();
+
+	//Timer portion of moving the lift to the switch height
+	if (iterations == 0)
+	{
+		switchTime.Reset();
+		switchTime.Start();
+		iterations++;
+	}
+	else if (switchTime.Get() < SW_LIFT_TIME) //If the timer is less than time switch left
+	{
+		std::cout << "LiftToSwitch()" << std::endl;
+		myLift->Set(-LIFT_POWER); //Move lift up
+	}
+	else if (scaleTime.Get() > SW_LIFT_TIME) //If timer is greater than switch time left
+	{
+		StopLift();
+		iterations = 0;
+	}
 }
