@@ -14,8 +14,9 @@
 
 DriveSystem::DriveSystem()
 {
-	//Initialize the gyro sensitivity
-	gyro.SetSensitivity(GYRO_GAIN);
+	//Initialize the gyro and reset to zero
+	gyro.Calibrate();
+	gyro.Reset();
 
 	//Instantiate motor controllers
 	leftLead = new WPI_TalonSRX(LEFT_LEAD_ID);
@@ -87,11 +88,40 @@ void DriveSystem::Drive (double& Y, double& X)
 }
 
 //Drives Straight only in autonomous
-void DriveSystem::DriveStraight()
+void DriveSystem::DriveStraight(const double time)
 {
+	static short iterations = 0; //For measuring if this is the first iteration of the method
+	double gyroAngle = 0.0; //measures gyro angle to keep the robot straight.
+
+	if(iterations == 0)
+	{
+		driveTime.Reset(); //Reset and start timer
+		driveTime.Start();
+		iterations++;
+	}
+	else if(driveTime.Get() < time) //While the time driven is less than the time needed to go.
+	{
+		gyroAngle = gyro.GetAngle(); //Find the current angle.
+
+		if(gyroAngle != 0)
+		{
+			gyroAngle = abs(gyroAngle);
+			gyroAngle += -gyroAngle; //Compensate for being either greater than or less than to zero
+			diffDrive->ArcadeDrive(AUTO_POWER, gyroAngle); //Drive forward at 0;
+		}
+		else
+		{
+			diffDrive->ArcadeDrive(AUTO_POWER, 0); //Angle is already at zero, just move forward.
+		}
+	}
+	else if(driveTime.Get() >= time) //Time is expired
+	{
+		Stop();
+		iterations = 0;
+	}
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
-void DriveSystem::DriveTurn (const int& angle)
+void DriveSystem::DriveTurn (const double& angle)
 {
 }
