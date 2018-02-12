@@ -35,10 +35,6 @@ DriveSystem::DriveSystem()
 	leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 	rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 
-	//Inverts same side motors NOT NEEDED
-	/* rightFollower->SetInverted(true);
-	leftFollower->SetInverted(true); */
-
 	//Clears sticky faults
 	leftLead->ClearStickyFaults(0);
 	rightLead->ClearStickyFaults(0);
@@ -82,37 +78,9 @@ void DriveSystem::Stop()
 
 void DriveSystem::Drive (double& Y, double& X)
 {
-	//Apply smoothing curve to acceleration
-	Y = (pow(MAX_POWER, Y) * Y);
-
 	//Flip the Y value because of the RobotDrive.Drive function
 	//is opposite of the XBoxController
 	Y = -Y;
-
-	//Enforce a max power/speed
-	if(abs(Y) > MAX_POWER) //If the absolute value of y is greater than the max power we are allowing the Sparks to have (0.8)...
-	{
-		if (Y < 0) //Test to see if Y is negative (moving forwards, first two quadrants)
-		{
-			Y = 0 - MAX_POWER; //Make sure y is less than the max power and that it is negative (we are moving forward)
-		}
-		else //Otherwise we are moving backwards (third and fourth quadrants)
-		{
-			Y = MAX_POWER; //Make sure that y is less than the max power, postive because we are moving backwards.
-		}
-	}
-
-	if(abs(X) > MAX_POWER) //Make sure the absolute value of x is not greater than the max power
-	{
-		if (X < 0) //If we are moving left (second and third quadrants).
-		{
-			X = 0 - MAX_POWER; //Make sure x is at the max power and that it is negative (we are moving left)
-		}
-		else //If we are moving right (first and fourth quadrants)
-		{
-			X = MAX_POWER; //Make sure that x is at the max power and that it is positive (we are moving right)
-		}
-	}
 
 	std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
 	diffDrive->ArcadeDrive(Y, X);

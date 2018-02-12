@@ -16,7 +16,6 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include <Math.h>
 
 //frc includes
 #include <Timer.h>

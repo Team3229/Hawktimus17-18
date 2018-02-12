@@ -72,29 +72,30 @@ void Autonomous::AddOptions()
 	delayChooser->AddObject("Yes", &Yes);
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
-/* void Autonomous::ReadStation()
+
+void Autonomous::ReadStation()
 {
 	//Check selection of starting station;
 	switch(*(targetChooser->GetSelected()))
 	{
 	case 0: //User specifies Default
-		start = Target::D;
+		procedure = Target::D;
 		break;
 
 	case 1: //User specifices they want the exchange
-		 start = Position::E;
+		 procedure = Target::E;
 		 break;
 
 	case 2:
-		start = Target::SW;
+		procedure = Target::SW;
 		break;
 
 	case 3:
-		start = Target::SC;
+		procedure = Target::SC;
 		break;
 
 	case 4:
-		start = Target::B;
+		procedure = Target::B;
 		break;
 	}
-} */
+}

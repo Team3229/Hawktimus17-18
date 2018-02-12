@@ -25,12 +25,8 @@ class Camera
 {
 public:
 	Camera();
-	void Reset();
-	void Move(double Y, double X);
 
 private:
-	frc::Servo * panServo;
-	frc::Servo * tiltServo;
 	cs::VideoSource camera;
 
 	// Constants for Camera Settings

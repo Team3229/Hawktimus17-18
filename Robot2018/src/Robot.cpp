@@ -104,7 +104,7 @@ public:
 		rightY = xbox.GetRawAxis(5);
 		if(abs(rightY) > DEAD_BAND_RIGHT)
 		{
-			gettinPoints.Conveyor(rightY);
+			gettinPoints.Conveyor(rightY); //Move conveyor at the speed of the joystick
 		}
 		else
 		{
@@ -114,7 +114,7 @@ public:
 		//Map the left and right bumper to the climbers
 		if(xbox.GetBumper(GenericHID::kRightHand))
 		{
-			gettinPoints.Lift(true);
+			gettinPoints.Lift(true); //Move the lift system up
 		}
 		else if(xbox.GetBumper(GenericHID::kLeftHand))
 		{
