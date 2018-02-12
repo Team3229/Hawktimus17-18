@@ -73,6 +73,7 @@ void Autonomous::AddOptions()
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
 
+//Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
 	//Check selection of starting station;
