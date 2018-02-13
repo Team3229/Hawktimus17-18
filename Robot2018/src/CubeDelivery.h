@@ -1,7 +1,7 @@
 /*
  * File Name:                        CubeDelivery.h
  * Author(s):                        Luke Simone
- * Last Modified:                    2/3/2018
+ * Last Modified:                    2/13/2018
  * Team:                             Hawktimus Prime - 3229
  *
  * File Description:
@@ -32,6 +32,7 @@ public:
 	void StopLift();
 	void Conveyor(double& conveyorPower);
 	void StopConveyor();
+	void TestLimitSwitch();
 
 	//Automated functions
 	void PushCube();

@@ -1,7 +1,7 @@
 /*
  * File Name:                        CubeDelivery.cpp
  * Author(s):                        Luke Simone
- * Last Modified:                    2/3/2018
+ * Last Modified:                    2/13/2018
  * Team:                             Hawktimus Prime - 3229
  *
  * File Description:
@@ -14,7 +14,7 @@
 CubeDelivery::CubeDelivery()
 {
 	//Passes in parameters to instantiated objects
-	topSwitch = new DigitalInput(TOPSWITCH_DIO);
+	topSwitch = new DigitalInput(TOPSWITCH_DIO); //Might have to use == true/false NEEDS TESTING
 	bottomSwitch = new DigitalInput(BOTTOMSWITCH_DIO);
 	myLift = new frc::Spark(LIFT_PWM);
 	myConveyor = new frc::Spark(CONVEYOR_PWM);
@@ -31,10 +31,11 @@ CubeDelivery::~CubeDelivery()
 
 void CubeDelivery::ResetLift()
 {
+	//Used to reset the lift to its lowest point
 	std::cout << "ResetLift()" << std::endl;
 	if (!bottomSwitch->Get()) //Moves the lift to its lowest point
 	{
-		myLift->Set(-LIFT_POWER);
+		myLift->Set(LIFT_POWER);
 	}
 	else
 	{
@@ -150,4 +151,14 @@ void CubeDelivery::LiftToSwitch()
 		StopLift();
 		iterations = 0;
 	}
+}
+
+void CubeDelivery::TestLimitSwitch()
+{
+	using namespace std;
+
+	cout << "TestLimitSwitch()" << endl;
+
+	cout << "Top Switch = " << topSwitch->Get() << endl; //Outputs to console the state of the top limit switch
+	cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
 }
