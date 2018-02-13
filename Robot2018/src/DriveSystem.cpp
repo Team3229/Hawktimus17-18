@@ -73,7 +73,7 @@ void DriveSystem::ResetHeading()
 void DriveSystem::Stop()
 {
 	diffDrive->ArcadeDrive(0, 0);
-	frc::Wait(0.05);
+	//frc::Wait(0.05);
 }
 
 
@@ -90,15 +90,14 @@ void DriveSystem::Drive (double& Y, double& X)
 //Drives Straight only in autonomous
 void DriveSystem::DriveStraight(const double time)
 {
-	static short iterations = 0; //For measuring if this is the first iteration of the method
 	double gyroAngle = 0.0; //measures gyro angle to keep the robot straight.
 
-	if(iterations == 0)
+	if(straight)
 	{
 		gyro.Reset(); //For if a turn is made.
 		driveTime.Reset(); //Reset and start timer
 		driveTime.Start();
-		iterations++;
+		straight = false;
 	}
 	else if(driveTime.Get() < time) //While the time driven is less than the time needed to go.
 	{
@@ -118,34 +117,32 @@ void DriveSystem::DriveStraight(const double time)
 	else if(driveTime.Get() >= time) //Time is expired
 	{
 		Stop();
-		iterations = 0;
+		straight = true;
 	}
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (const double& angle)
 {
-	static int iterations = 0;
 	double gyroAngle = 0.0;
 
-	if(iterations == 0)
+	if(turn)
 	{
 		gyro.Reset(); //For if a turn is made.
-		iterations++;
+		turn = false;
 	}
 
 	gyroAngle = gyro.GetAngle();
 
 	if(gyroAngle != angle)
 	{
-		gyroAngle = abs(angle);
-		gyroAngle += (angle - gyroAngle);
+		gyroAngle = angle - gyroAngle;
 
 		diffDrive->ArcadeDrive(0, gyroAngle);
 	}
 	else
 	{
 		Stop();
-		iterations = 0;
+		turn = true;
 	}
 }

@@ -54,14 +54,18 @@ private:
 	const unsigned int RIGHT_FOLLOWER_ID = 4;
 
 	//Constants for driving
-	const float SMOOTH_TIME = 0.25; //Sets time in seconds the motors take to get from neutral to full power
+	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
 	const float SAFETY_TIMEOUT = 0.5;
 	const float MAX_OUTPUT = 1.0;
-	const float MAX_POWER = 0.8;
+	const float MAX_POWER = 0.6;
 	const float AUTO_POWER = 0.60;
 	const float GYRO_GAIN = 0.259;
 	const float COMP_RATIO = 0.1111;
 	const float TURN_POWER = 0.47;
+
+	//For measuring start and stop;
+	bool turn = false; //For measuring if this is the first iteration of the DriveTurn method
+	bool straight = true; //For measuring if this is the first iteration of the DriveStraight method
 };
 
 #endif /* SRC_DRIVESYSTEM_H_ */

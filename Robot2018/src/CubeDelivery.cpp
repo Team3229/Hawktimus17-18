@@ -59,11 +59,11 @@ void CubeDelivery::StopConveyor()
 void CubeDelivery::Lift(const bool direction)
 {
 	std::cout << "Lift()" << std::endl;
-	if ((direction == true) && !topSwitch->Get()) //True = up as long as top switch isn't pressed
+	if (direction == true) //&& !topSwitch->Get()) //True = up as long as top switch isn't pressed
 	{
 		myLift->Set(-LIFT_POWER); //Moves lift up
 	}
-	else if ((direction == false) && !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
+	else if (direction == false) //&& !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
 	{
 		myLift->Set(LIFT_POWER); //Moves lift down
 	}

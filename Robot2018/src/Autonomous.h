@@ -45,8 +45,8 @@ private:
 	ADXRS450_Gyro * gyro; //Instantiates gyro
 	Timer movementTimer(); //For tracking movements.
 	AnalogInput * ultra; //Gets input from distance sensor on AnalogPort
-	DriveSystem chasis{};
-	CubeDelivery gettinPoints{};
+	DriveSystem * driveTrain;
+	CubeDelivery * gettinPoints;
 
 	//Choosing bois
 	frc::SendableChooser<int*> * positionChooser; //Receiving from the smart dashboard
@@ -67,11 +67,11 @@ private:
 	char scaleColor; //color of scale
 
 public:
-	Autonomous();
+	Autonomous(DriveSystem * chasis, CubeDelivery * cube);
 	~Autonomous();
 	void AutoInit(std::string colors);
 	void ReadStation();
-	void AutoPeriodic(DriveSystem& chasis);
+	void AutoPeriodic();
 	void Exchange();
 	void Switch ();
 	void Baseline();

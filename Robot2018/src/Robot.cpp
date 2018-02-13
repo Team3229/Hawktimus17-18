@@ -26,17 +26,17 @@ private:
 	//Instantiate Climber
 	Climber climberMotor{};
 
-	//Instantiate Autonomous mode
-    Autonomous autoMode{};
-
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
 
-	//Instantiate camera
-	Camera driveCam{};
-
 	//Instantiate object to control conveyor and lift system.
 	CubeDelivery gettinPoints{};
+
+	//Instantiate Autonomous mode
+    Autonomous autoMode{&chasis, &gettinPoints};
+
+	//Instantiate camera
+	Camera driveCam{};
 
 public:
 
@@ -44,6 +44,7 @@ public:
 	void RobotInit()
 	{
 		std::cout << "RobotInit()" << std::endl;
+		//gettinPoints.ResetLift();
 	}
 
 	//Runs once when Autonomous starts
@@ -61,7 +62,7 @@ public:
 		std::cout << "AutonomousPeriodic()" << std::endl;
 
 		//While autonomous movements are not done (because it is re-entrant)
-		autoMode.AutoPeriodic(chasis);
+		autoMode.AutoPeriodic();
 	}
 
 

@@ -9,16 +9,16 @@
 
 #include "Autonomous.h"
 
-Autonomous::Autonomous()
+Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 {
 	gyro = new ADXRS450_Gyro(); //Green gyro
 	ultra = new AnalogInput(ULTRA_PORT);
 	positionChooser = new frc::SendableChooser<int*>();
 	targetChooser = new frc::SendableChooser<int*>();
 	delayChooser = new frc::SendableChooser<int*>();
-
+	driveTrain = chasis;
+	gettinPoints = cube;
 	AddOptions();
-
 }
 
 Autonomous::~Autonomous()
@@ -34,12 +34,18 @@ Autonomous::~Autonomous()
 void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
-	scaleColor = colors[1];
-
-	//ReadStation();
 }
 
-void Autonomous::AutoPeriodic(DriveSystem& chasis) { /*Runs either exchange, switch, or baseline based on enums*/}
+void Autonomous::AutoPeriodic()
+{
+
+	driveTrain->DriveStraight(3.0);
+	driveTrain->DriveStraight(180);
+	driveTrain->DriveStraight(-270);
+
+	ReadStation();
+}
+
 void Autonomous::Exchange() {}
 void Autonomous::Switch () {}
 void Autonomous::Baseline() {}
@@ -75,129 +81,130 @@ void Autonomous::AddOptions()
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
 
+//Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
 	//Check selection of starting station;
-	switch(*(targetChooser->GetSelected()))
-	{
-	case 0: //User specifies Default
-		procedure = Target::D; //Do nothing for deafult
-		break;
-
-	case 1: //User specifices they want the exchange
-		 procedure = Target::E;
-		 break;
-
-	case 2://runs the switch autos
-		switch(*(positionChooser->GetSelected()))
+		switch(*(targetChooser->GetSelected()))
 		{
-		case 0://center
-			//do not go for switch while center
+		case 0: //User specifies Default
+			procedure = Target::D; //Do nothing for deafult
 			break;
-		case 1://left
-			if ( switchColor == 'L')
+
+		case 1: //User specifices they want the exchange
+			 procedure = Target::E;
+			 break;
+
+		case 2://runs the switch autos
+			switch(*(positionChooser->GetSelected()))
 			{
-				chasis.DriveStraight(3);
-				chasis.DriveTurn(90);
-				chasis.DriveStraight(.5);
-				gettinPoints.LiftToSwitch();
-				gettinPoints.PushCube();
-
-			}
-			else if (switchColor == 'R')
-			{
-				chasis.DriveStraight(3);
-				chasis.DriveTurn(90);
-				chasis.DriveStraight(2);
-				chasis.DriveTurn(90);
-				gettinPoints.LiftToSwitch();
-				gettinPoints.PushCube();
-
-			}
-
-			break;
-		case 2://right
-			if (switchColor == 'R')
+			case 0://center
+				//do not go for switch while center
+				break;
+			case 1://left
+				if ( switchColor == 'L')
 				{
-				chasis.DriveStraight(3);
-				chasis.DriveTurn(-90);
-				chasis.DriveStraight(.5);
-				gettinPoints.LiftToSwitch();
-				gettinPoints.PushCube();
+					driveTrain->DriveStraight(3);
+					driveTrain->DriveTurn(90);
+					driveTrain->DriveStraight(.5);
+					gettinPoints->LiftToSwitch();
+					gettinPoints->PushCube();
 
 				}
-				else if (switchColor == 'L')
+				else if (switchColor == 'R')
 				{
-				chasis.DriveStraight(3);
-				chasis.DriveTurn(-90);
-				chasis.DriveStraight(2);
-				chasis.DriveTurn(-90);
-				gettinPoints.LiftToSwitch();
-				gettinPoints.PushCube();
+					driveTrain->DriveStraight(3);
+					driveTrain->DriveTurn(90);
+					driveTrain->DriveStraight(2);
+					driveTrain->DriveTurn(90);
+					gettinPoints->LiftToSwitch();
+					gettinPoints->PushCube();
+
 				}
+
+				break;
+			case 2://right
+				if (switchColor == 'R')
+					{
+					driveTrain->DriveStraight(3);
+					driveTrain->DriveTurn(-90);
+					driveTrain->DriveStraight(.5);
+					gettinPoints->LiftToSwitch();
+					gettinPoints->PushCube();
+
+					}
+					else if (switchColor == 'L')
+					{
+					driveTrain->DriveStraight(3);
+					driveTrain->DriveTurn(-90);
+					driveTrain->DriveStraight(2);
+					driveTrain->DriveTurn(-90);
+					gettinPoints->LiftToSwitch();
+					gettinPoints->PushCube();
+					}
+				break;
+			}
+			procedure = Target::SW;
+			break;
+
+		case 3:
+			procedure = Target::SC;
+			switch(*(positionChooser->GetSelected()))
+			{
+			case 0://center
+				//do not go for scale while center
+				break;
+			case 1://left
+				if ( scaleColor == 'L')
+				{
+					driveTrain->DriveStraight(6);
+					driveTrain->DriveTurn(90);
+					gettinPoints->LiftToScale();
+					gettinPoints->PushCube();
+
+				}
+				else if (scaleColor == 'R')
+				{
+					driveTrain->DriveStraight(5);
+					driveTrain->DriveTurn(90);
+					driveTrain->DriveStraight(3);
+					driveTrain->DriveTurn(-90);
+					driveTrain->DriveStraight(75);
+					driveTrain->DriveTurn(-90);
+					gettinPoints->LiftToScale();
+					gettinPoints->PushCube();
+
+				}
+
+				break;
+			case 2://right
+				if (scaleColor == 'R')
+					{
+					driveTrain->DriveStraight(6);
+					driveTrain->DriveTurn(-90);
+					gettinPoints->LiftToScale();
+					gettinPoints->PushCube();
+
+					}
+					else if (scaleColor == 'L')
+					{
+						driveTrain->DriveStraight(5);
+						driveTrain->DriveTurn(-90);
+						driveTrain->DriveStraight(3);
+						driveTrain->DriveTurn(90);
+						driveTrain->DriveStraight(.75);
+						driveTrain->DriveTurn(90);
+						gettinPoints->LiftToScale();
+						gettinPoints->PushCube();
+
+					}
+				break;
+			}
+			break;
+
+		case 4:
+			procedure = Target::B;
+			driveTrain->DriveStraight(5);
 			break;
 		}
-		procedure = Target::SW;
-		break;
-
-	case 3:
-		procedure = Target::SC;
-		switch(*(positionChooser->GetSelected()))
-		{
-		case 0://center
-			//do not go for scale while center
-			break;
-		case 1://left
-			if ( scaleColor == 'L')
-			{
-				chasis.DriveStraight(6);
-				chasis.DriveTurn(90);
-				gettinPoints.LiftToScale();
-				gettinPoints.PushCube();
-
-			}
-			else if (scaleColor == 'R')
-			{
-				chasis.DriveStraight(5);
-				chasis.DriveTurn(90);
-				chasis.DriveStraight(3);
-				chasis.DriveTurn(-90);
-				chasis.DriveStraight(.75);
-				chasis.DriveTurn(-90);
-				gettinPoints.LiftToScale();
-				gettinPoints.PushCube();
-
-			}
-
-			break;
-		case 2://right
-			if (scaleColor == 'R')
-				{
-				chasis.DriveStraight(6);
-				chasis.DriveTurn(-90);
-				gettinPoints.LiftToScale();
-				gettinPoints.PushCube();
-
-				}
-				else if (scaleColor == 'L')
-				{
-					chasis.DriveStraight(5);
-					chasis.DriveTurn(-90);
-					chasis.DriveStraight(3);
-					chasis.DriveTurn(90);
-					chasis.DriveStraight(.75);
-					chasis.DriveTurn(90);
-					gettinPoints.LiftToScale();
-					gettinPoints.PushCube();
-
-				}
-			break;
-		}
-		break;
-
-	case 4:
-		procedure = Target::B;
-		chasis.DriveStraight(5);
-		break;
 	}
-}
