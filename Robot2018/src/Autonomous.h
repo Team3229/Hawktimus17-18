@@ -24,6 +24,7 @@
 
 //Programmer-Defined Includes
 #include "DriveSystem.h"
+#include "CubeDelivery.h"
 
 class Autonomous
 {
@@ -44,6 +45,8 @@ private:
 	ADXRS450_Gyro * gyro; //Instantiates gyro
 	Timer movementTimer(); //For tracking movements.
 	AnalogInput * ultra; //Gets input from distance sensor on AnalogPort
+	DriveSystem chasis{};
+	CubeDelivery gettinPoints{};
 
 	//Choosing bois
 	frc::SendableChooser<int*> * positionChooser; //Receiving from the smart dashboard
@@ -61,6 +64,7 @@ private:
 	Delay wait;
 
 	char switchColor; //Color of the switch
+	char scaleColor; //color of scale
 
 public:
 	Autonomous();
