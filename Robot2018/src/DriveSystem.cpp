@@ -95,6 +95,7 @@ void DriveSystem::DriveStraight(const double time)
 
 	if(iterations == 0)
 	{
+		gyro.Reset(); //For if a turn is made.
 		driveTime.Reset(); //Reset and start timer
 		driveTime.Start();
 		iterations++;
@@ -124,4 +125,27 @@ void DriveSystem::DriveStraight(const double time)
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (const double& angle)
 {
+	static int iterations = 0;
+	double gyroAngle = 0.0;
+
+	if(iterations == 0)
+	{
+		gyro.Reset(); //For if a turn is made.
+		iterations++;
+	}
+
+	gyroAngle = gyro.GetAngle();
+
+	if(gyroAngle != angle)
+	{
+		gyroAngle = abs(angle);
+		gyroAngle += (angle - gyroAngle);
+
+		diffDrive->ArcadeDrive(0, gyroAngle);
+	}
+	else
+	{
+		Stop();
+		iterations = 0;
+	}
 }
