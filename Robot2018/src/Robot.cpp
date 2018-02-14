@@ -45,6 +45,7 @@ public:
 	{
 		std::cout << "RobotInit()" << std::endl;
 		//gettinPoints.ResetLift();
+		autoMode.AddOptions();
 	}
 
 	//Runs once when Autonomous starts
@@ -61,8 +62,8 @@ public:
 	{
 		std::cout << "AutonomousPeriodic()" << std::endl;
 
-		//While autonomous movements are not done (because it is re-entrant)
 		autoMode.AutoPeriodic();
+		//While autonomous movements are not done (because it is re-entrant)
 	}
 
 

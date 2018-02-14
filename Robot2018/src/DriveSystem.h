@@ -21,7 +21,7 @@
 //FRC library includes
 #include <Timer.h>
 #include <GenericHID.h>
-#include <ADXRS450_Gyro.h>
+#include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
 
@@ -33,7 +33,7 @@ public:
 	void ResetHeading(); //Resets the gyro
 	void Stop(); //Stops driving the talons.
 	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
-	void DriveStraight(const double time); //Used for driving the robot straight during autonomous
+	void DriveStraight(); //Used for driving the robot straight during autonomous
 	void DriveTurn (const double& angle); //Used for driving the robot at an angle during autonomous.
 
 private:
@@ -44,7 +44,7 @@ private:
 	WPI_TalonSRX * rightFollower; //Back right, follower
 
 	DifferentialDrive * diffDrive; //Drivetrain
-	frc::ADXRS450_Gyro gyro{}; //Instantiate gyro and initialize its port
+	frc::AnalogGyro gyro{0}; //Instantiate gyro and initialize its port
 	frc::Timer driveTime{};
 
 	//Constants for ports and unique id
@@ -56,15 +56,15 @@ private:
 	//Constants for driving
 	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
 	const float SAFETY_TIMEOUT = 0.5;
-	const float MAX_OUTPUT = 1.0;
-	const float MAX_POWER = 0.6;
-	const float AUTO_POWER = 0.60;
+	const float MAX_OUTPUT = 0.6;
+	const float AUTO_POWER = 0.9;
 	const float GYRO_GAIN = 0.259;
 	const float COMP_RATIO = 0.1111;
 	const float TURN_POWER = 0.47;
+	//const frc::SPI::Port PORT = frc::SPI::Port::kOnboardCS0;
 
 	//For measuring start and stop;
-	bool turn = false; //For measuring if this is the first iteration of the DriveTurn method
+	bool turn = true; //For measuring if this is the first iteration of the DriveTurn method
 	bool straight = true; //For measuring if this is the first iteration of the DriveStraight method
 };
 

@@ -42,8 +42,8 @@ private:
 	const float GYRO_GAIN = 0.259;
 	static constexpr double ValueToInches = 0.125; //Because 8 units per inch of reading 52 MINIMUM (6.5 inches)
 
-	ADXRS450_Gyro * gyro; //Instantiates gyro
-	Timer movementTimer(); //For tracking movements.
+	//ADXRS450_Gyro * gyro; //Instantiates gyro
+	Timer movementTimer{}; //For tracking movements.
 	AnalogInput * ultra; //Gets input from distance sensor on AnalogPort
 	DriveSystem * driveTrain;
 	CubeDelivery * gettinPoints;

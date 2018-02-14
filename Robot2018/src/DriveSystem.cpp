@@ -15,6 +15,8 @@
 DriveSystem::DriveSystem()
 {
 	//Initialize the gyro and reset to zero
+	gyro.InitGyro();
+	gyro.SetSensitivity(GYRO_GAIN);
 	gyro.Calibrate();
 	gyro.Reset();
 
@@ -88,43 +90,18 @@ void DriveSystem::Drive (double& Y, double& X)
 }
 
 //Drives Straight only in autonomous
-void DriveSystem::DriveStraight(const double time)
+void DriveSystem::DriveStraight()
 {
-	double gyroAngle = 0.0; //measures gyro angle to keep the robot straight.
+		//double X = 0;
+		//double heading = 0;
 
-	if(straight)
-	{
-		gyro.Reset(); //For if a turn is made.
-		driveTime.Reset(); //Reset and start timer
-		driveTime.Start();
-		straight = false;
-	}
-	else if(driveTime.Get() < time) //While the time driven is less than the time needed to go.
-	{
-		gyroAngle = gyro.GetAngle(); //Find the current angle.
-
-		if(gyroAngle != 0)
-		{
-			gyroAngle = abs(gyroAngle);
-			gyroAngle += -gyroAngle; //Compensate for being either greater than or less than to zero
-			diffDrive->ArcadeDrive(AUTO_POWER, gyroAngle); //Drive forward at 0;
-		}
-		else
-		{
-			diffDrive->ArcadeDrive(AUTO_POWER, 0); //Angle is already at zero, just move forward.
-		}
-	}
-	else if(driveTime.Get() >= time) //Time is expired
-	{
-		Stop();
-		straight = true;
-	}
+		diffDrive->ArcadeDrive(AUTO_POWER, 0.0);
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (const double& angle)
 {
-	double gyroAngle = 0.0;
+	/*double gyroAngle = 0.0;
 
 	if(turn)
 	{
@@ -144,5 +121,5 @@ void DriveSystem::DriveTurn (const double& angle)
 	{
 		Stop();
 		turn = true;
-	}
+	}*/
 }

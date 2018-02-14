@@ -11,19 +11,18 @@
 
 Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 {
-	gyro = new ADXRS450_Gyro(); //Green gyro
+	//gyro = new ADXRS450_Gyro(); //Green gyro
 	ultra = new AnalogInput(ULTRA_PORT);
 	positionChooser = new frc::SendableChooser<int*>();
 	targetChooser = new frc::SendableChooser<int*>();
 	delayChooser = new frc::SendableChooser<int*>();
 	driveTrain = chasis;
 	gettinPoints = cube;
-	AddOptions();
 }
 
 Autonomous::~Autonomous()
 {
-	delete gyro;
+	//delete gyro;
 	delete ultra;
 	delete positionChooser;
 	delete targetChooser;
@@ -36,14 +35,33 @@ void Autonomous::AutoInit(std::string colors)
 	switchColor = colors[0]; //Get the color of the switch
 }
 
+bool test = true;
+
 void Autonomous::AutoPeriodic()
 {
+	static int time = 1;
 
-	driveTrain->DriveStraight(3.0);
-	driveTrain->DriveStraight(180);
-	driveTrain->DriveStraight(-270);
+	if(test)
+	{
+		movementTimer.Reset();
+		movementTimer.Start();
+		test = false;
+	}
 
-	ReadStation();
+	if(movementTimer.Get() < time)
+	{
+		driveTrain->DriveStraight();
+	}
+	else
+	{
+		driveTrain->Stop();
+		movementTimer.Stop();
+		test = true;
+		Wait(1.0);
+		time = 2;
+	}
+
+
 }
 
 void Autonomous::Exchange() {}
@@ -84,6 +102,8 @@ void Autonomous::AddOptions()
 //Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
+	/*std::cout << *(targetChooser->GetSelected()) << std::endl;
+
 	//Check selection of starting station;
 		switch(*(targetChooser->GetSelected()))
 		{
@@ -206,5 +226,5 @@ void Autonomous::ReadStation()
 			procedure = Target::B;
 			driveTrain->DriveStraight(5);
 			break;
-		}
+		}*/
 	}
