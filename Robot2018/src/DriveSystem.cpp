@@ -15,10 +15,9 @@
 DriveSystem::DriveSystem()
 {
 	//Initialize the gyro and reset to zero
-	gyro.InitGyro();
-	gyro.SetSensitivity(GYRO_GAIN);
-	gyro.Calibrate();
-	gyro.Reset();
+	gyro = new ADXRS450_Gyro(frc::SPI::kOnboardCS0);
+	gyro->Calibrate();
+	gyro->Reset();
 
 	//Instantiate motor controllers
 	leftLead = new WPI_TalonSRX(LEFT_LEAD_ID);
@@ -69,7 +68,7 @@ DriveSystem::~DriveSystem()
 void DriveSystem::ResetHeading()
 {
 	//Reset the gyro so zero angle is straight ahead
-	gyro.Reset();
+	gyro->Reset();
 }
 
 void DriveSystem::Stop()
@@ -85,31 +84,56 @@ void DriveSystem::Drive (double& Y, double& X)
 	//is opposite of the XBoxController
 	Y = -Y;
 
-	std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
+	std::cout << "diffDrive \n Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
 	diffDrive->ArcadeDrive(Y, X);
 }
 
 //Drives Straight only in autonomous
-void DriveSystem::DriveStraight()
+void DriveSystem::DriveStraight(const double time)
 {
-		//double X = 0;
-		//double heading = 0;
+	double gyroAngle = 0.0; //measures gyro angle to keep the robot straight.
 
-		diffDrive->ArcadeDrive(AUTO_POWER, 0.0);
+	if(straight)
+	{
+		gyro->Reset(); //For if a turn is made.
+		driveTime.Reset(); //Reset and start timer
+		driveTime.Start();
+		straight = false;
+	}
+	else if(driveTime.Get() < time) //While the time driven is less than the time needed to go.
+	{
+		gyroAngle = gyro->GetAngle(); //Find the current angle.
+
+		if(gyroAngle != 0)
+		{
+			gyroAngle = abs(gyroAngle);
+			gyroAngle += -gyroAngle; //Compensate for being either greater than or less than to zero
+			diffDrive->ArcadeDrive(AUTO_POWER, gyroAngle); //Drive forward at 0;
+		}
+		else
+		{
+			diffDrive->ArcadeDrive(AUTO_POWER, 0); //Angle is already at zero, just move forward.
+		}
+	}
+	else if(driveTime.Get() >= time) //Time is expired
+	{
+		Stop();
+		straight = true;
+	}
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (const double& angle)
 {
-	/*double gyroAngle = 0.0;
+	double gyroAngle = 0.0;
 
 	if(turn)
 	{
-		gyro.Reset(); //For if a turn is made.
+		gyro->Reset(); //For if a turn is made.
 		turn = false;
 	}
 
-	gyroAngle = gyro.GetAngle();
+	gyroAngle = gyro->GetAngle();
 
 	if(gyroAngle != angle)
 	{
@@ -121,5 +145,14 @@ void DriveSystem::DriveTurn (const double& angle)
 	{
 		Stop();
 		turn = true;
-	}*/
+	}
+}
+
+void DriveSystem::TestGyro()
+{
+	//gyro.Reset();
+	//gyro.SetSensitivity(0.259);
+
+	double angle = gyro->GetAngle();
+	std::cout << "Gyro angle: " << angle << std::endl;
 }
