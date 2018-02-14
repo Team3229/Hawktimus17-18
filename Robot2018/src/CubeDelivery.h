@@ -60,7 +60,7 @@ private:
 	//Constants for power and max power
 	const float MAX_POWER = 0.6;
 	const float LIFT_POWER = 1.0;
-	const float CONVEYOR_POWER = -0.6;
+	const float CONVEYOR_POWER = -1.0;
 
 	//Time constants PLACEHOLDERS
 	const float PUSH_TIME = 1.0; //Time the conveyor will run to push the cube out

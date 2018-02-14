@@ -77,26 +77,8 @@ void CubeDelivery::StopLift()
 
 void CubeDelivery::PushCube()
 {
-	//Reusable function for autonomous to push the cube out off of the conveyor
-	static int iterations = 0;
-
-	//Timer portion for pushing the cube out
-	if (iterations == 0)
-	{
-		pushTime.Reset();
-		pushTime.Start();
-		iterations++;
-	}
-	else if (pushTime.Get() < PUSH_TIME) //If the timer is less than the push time left
-	{
 		std::cout << "PushCube()" << std::endl;
 		myConveyor->Set(CONVEYOR_POWER); //Moves conveyor to push cube out
-	}
-	else if (pushTime.Get() > PUSH_TIME) //If the timer is greater than the push time left
-	{
-		StopConveyor();
-		iterations = 0;
-	}
 }
 
 void CubeDelivery::LiftToScale()
