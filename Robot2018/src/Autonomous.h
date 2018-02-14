@@ -16,7 +16,6 @@
 #include <Math.h>
 
 //FRC-Defined includes
-#include <ADXRS450_Gyro.h>
 #include <Timer.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
@@ -29,22 +28,8 @@
 class Autonomous
 {
 private:
-	//Constants for driving
-	const double TURN_ANGLE = 30;
-	const double DRIVE_DISTANCE = 0.0;
-	const int BASELINE = 8;
 
-	//Constants for ports
-	const int ULTRA_PORT = 2;
-	//const int GYRO_PORT = 1; //Green gyro
-
-	//Sensor constants
-	const float GYRO_GAIN = 0.259;
-	static constexpr double ValueToInches = 0.125; //Because 8 units per inch of reading 52 MINIMUM (6.5 inches)
-
-	//ADXRS450_Gyro * gyro; //Instantiates gyro
-	Timer movementTimer{}; //For tracking movements.
-	AnalogInput * ultra; //Gets input from distance sensor on AnalogPort
+	Timer movementTimer{}; //For tracking movements
 	DriveSystem * driveTrain;
 	CubeDelivery * gettinPoints;
 
@@ -66,6 +51,8 @@ private:
 	char switchColor; //Color of the switch
 	char scaleColor; //color of scale
 
+	bool turn = true; //For measuring if this is the first iteration of the DriveTurn method
+
 public:
 	Autonomous(DriveSystem * chasis, CubeDelivery * cube);
 	~Autonomous();
@@ -76,20 +63,10 @@ public:
 	void Switch ();
 	void Baseline();
 	void AddOptions();
+	void DriveStraight(int seconds);
 };
 
 #endif /*SRC_AUTONOMOUS_H*/
-
-
-//Gyro stuff
-		/* gyro->SetSensitivity(GYRO_GAIN);
-		gyro->Reset();
-
-		//ultrasonic stuff
-		ultra = new Ultrasonic(1, 1); // assigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
-		ultra->SetEnabled(true);
-		ultra->SetAutomaticMode(true); // turns on automatic mode */
-
 
 //Ultrasonic output WORKING
 		/* double currentDistance = ultra.GetValue() * ValueToInches;

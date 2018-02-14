@@ -11,8 +11,6 @@
 
 Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 {
-	//gyro = new ADXRS450_Gyro(); //Green gyro
-	ultra = new AnalogInput(ULTRA_PORT);
 	positionChooser = new frc::SendableChooser<int*>();
 	targetChooser = new frc::SendableChooser<int*>();
 	delayChooser = new frc::SendableChooser<int*>();
@@ -22,8 +20,6 @@ Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 
 Autonomous::~Autonomous()
 {
-	//delete gyro;
-	delete ultra;
 	delete positionChooser;
 	delete targetChooser;
 	delete delayChooser;
@@ -33,35 +29,28 @@ Autonomous::~Autonomous()
 void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
+	scaleColor = colors[1];
 }
-
-bool test = true;
 
 void Autonomous::AutoPeriodic()
 {
-	static int time = 1;
-
-	if(test)
+	if(turn) //A global variable that signifies if this is first time.
 	{
-		movementTimer.Reset();
+		movementTimer.Reset(); //Reset the timer
 		movementTimer.Start();
-		test = false;
+		turn = false; //Not first time running, dont need to run if again
 	}
 
-	if(movementTimer.Get() < time)
+	if(movementTimer.Get() < 10) //Drive straight while the time is less than the number of seconds needed.
 	{
-		driveTrain->DriveStraight();
+		driveTrain->TestGyro();
+		driveTrain->DriveTurn(90);
 	}
-	else
+	else //Time has been reached
 	{
-		driveTrain->Stop();
-		movementTimer.Stop();
-		test = true;
-		Wait(1.0);
-		time = 2;
+		movementTimer.Stop(); //Stop the timer
+		turn = true;
 	}
-
-
 }
 
 void Autonomous::Exchange() {}
@@ -228,3 +217,25 @@ void Autonomous::ReadStation()
 			break;
 		}*/
 	}
+
+//Drives the robot straight for a given number of seconds
+void Autonomous::DriveStraight(int seconds)
+{
+	if(turn) //A global variable that signifies if this is first time.
+	{
+		movementTimer.Reset(); //Reset the timer
+		movementTimer.Start();
+		turn = false; //Not first time running, dont need to run if again
+	}
+
+	if(movementTimer.Get() < seconds) //Drive straight while the time is less than the number of seconds needed.
+	{
+		driveTrain->DriveStraight();
+	}
+	else //Time has been reached
+	{
+		driveTrain->Stop(); //Stop driving
+		movementTimer.Stop(); //Stop the timer
+		turn = true; //Run top if again.
+	}
+}

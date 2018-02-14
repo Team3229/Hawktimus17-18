@@ -15,7 +15,7 @@
 DriveSystem::DriveSystem()
 {
 	//Initialize the gyro and reset to zero
-	gyro = new ADXRS450_Gyro(frc::SPI::kOnboardCS0);
+	gyro = new ADXRS450_Gyro{frc::SPI::kOnboardCS0};
 	gyro->Calibrate();
 	gyro->Reset();
 
@@ -74,7 +74,6 @@ void DriveSystem::ResetHeading()
 void DriveSystem::Stop()
 {
 	diffDrive->ArcadeDrive(0, 0);
-	//frc::Wait(0.05);
 }
 
 
@@ -84,48 +83,22 @@ void DriveSystem::Drive (double& Y, double& X)
 	//is opposite of the XBoxController
 	Y = -Y;
 
-	std::cout << "diffDrive \n Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
+	std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
 	diffDrive->ArcadeDrive(Y, X);
 }
 
-//Drives Straight only in autonomous
-void DriveSystem::DriveStraight(const double time)
+void DriveSystem::DriveStraight()
 {
-	double gyroAngle = 0.0; //measures gyro angle to keep the robot straight.
-
-	if(straight)
-	{
-		gyro->Reset(); //For if a turn is made.
-		driveTime.Reset(); //Reset and start timer
-		driveTime.Start();
-		straight = false;
-	}
-	else if(driveTime.Get() < time) //While the time driven is less than the time needed to go.
-	{
-		gyroAngle = gyro->GetAngle(); //Find the current angle.
-
-		if(gyroAngle != 0)
-		{
-			gyroAngle = abs(gyroAngle);
-			gyroAngle += -gyroAngle; //Compensate for being either greater than or less than to zero
-			diffDrive->ArcadeDrive(AUTO_POWER, gyroAngle); //Drive forward at 0;
-		}
-		else
-		{
-			diffDrive->ArcadeDrive(AUTO_POWER, 0); //Angle is already at zero, just move forward.
-		}
-	}
-	else if(driveTime.Get() >= time) //Time is expired
-	{
-		Stop();
-		straight = true;
-	}
+	diffDrive->ArcadeDrive(AUTO_POWER, 0.0); //Drives the robot straight
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
-void DriveSystem::DriveTurn (const double& angle)
+void DriveSystem::DriveTurn (double angle)
 {
 	double gyroAngle = 0.0;
+
+	if(angle > 180)
+		angle = angle - 360;
 
 	if(turn)
 	{
@@ -135,16 +108,22 @@ void DriveSystem::DriveTurn (const double& angle)
 
 	gyroAngle = gyro->GetAngle();
 
-	if(gyroAngle != angle)
+	if(gyroAngle < angle)
 	{
-		gyroAngle = angle - gyroAngle;
-
-		diffDrive->ArcadeDrive(0, gyroAngle);
+		if(angle < 0)
+		{
+			diffDrive->ArcadeDrive(AUTO_POWER, -1.0);
+		}
+		else
+		{
+			diffDrive->ArcadeDrive(AUTO_POWER, 1.0);
+		}
 	}
 	else
 	{
 		Stop();
 		turn = true;
+		Wait(2.0);
 	}
 }
 
