@@ -116,11 +116,11 @@ public:
 		//Map the left and right bumper to the climbers
 		if(xbox.GetBumper(GenericHID::kRightHand))
 		{
-			gettinPoints.Lift(true); //Move the lift system up
+			gettinPoints.Lift(CubeDelivery::Up); //Move the lift system up
 		}
 		else if(xbox.GetBumper(GenericHID::kLeftHand))
 		{
-			gettinPoints.Lift(false); //Move lift system down.
+			gettinPoints.Lift(CubeDelivery::Down); //Move lift system down.
 		}
 		else
 		{

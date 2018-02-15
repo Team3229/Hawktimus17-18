@@ -14,8 +14,8 @@
 CubeDelivery::CubeDelivery()
 {
 	//Passes in parameters to instantiated objects
-	topSwitch = new DigitalInput(TOPSWITCH_DIO); //Might have to use == true/false NEEDS TESTING
-	bottomSwitch = new DigitalInput(BOTTOMSWITCH_DIO);
+	topSwitch = new frc::DigitalInput(TOPSWITCH_DIO); //Might have to use == true/false NEEDS TESTING
+	bottomSwitch = new frc::DigitalInput(BOTTOMSWITCH_DIO);
 	myLift = new frc::Spark(LIFT_PWM);
 	myConveyor = new frc::Spark(CONVEYOR_PWM);
 }
@@ -29,6 +29,44 @@ CubeDelivery::~CubeDelivery()
 	delete myConveyor;
 }
 
+void CubeDelivery::Conveyor(double& conveyorPower)
+{
+	std::cout << "Conveyor()" << std::endl;
+	myConveyor->Set(-conveyorPower); //Moves conveyor based on conveyorPower
+}
+
+void CubeDelivery::PushCube()
+{
+	std::cout << "PushCube()" << std::endl;
+	myConveyor->Set(CONVEYOR_POWER); //Moves conveyor to push cube out
+}
+
+void CubeDelivery::StopConveyor()
+{
+	//Stops the conveyor when button is not pressed
+	myConveyor->StopMotor();
+}
+
+void CubeDelivery::Lift(LiftDirection direction)
+{
+	if (direction == LiftDirection::Up) //&& !topSwitch->Get()) //True = up as long as top switch isn't pressed
+	{
+		std::cout << "LiftUp()" << std::endl;
+		myLift->Set(-LIFT_POWER); //Moves lift up
+	}
+	else if (direction == LiftDirection::Down) //&& !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
+	{
+		std::cout << "LiftDown()" << std::endl;
+		myLift->Set(LIFT_POWER); //Moves lift down
+	}
+}
+
+void CubeDelivery::StopLift()
+{
+	//Stops lift when button is not pressed
+	myLift->StopMotor();
+}
+/*
 void CubeDelivery::ResetLift()
 {
 	//Used to reset the lift to its lowest point
@@ -43,102 +81,37 @@ void CubeDelivery::ResetLift()
 	}
 }
 
-void CubeDelivery::Conveyor(double& conveyorPower)
-{
-	std::cout << "Conveyor()" << std::endl;
-	conveyorPower = (pow(MAX_POWER, conveyorPower) * conveyorPower); //Applies smoothing curve to conveyor motor
-	myConveyor->Set(-conveyorPower); //Moves conveyor based on conveyorPower
-}
-
-void CubeDelivery::StopConveyor()
-{
-	//Stops the conveyor when button is not pressed
-	myConveyor->StopMotor();
-}
-
-void CubeDelivery::Lift(const bool direction)
-{
-	std::cout << "Lift()" << std::endl;
-	if (direction == true) //&& !topSwitch->Get()) //True = up as long as top switch isn't pressed
-	{
-		myLift->Set(-LIFT_POWER); //Moves lift up
-	}
-	else if (direction == false) //&& !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
-	{
-		myLift->Set(LIFT_POWER); //Moves lift down
-	}
-}
-
-void CubeDelivery::StopLift()
-{
-	//Stops lift when button is not pressed
-	myLift->StopMotor();
-}
-
-void CubeDelivery::PushCube()
-{
-		std::cout << "PushCube()" << std::endl;
-		myConveyor->Set(CONVEYOR_POWER); //Moves conveyor to push cube out
-}
-
 void CubeDelivery::LiftToScale()
 {
-	//Reusable function for autonomous to move the lift to the height of the scale
-	static int iterations = 0;
+	//Gets lift down to the lowest point only the first time
+	if (firstScale)
+	{
+		ResetLift();
+		firstScale = false;
+	}
 
-	//Gets lift down to the lowest point
-	ResetLift();
-
-	//Timer portion of moving the lift to the scale height
-	if (iterations == 0)
-	{
-		scaleTime.Reset();
-		scaleTime.Start();
-		iterations++;
-	}
-	else if (scaleTime.Get() < SC_LIFT_TIME) //If the timer is less than scale time left
-	{
-		std::cout << "LiftToScale()" << std::endl;
-		myLift->Set(-LIFT_POWER); //Move lift up
-	}
-	else if (scaleTime.Get() > SC_LIFT_TIME) //If the timer has passed the scale time left
-	{
-		StopLift();
-		iterations = 0;
-	}
+	//Commands to lift scale, timer handled in autonomous
+	std::cout << "LiftToScale()" << std::endl;
+	myLift->Set(-LIFT_POWER); //Move lift up
 }
 
 void CubeDelivery::LiftToSwitch()
 {
-	//Reusable function for autonomous to move the lift to the height of the switch
-	static int iterations = 0;
+	//Gets lift down to the lowest point only the first time
+	if (firstSwitch)
+	{
+		ResetLift();
+		firstSwitch = false;
+	}
 
-	//Gets lift down to the lowest point
-	ResetLift();
-
-	//Timer portion of moving the lift to the switch height
-	if (iterations == 0)
-	{
-		switchTime.Reset();
-		switchTime.Start();
-		iterations++;
-	}
-	else if (switchTime.Get() < SW_LIFT_TIME) //If the timer is less than time switch left
-	{
-		std::cout << "LiftToSwitch()" << std::endl;
-		myLift->Set(-LIFT_POWER); //Move lift up
-	}
-	else if (scaleTime.Get() > SW_LIFT_TIME) //If timer is greater than switch time left
-	{
-		StopLift();
-		iterations = 0;
-	}
+	//Comands to lift to switch, timer handled in autonomous
+	std::cout << "LiftToSwitch()" << std::endl;
+	myLift->Set(-LIFT_POWER); //Move lift up
 }
-
+*/
 void CubeDelivery::TestLimitSwitch()
 {
 	using namespace std;
-
 	cout << "TestLimitSwitch()" << endl;
 
 	cout << "Top Switch = " << topSwitch->Get() << endl; //Outputs to console the state of the top limit switch
