@@ -10,6 +10,12 @@
 #ifndef SRC_AUTONOMOUS_H
 #define SRC_AUTONOMOUS_H
 
+#define FORWARD 0.6
+#define REVERSE -0.6
+#define DRIVE_FT_SEC 4.0
+#define LIFT_FT_SEC 4.0
+#define TURN_TIMEOUT 1.0
+
 //Standard Includes
 #include <iostream>
 #include <string>
@@ -32,24 +38,29 @@ private:
 	Timer movementTimer{}; //For tracking movements
 	DriveSystem * driveTrain;
 	CubeDelivery * gettinPoints;
+	Timer autoTimer{};
 
 	//Choosing bois
 	frc::SendableChooser<int*> * positionChooser; //Receiving from the smart dashboard
 	frc::SendableChooser<int*> * targetChooser;
 	frc::SendableChooser<int*> * delayChooser;
 
-	//Enums from dashboard
-	enum Position {C, L, R}; //For determining which station we are at
-	enum Target {D, E, SW, SC, B}; //For determining which action we want to take.
-	enum Delay {Yes, No}; //For determining if delay
+	enum positions {left, center, right};
+	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
+	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10};
 
-	//Initializations of enums
-	Position start;
-	Target procedure;
-	Delay wait;
+	enum commands {drive, reverse, turn, lift, lower, push, done};
 
-	bool turn = true; //For measuring if this is the first iteration of the DriveTurn method
+	struct cmd {
+		commands command;
+		double	         data; 	/* feet or degrees */
+	};
+	cmd autocommand [3] /* position */ [6] /* target */ [10]; /* movement */
 
+	bool autodone = false; //Is movement done?
+	const double TIME_LIMIT = 0.0; //Move for how long?
+	movements movement = M1; //What movement are we on?
+	targets target = baseline;
 
 
 public:

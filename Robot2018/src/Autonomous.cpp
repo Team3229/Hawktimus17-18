@@ -31,62 +31,40 @@ void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
 	scaleColor = colors[1]; //get the4 color of the scale
+	ReadStation();
 
-	if (autotarget == baseline)
-	{
-		target = baseline;
-	}
-	else if (autotarget == exchange)
-	{
-		target = exchange;
-	}
-	else if (autotarget == switch)
-	{
-		if (switchColor == L)
+		if (autotarget == baseline)
 		{
-			target = leftswitch;
+			target = baseline;
 		}
-		else
+		else if (autotarget == exchange)
 		{
-			target = rightswitch;
+			target = exchange;
 		}
-	}
-	else if (autotarget == scale)
-	{
-		if (scaleColor == L)
+		else if (autotarget == switch)
 		{
-			target = leftscale;
+			if (switchColor == L)
+			{
+				target = leftswitch;
+			}
+			else
+			{
+				target = rightswitch;
+			}
 		}
-		else
+		else if (autotarget == scale)
 		{
-			target = rightswitch;
+			if (scaleColor == L)
+			{
+				target = leftscale;
+			}
+			else
+			{
+				target = rightswitch;
+			}
 		}
-	}
 
-global -autodone = false;
-global – movement = M1;
-global – autotimer;
-global – timelimit;
-movementTimer.Reset();
-
-#define FORWARD 0.6
-#define REVERSE -0.6
-#define DRIVE_FT_SEC 4.0
-#define LIFT_FT_SEC 4.0
-#define TURN_TIMEOUT 1.0
-
-enum positions {left, center, right};
-enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
-enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10};
-
-enum commands {drive, reverse, turn, lift, lower, push, done};
-
-struct cmd {
-	commands command;
-	double	         data; 	/* feet or degrees */
-};
-
-cmd autocommand [3] /* position */ [6] /* target */ [10]; /* movement */
+autoTimer.Reset();
 
 // start = left, target = baseline
 autocommand[left][baseline][M1].command = drive;
@@ -210,7 +188,6 @@ autocommand[right][leftswitch][M6].command = push;
 autocommand[right][leftswitch][M7].command = lower;
 autocommand[right][leftswitch][M7].data = 2.0;
 autocommand[right][leftswitch][M8].command = done;
-
 }
 
 void Autonomous::AutoPeriodic()
