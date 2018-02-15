@@ -52,12 +52,12 @@ void CubeDelivery::Lift(LiftDirection direction)
 	if (direction == LiftDirection::Up) //&& !topSwitch->Get()) //True = up as long as top switch isn't pressed
 	{
 		std::cout << "LiftUp()" << std::endl;
-		myLift->Set(-LIFT_POWER); //Moves lift up
+		myLift->Set(LIFT_POWER); //Moves lift up
 	}
 	else if (direction == LiftDirection::Down) //&& !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
 	{
 		std::cout << "LiftDown()" << std::endl;
-		myLift->Set(LIFT_POWER); //Moves lift down
+		myLift->Set(-LIFT_POWER); //Moves lift down
 	}
 }
 

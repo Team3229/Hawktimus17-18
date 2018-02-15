@@ -120,7 +120,7 @@ public:
 		}
 		else if(xbox.GetBumper(GenericHID::kLeftHand))
 		{
-			gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move lift system down.
+			gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move lift system down
 		}
 		else
 		{

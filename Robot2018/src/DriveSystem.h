@@ -56,7 +56,7 @@ private:
 	//Constants for driving
 	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
 	const float SAFETY_TIMEOUT = 0.5;
-	const float MAX_OUTPUT = 0.6;
+	const float MAX_OUTPUT = 0.4;
 	const float AUTO_POWER = 0.9;
 	const float TURN_POWER = 0.47;
 };
