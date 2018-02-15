@@ -32,39 +32,7 @@ void Autonomous::AutoInit(std::string colors)
 	switchColor = colors[0]; //Get the color of the switch
 	scaleColor = colors[1]; //get the4 color of the scale
 	ReadStation();
-
-		if (autotarget == baseline)
-		{
-			target = baseline;
-		}
-		else if (autotarget == exchange)
-		{
-			target = exchange;
-		}
-		else if (autotarget == switch)
-		{
-			if (switchColor == L)
-			{
-				target = leftswitch;
-			}
-			else
-			{
-				target = rightswitch;
-			}
-		}
-		else if (autotarget == scale)
-		{
-			if (scaleColor == L)
-			{
-				target = leftscale;
-			}
-			else
-			{
-				target = rightswitch;
-			}
-		}
-
-autoTimer.Reset();
+	autoTimer.Reset();
 
 // start = left, target = baseline
 autocommand[left][baseline][M1].command = drive;
@@ -190,26 +158,7 @@ autocommand[right][leftswitch][M7].data = 2.0;
 autocommand[right][leftswitch][M8].command = done;
 }
 
-void Autonomous::AutoPeriodic()
-{
-	if(turn) //A global variable that signifies if this is first time.
-	{
-		movementTimer.Reset(); //Reset the timer
-		movementTimer.Start();
-		turn = false; //Not first time running, dont need to run if again
-	}
-
-	if(movementTimer.Get() < 10) //Drive straight while the time is less than the number of seconds needed.
-	{
-		driveTrain->DriveTurn(90);
-	}
-	else //Time has been reached
-	{
-		movementTimer.Stop(); //Stop the timer
-		turn = true;
-	}
-}
-
+void Autonomous::AutoPeriodic() {}
 void Autonomous::Exchange() {}
 void Autonomous::Switch () {}
 void Autonomous::Baseline() {}
@@ -226,16 +175,18 @@ void Autonomous::AddOptions()
 	positionChooser->AddObject("Right", &Right);
 	frc::SmartDashboard::PutData("Starting Position", positionChooser); //Labels the dropdown box.
 
-	int Default = 0; //Default option that will have the robot do NOTHING
-	int Exchange = 1; //5 variables for target chooser
-	int Switch = 2;
-	int Scale = 3;
-	int Baseline = 4;
-	targetChooser->AddDefault("Default", &Default); //Default option
-	targetChooser->AddObject("Exchange", &Exchange); //Adds the other 4 target options to the chooser
-	targetChooser->AddObject("Switch", &Switch);
-	targetChooser->AddObject("Scale", &Scale);
-	targetChooser->AddObject("Baseline", &Baseline);
+	int baseline = 1;
+	int exchange = 2; //5 variables for target chooser
+	int rightSwitch = 3;
+	int leftSwitch = 4;
+	int rightScale = 5;
+	int leftScale = 6;
+	targetChooser->AddDefault("Baseline", &baseline); //Default option
+	targetChooser->AddObject("Exchange", &exchange); //Adds the other 4 target options to the chooser
+	targetChooser->AddObject("Right Switch", &rightSwitch);
+	targetChooser->AddObject("Left Switch", &leftSwitch);
+	targetChooser->AddObject("Right Scale", &rightScale);
+	targetChooser->AddObject("Left Scale", &leftScale);
 	frc::SmartDashboard::PutData("Target", targetChooser); //Labels the dropdown box.
 
 	int No = 0; //Default is no, the 2 options for making the robot wait
@@ -250,33 +201,46 @@ void Autonomous::ReadStation()
 {
 std::cout << *(targetChooser->GetSelected()) << std::endl;
 
-	//Check selection of starting station;
-		switch(*(targetChooser->GetSelected()))
-		{
-		case 0: //User specifies Default
-			procedure = Target::D; //Do nothing for deafult
-			break;
-
-		case 1: //User specifices they want the exchange
-			 procedure = Target::E;
-			 break;
-
-		case 2://runs the switch autos
-			switch(*(positionChooser->GetSelected()))
-			{
-
-			procedure = Target::SW;
-			break;
-
-		case 3:
-			procedure = Target::SC;
-
-			break;
-
-		case 4:
-			procedure = Target::B;
-
-			break;
-		}
+	//Decide target
+	switch(*(targetChooser->GetSelected()))
+	{
+	case 1:
+		target = baseline;
+		break;
+	case 2:
+		target = exchange;
+		break;
+	case 3:
+		target = rightswitch;
+		break;
+	case 4:
+		target = leftswitch;
+		break;
+	case 5:
+		target = rightscale;
+		break;
+	case 6:
+		target = leftscale;
+		break;
 	}
+
+	//Decide position of robot
+	switch(*(positionChooser->GetSelected()))
+	{
+	case 0:
+		pos = center;
+		break;
+	case 1:
+		pos = left;
+		break;
+	case 2:
+		pos = right;
+		break;
+	}
+
+	//Decide delay
+	if(*(delayChooser->GetSelected()) == 0)
+		useDelay = false;
+	else
+		useDelay = true;
 }

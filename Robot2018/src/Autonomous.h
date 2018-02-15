@@ -40,6 +40,11 @@ private:
 	CubeDelivery * gettinPoints;
 	Timer autoTimer{};
 
+	const double TIME_LIMIT = 0.0; //Move for how long?
+	const static int POSITION_SIZE = 3;
+	const static int TARGET_SIZE = 6;
+	const static int MOVEMENT_SIZE = 10;
+
 	//Choosing bois
 	frc::SendableChooser<int*> * positionChooser; //Receiving from the smart dashboard
 	frc::SendableChooser<int*> * targetChooser;
@@ -55,12 +60,13 @@ private:
 		commands command;
 		double	         data; 	/* feet or degrees */
 	};
-	cmd autocommand [3] /* position */ [6] /* target */ [10]; /* movement */
+	cmd autocommand [POSITION_SIZE] /* position */ [TARGET_SIZE] /* target */ [MOVEMENT_SIZE]; /* movement */
 
 	bool autodone = false; //Is movement done?
-	const double TIME_LIMIT = 0.0; //Move for how long?
+	bool useDelay = false; //Delay our auto?
 	movements movement = M1; //What movement are we on?
 	targets target = baseline;
+	positions pos = center;
 
 
 public:
