@@ -63,6 +63,7 @@ DriveSystem::~DriveSystem()
 	delete leftFollower;
 	delete rightFollower;
 	delete diffDrive;
+	delete gyro;
 }
 
 void DriveSystem::ResetHeading()
@@ -87,9 +88,39 @@ void DriveSystem::Drive (double& Y, double& X)
 	diffDrive->ArcadeDrive(Y, X);
 }
 
-void DriveSystem::DriveStraight()
+/*Drives the robot straight and checks each iteration to make sure it is still straight, direction is false for
+ * backwards.  For direction, true is forwards, false is backwards*/
+void DriveSystem::DriveStraight(bool direction)
 {
-	diffDrive->ArcadeDrive(AUTO_POWER, 0.0); //Drives the robot straight
+	double gyroAngle = 0.0; //Holds the current angle of the gyro
+	double adjust = 0.0; //Holds the angle the robot will use to adjust
+
+	gyroAngle = gyro->GetAngle();
+
+	if(gyroAngle < 0) //current robot angle is negative
+	{
+		adjust = 0.1; //move right, we are moving left
+		if(direction)
+			diffDrive->ArcadeDrive(AUTO_POWER, adjust); //Move forward
+		else
+			diffDrive->ArcadeDrive(-AUTO_POWER, adjust); //Move backward
+	}
+	else if(gyroAngle > 0) //current robot angle is positive
+	{
+		adjust = -0.1; //move left, we are moving right
+		if(direction)
+			diffDrive->ArcadeDrive(AUTO_POWER, adjust); //Move Forward
+		else
+			diffDrive->ArcadeDrive(-AUTO_POWER, adjust); //Move backward
+	}
+	else if(gyro == 0) //We don't need to correct
+	{
+		adjust = 0.0;
+		if(direction)
+			diffDrive->ArcadeDrive(AUTO_POWER, adjust); //Move forward
+		else
+			diffDrive->ArcadeDrive(-AUTO_POWER, adjust); //Move backward
+	}
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
@@ -100,30 +131,19 @@ void DriveSystem::DriveTurn (double angle)
 	if(angle > 180)
 		angle = angle - 360;
 
-	if(turn)
-	{
-		gyro->Reset(); //For if a turn is made.
-		turn = false;
-	}
-
 	gyroAngle = gyro->GetAngle();
 
 	if(gyroAngle < angle)
 	{
-		if(angle < 0)
-		{
-			diffDrive->ArcadeDrive(AUTO_POWER, -1.0);
-		}
-		else
-		{
-			diffDrive->ArcadeDrive(AUTO_POWER, 1.0);
-		}
+		diffDrive->ArcadeDrive(TURN_POWER, 1.0);
+	}
+	if(gyroAngle > angle)
+	{
+		diffDrive->ArcadeDrive(TURN_POWER, -1.0);
 	}
 	else
 	{
 		Stop();
-		turn = true;
-		Wait(2.0);
 	}
 }
 

@@ -1,7 +1,6 @@
 /*
  * File:			ArcadeDrive.h
  * Author:			Hayden Mann
- * Last Modified:	02/02/18
  * Team:			Hawktimus Prime - 3229
  *
  * File Description:
@@ -22,7 +21,6 @@
 #include <Timer.h>
 #include <GenericHID.h>
 #include <ADXRS450_Gyro.h>
-#include <AnalogGyro.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
 
@@ -34,7 +32,7 @@ public:
 	void ResetHeading(); //Resets the gyro
 	void Stop(); //Stops driving the talons.
 	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
-	void DriveStraight(); //Used for driving the robot straight during autonomous
+	void DriveStraight(bool direction); //Used for driving the robot straight during autonomous
 	void DriveTurn (double angle); //Used for driving the robot at an angle during autonomous.
 	void TestGyro();
 
@@ -60,9 +58,7 @@ private:
 	const float SAFETY_TIMEOUT = 0.5;
 	const float MAX_OUTPUT = 0.6;
 	const float AUTO_POWER = 0.9;
-
-	//For measuring start and stop;
-	bool turn = true; //For measuring if this is the first iteration of the DriveStraight method
+	const float TURN_POWER = 0.47;
 };
 
 #endif /* SRC_DRIVESYSTEM_H_ */
