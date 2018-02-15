@@ -48,10 +48,9 @@ private:
 	Target procedure;
 	Delay wait;
 
-	char switchColor; //Color of the switch
-	char scaleColor; //color of scale
-
 	bool turn = true; //For measuring if this is the first iteration of the DriveTurn method
+
+
 
 public:
 	Autonomous(DriveSystem * chasis, CubeDelivery * cube);
@@ -63,7 +62,9 @@ public:
 	void Switch ();
 	void Baseline();
 	void AddOptions();
-	void DriveStraight(int seconds);
+	char switchColor; //Color of the switch
+	char scaleColor; //color of scale
+
 };
 
 #endif /*SRC_AUTONOMOUS_H*/

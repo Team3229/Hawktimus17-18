@@ -16,6 +16,7 @@ Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 	delayChooser = new frc::SendableChooser<int*>();
 	driveTrain = chasis;
 	gettinPoints = cube;
+
 }
 
 Autonomous::~Autonomous()
@@ -29,7 +30,173 @@ Autonomous::~Autonomous()
 void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
-	scaleColor = colors[1];
+	scaleColor = colors[1]; //get the4 color of the scale
+
+	if (autotarget == baseline)
+		target = baseline
+	else if autotarget == exchange(
+		target == exchange);
+	else if autotarget == switch(
+		if switchColor == L(
+			target = leftswitch
+		else
+			target = rightswitch
+	else if autotarget == scale
+		if scaleColor == L
+			target = leftscale
+		else
+			target = rightswitch
+
+global – autodone = false;
+global – movement = M1;
+global – autotimer;
+global – timelimit;
+movementTimer.Reset();
+
+#define FORWARD 0.6
+#define REVERSE -0.6
+#define UP 0.6
+#define DOWN -0.6
+#define DRIVE_FT_SEC 4.0
+#define LIFT_FT_SEC 4.0
+#define TURN_TIMEOUT 1.0
+
+enum positions {left, center, right};
+enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
+enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10};
+
+enum commands {drive, reverse, turn, lift, lower, push, done};
+
+struct cmd {
+	commands command;
+	double	         data; 	/* feet or degrees */
+};
+cmd autocommand [3] /* position */ [6] /* target */ [10]; /* movement */
+
+// start = left, target = baseline
+autocommand[left][baseline][M1].command = drive;
+autocommand[left][baseline][M1].data = 8.0;
+autocommand[left][baseline][M2].command = done;
+
+// start = center, target = baseline
+autocommand[center][baseline][M1].command = drive;
+autocommand[center][baseline][M1].data = 8.0;
+autocommand[center][baseline][M2].command = done;
+
+// start = right, target = baseline
+autocommand[right][baseline][M1].command = drive;
+autocommand[right][baseline][M1].data = 8.0;
+autocommand[right][baseline][M2].command = done;
+
+// start = left, target = exchange
+autocommand[left][exchange][M1].command = drive;
+autocommand[left][exchange][M1].data = 8.0;
+autocommand[left][exchange][M2].command = reverse;
+autocommand[left][exchange][M2].data = 5.0;
+autocommand[left][exchange][M3].command = turn;
+autocommand[left][exchange][M3].data = 90;
+autocommand[left][exchange][M4].command = drive;
+autocommand[left][exchange][M4].data = 3.0;
+autocommand[left][exchange][M5].command = turn;
+autocommand[left][exchange][M5].data = 90;
+autocommand[left][exchange][M6].command = drive;
+autocommand[left][exchange][M6].data = 3.0;
+autocommand[left][exchange][M7].command = push;
+autocommand[left][exchange][M8].command = done;
+
+//start = center, target = exchange
+autocommand[center][exchange][M1].command = drive;
+autocommand[center][exchange][M1].data = 8.0;
+autocommand[center][exchange][M2].command = reverse;
+autocommand[center][exchange][M2].data = 5.0;
+autocommand[center][exchange][M3].command = turn;
+autocommand[center][exchange][M3].data = -90;
+autocommand[center][exchange][M4].command = drive;
+autocommand[center][exchange][M4].data = 3.0;
+autocommand[center][exchange][M5].command = turn;
+autocommand[center][exchange][M5].data = -90;
+autocommand[center][exchange][M6].command = drive;
+autocommand[center][exchange][M6].data = 3.0;
+autocommand[center][exchange][M7].command = push;
+autocommand[center][exchange][M8].command = done;
+
+//start = right, target = exchange
+autocommand[right][exchange][M1].command = drive;
+autocommand[right][exchange][M1].data = 8.0;
+autocommand[right][exchange][M2].command = reverse;
+autocommand[right][exchange][M2].data = 5.0;
+autocommand[right][exchange][M3].command = turn;
+autocommand[right][exchange][M3].data = -90;
+autocommand[right][exchange][M4].command = drive;
+autocommand[right][exchange][M4].data = 8.0;
+autocommand[right][exchange][M5].command = turn;
+autocommand[right][exchange][M5].data = -90;
+autocommand[right][exchange][M6].command = drive;
+autocommand[right][exchange][M6].data = 3.0;
+autocommand[right][exchange][M7].command = push;
+autocommand[right][exchange][M8].command = done;
+
+// start = left, target = left switch
+autocommand[left][leftswitch][M1].command = drive;
+autocommand[left][leftswitch][M1].data = 8.0;
+autocommand[left][leftswitch][M2].command = turn;
+autocommand[left][leftswitch][M2].data = 30;
+autocommand[left][leftswitch][M3].command = drive;
+autocommand[left][leftswitch][M3].data = 1.5;
+autocommand[left][leftswitch][M4].command = lift;
+autocommand[left][leftswitch][M4].data = 2.0;
+autocommand[left][leftswitch][M5].command = push;
+autocommand[left][leftswitch][M6].command = lower;
+autocommand[left][leftswitch][M6].data = 2.0;
+autocommand[left][leftswitch][M7].command = done;
+
+// start = left, target = right switch
+autocommand[left][rightswitch][M1].command = drive;
+autocommand[left][rightswitch][M1].data = 10.0;
+autocommand[left][rightswitch][M2].command = turn;
+autocommand[left][rightswitch][M2].data = 90;
+autocommand[left][rightswitch][M3].command = drive;
+autocommand[left][rightswitch][M3].data = 4;
+autocommand[left][rightswitch][M4].command = turn;
+autocommand[left][rightswitch][M4].data = 90;
+autocommand[left][rightswitch][M5].command = lift;
+autocommand[left][rightswitch][M5].data = 2.0;
+autocommand[left][rightswitch][M6].command = push;
+autocommand[left][rightswitch][M7].command = lower;
+autocommand[left][rightswitch][M7].data = 2.0;
+autocommand[left][rightswitch][M8].command = done;
+
+// start = right, target = right switch
+autocommand[right][rightswitch][M1].command = drive;
+autocommand[right][rightswitch][M1].data = 8.0;
+autocommand[right][rightswitch][M2].command = turn;
+autocommand[right][rightswitch][M2].data = -30;
+autocommand[right][rightswitch][M3].command = drive;
+autocommand[right][rightswitch][M3].data = 1.5;
+autocommand[right][rightswitch][M4].command = lift;
+autocommand[right][rightswitch][M4].data = 2.0;
+autocommand[right][rightswitch][M5].command = push;
+autocommand[right][rightswitch][M6].command = lower;
+autocommand[right][rightswitch][M6].data = 2.0;
+autocommand[right][rightswitch][M7].command = done;
+
+// start = right, target = right switch
+autocommand[right][leftswitch][M1].command = drive;
+autocommand[right][leftswitch][M1].data = 10.0;
+autocommand[right][leftswitch][M2].command = turn;
+autocommand[right][leftswitch][M2].data = -90;
+autocommand[right][leftswitch][M3].command = drive;
+autocommand[right][leftswitch][M3].data = 4;
+autocommand[right][leftswitch][M4].command = turn;
+autocommand[right][leftswitch][M4].data = -90;
+autocommand[right][leftswitch][M5].command = lift;
+autocommand[right][leftswitch][M5].data = 2.0;
+autocommand[right][leftswitch][M6].command = push;
+autocommand[right][leftswitch][M7].command = lower;
+autocommand[right][leftswitch][M7].data = 2.0;
+autocommand[right][leftswitch][M8].command = done;
+
+
 }
 
 void Autonomous::AutoPeriodic()
@@ -43,7 +210,6 @@ void Autonomous::AutoPeriodic()
 
 	if(movementTimer.Get() < 10) //Drive straight while the time is less than the number of seconds needed.
 	{
-		driveTrain->TestGyro();
 		driveTrain->DriveTurn(90);
 	}
 	else //Time has been reached
@@ -91,7 +257,7 @@ void Autonomous::AddOptions()
 //Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
-	/*std::cout << *(targetChooser->GetSelected()) << std::endl;
+std::cout << *(targetChooser->GetSelected()) << std::endl;
 
 	//Check selection of starting station;
 		switch(*(targetChooser->GetSelected()))
@@ -107,135 +273,19 @@ void Autonomous::ReadStation()
 		case 2://runs the switch autos
 			switch(*(positionChooser->GetSelected()))
 			{
-			case 0://center
-				//do not go for switch while center
-				break;
-			case 1://left
-				if ( switchColor == 'L')
-				{
-					driveTrain->DriveStraight(3);
-					driveTrain->DriveTurn(90);
-					driveTrain->DriveStraight(.5);
-					gettinPoints->LiftToSwitch();
-					gettinPoints->PushCube();
 
-				}
-				else if (switchColor == 'R')
-				{
-					driveTrain->DriveStraight(3);
-					driveTrain->DriveTurn(90);
-					driveTrain->DriveStraight(2);
-					driveTrain->DriveTurn(90);
-					gettinPoints->LiftToSwitch();
-					gettinPoints->PushCube();
-
-				}
-
-				break;
-			case 2://right
-				if (switchColor == 'R')
-					{
-					driveTrain->DriveStraight(3);
-					driveTrain->DriveTurn(-90);
-					driveTrain->DriveStraight(.5);
-					gettinPoints->LiftToSwitch();
-					gettinPoints->PushCube();
-
-					}
-					else if (switchColor == 'L')
-					{
-					driveTrain->DriveStraight(3);
-					driveTrain->DriveTurn(-90);
-					driveTrain->DriveStraight(2);
-					driveTrain->DriveTurn(-90);
-					gettinPoints->LiftToSwitch();
-					gettinPoints->PushCube();
-					}
-				break;
-			}
 			procedure = Target::SW;
 			break;
 
 		case 3:
 			procedure = Target::SC;
-			switch(*(positionChooser->GetSelected()))
-			{
-			case 0://center
-				//do not go for scale while center
-				break;
-			case 1://left
-				if ( scaleColor == 'L')
-				{
-					driveTrain->DriveStraight(6);
-					driveTrain->DriveTurn(90);
-					gettinPoints->LiftToScale();
-					gettinPoints->PushCube();
 
-				}
-				else if (scaleColor == 'R')
-				{
-					driveTrain->DriveStraight(5);
-					driveTrain->DriveTurn(90);
-					driveTrain->DriveStraight(3);
-					driveTrain->DriveTurn(-90);
-					driveTrain->DriveStraight(75);
-					driveTrain->DriveTurn(-90);
-					gettinPoints->LiftToScale();
-					gettinPoints->PushCube();
-
-				}
-
-				break;
-			case 2://right
-				if (scaleColor == 'R')
-					{
-					driveTrain->DriveStraight(6);
-					driveTrain->DriveTurn(-90);
-					gettinPoints->LiftToScale();
-					gettinPoints->PushCube();
-
-					}
-					else if (scaleColor == 'L')
-					{
-						driveTrain->DriveStraight(5);
-						driveTrain->DriveTurn(-90);
-						driveTrain->DriveStraight(3);
-						driveTrain->DriveTurn(90);
-						driveTrain->DriveStraight(.75);
-						driveTrain->DriveTurn(90);
-						gettinPoints->LiftToScale();
-						gettinPoints->PushCube();
-
-					}
-				break;
-			}
 			break;
 
 		case 4:
 			procedure = Target::B;
-			driveTrain->DriveStraight(5);
+
 			break;
-		}*/
-	}
-
-//Drives the robot straight for a given number of seconds
-void Autonomous::DriveStraight(int seconds)
-{
-	if(turn) //A global variable that signifies if this is first time.
-	{
-		movementTimer.Reset(); //Reset the timer
-		movementTimer.Start();
-		turn = false; //Not first time running, dont need to run if again
-	}
-
-	if(movementTimer.Get() < seconds) //Drive straight while the time is less than the number of seconds needed.
-	{
-		driveTrain->DriveStraight();
-	}
-	else //Time has been reached
-	{
-		driveTrain->Stop(); //Stop driving
-		movementTimer.Stop(); //Stop the timer
-		turn = true; //Run top if again.
+		}
 	}
 }
