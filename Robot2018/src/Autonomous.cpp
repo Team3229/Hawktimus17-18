@@ -33,21 +33,37 @@ void Autonomous::AutoInit(std::string colors)
 	scaleColor = colors[1]; //get the4 color of the scale
 
 	if (autotarget == baseline)
-		target = baseline
-	else if autotarget == exchange(
-		target == exchange);
-	else if autotarget == switch(
-		if switchColor == L(
-			target = leftswitch
+	{
+		target = baseline;
+	}
+	else if (autotarget == exchange)
+	{
+		target = exchange;
+	}
+	else if (autotarget == switch)
+	{
+		if (switchColor == L)
+		{
+			target = leftswitch;
+		}
 		else
-			target = rightswitch
-	else if autotarget == scale
-		if scaleColor == L
-			target = leftscale
+		{
+			target = rightswitch;
+		}
+	}
+	else if (autotarget == scale)
+	{
+		if (scaleColor == L)
+		{
+			target = leftscale;
+		}
 		else
-			target = rightswitch
+		{
+			target = rightswitch;
+		}
+	}
 
-global – autodone = false;
+global -autodone = false;
 global – movement = M1;
 global – autotimer;
 global – timelimit;
@@ -55,8 +71,6 @@ movementTimer.Reset();
 
 #define FORWARD 0.6
 #define REVERSE -0.6
-#define UP 0.6
-#define DOWN -0.6
 #define DRIVE_FT_SEC 4.0
 #define LIFT_FT_SEC 4.0
 #define TURN_TIMEOUT 1.0
@@ -71,6 +85,7 @@ struct cmd {
 	commands command;
 	double	         data; 	/* feet or degrees */
 };
+
 cmd autocommand [3] /* position */ [6] /* target */ [10]; /* movement */
 
 // start = left, target = baseline
@@ -195,7 +210,6 @@ autocommand[right][leftswitch][M6].command = push;
 autocommand[right][leftswitch][M7].command = lower;
 autocommand[right][leftswitch][M7].data = 2.0;
 autocommand[right][leftswitch][M8].command = done;
-
 
 }
 
