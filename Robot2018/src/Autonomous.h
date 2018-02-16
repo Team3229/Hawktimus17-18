@@ -35,15 +35,18 @@ class Autonomous
 {
 private:
 
-	Timer movementTimer{}; //For tracking movements
 	DriveSystem * driveTrain;
 	CubeDelivery * gettinPoints;
 	Timer autoTimer{};
 
 	const double TIME_LIMIT = 0.0; //Move for how long?
+	double timeLimit = 0.0;
 	const static int POSITION_SIZE = 3;
 	const static int TARGET_SIZE = 6;
 	const static int MOVEMENT_SIZE = 10;
+
+	char switchColor; //Color of the switch
+	char scaleColor; //color of scale
 
 	//Choosing bois
 	frc::SendableChooser<int*> * positionChooser; //Receiving from the smart dashboard
@@ -58,13 +61,14 @@ private:
 
 	struct cmd {
 		commands command;
-		double	         data; 	/* feet or degrees */
+		double data; 	/* feet or degrees */
 	};
+
 	cmd autocommand [POSITION_SIZE] /* position */ [TARGET_SIZE] /* target */ [MOVEMENT_SIZE]; /* movement */
 
 	bool autodone = false; //Is movement done?
 	bool useDelay = false; //Delay our auto?
-	movements movement = M1; //What movement are we on?
+	int movement = M1; //What movement are we on?
 	targets target = baseline;
 	positions position = center;
 
@@ -79,8 +83,7 @@ public:
 	void Switch ();
 	void Baseline();
 	void AddOptions();
-	char switchColor; //Color of the switch
-	char scaleColor; //color of scale
+	void SetupAutoCommands();
 
 };
 
