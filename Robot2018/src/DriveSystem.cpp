@@ -112,11 +112,12 @@ void DriveSystem::DriveStraight(bool direction)
 		adjust = STRAIGHT_ADJUST; //move right, we are moving left
 	else if(gyroAngle > 0) //current robot angle is positive
 		adjust = -STRAIGHT_ADJUST; //move left, we are moving right
-	else if(gyro == 0) //We don't need to correct
+	else if(gyroAngle == 0) //We don't need to correct
 		adjust = 0.0;
 
 	// Drive the next segment
-std::cout << “DriveStraight Gyro angle:" << gyroAngle << “power:” << power << “adjust:” << adjust << std::endl;	diffDrive->ArcadeDrive(power, adjust)
+	std::cout << "DriveStraight Gyro angle:" << gyroAngle << "power:" << power << "adjust:" << adjust << std::endl;
+	diffDrive->ArcadeDrive(power, adjust);
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
@@ -136,11 +137,9 @@ void DriveSystem::DriveTurn (double angle)
 		turnpowerY = 0.0;
 	else if ((angle > 0) && (gyroAngle >= angle))
 		turnpowerY = 0.0;
-
 	// if not, keep turning
 	else
 		turnpowerY = TURN_POWER_Y;
-
 
 	// Which way are we turning
 	if (angle < 0)
@@ -148,16 +147,13 @@ void DriveSystem::DriveTurn (double angle)
 	else
 		turnpowerX = -TURN_POWER_X;
 
-	// Turn	
-std::cout << “DriveTurn Gyro angle:" << gyroAngle << “Angle:” << angle << “Yturn:” << turnpowerY << “XTurn:” << turnpowerX << std::endl;	
+	// Turn
+	std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
 	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
 void DriveSystem::TestGyro()
 {
-	//gyro.Reset();
-	//gyro.SetSensitivity(0.259);
-
 	double angle = gyro->GetAngle();
 	std::cout << "Gyro angle: " << angle << std::endl;
 }
