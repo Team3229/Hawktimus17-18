@@ -66,7 +66,7 @@ private:
 	bool useDelay = false; //Delay our auto?
 	movements movement = M1; //What movement are we on?
 	targets target = baseline;
-	positions pos = center;
+	positions position = center;
 
 
 public:

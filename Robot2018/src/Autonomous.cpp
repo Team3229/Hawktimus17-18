@@ -158,11 +158,109 @@ autocommand[right][leftswitch][M7].data = 2.0;
 autocommand[right][leftswitch][M8].command = done;
 }
 
-void Autonomous::AutoPeriodic() {}
+void Autonomous::AutoPeriodic()
+{
+	while (!autodone)
+		{
+			switch (autocommand[position][target][movement].command)
+			{
+				case drive:
+					if (movementTimer.Get() == 0) {
+						chasis->ResetHeading();
+						timelimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
+						movementTimer.Start();
+					}
+					if (movementTimer.Get() < timelimit) {
+						chasis->DriveStraight(FORWARD);
+					}
+					else {
+						chasis->Stop();
+						movementTimer.Reset();
+						movement++;
+					}
+					break;
+
+				case reverse:
+					if (movementTimer.Get() == 0) {
+						chasis->ResetHeading();
+						timelimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
+						movementTimer.Start();
+					}
+					if (movementTimer.Get() < timelimit) {
+						chasis->DriveStraight(REVERSE);
+					}
+					else {
+						chasis->Stop();
+						movementTimer.Reset();
+						movement++;
+					}
+					break;
+
+				case turn:
+					if (movementTimer.Get() == 0) {
+						chasis->ResetHeading();
+						movementTimer.Start();
+					}
+					if (movementTimer.Get() < TURN_TIMEOUT) {
+						chasis->DriveTurn(autocommand[position][target][movement].data);
+					}
+						else {
+							chasis->Stop();
+							movementTimer.Reset();
+							movement++;
+					}
+					break;
+
+				case lift:
+					if (movementTimer.Get() == 0) {
+						timelimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+						movementTimer.Start();
+					}
+					if (movementTimer.Get() < timelimit) {
+						CubeDelivery::Lift(UP)();
+					}
+					else {
+						CubeDelivery::Stop();
+						movementTimer.Reset();
+						movement++;
+					}
+					break;
+
+				case lower:
+					if (movementTimer.Get() == 0) {
+						timelimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+						movementTimer.Start();
+					}
+					if (movementTimer.Get() < timelimit) {
+						CubeDelivery::Lift(DOWN)();
+					}
+					else {
+						CubeDelivery::Stop();
+						movementTimer.Reset();
+						movement++;
+					}
+
+					break;
+
+				case push:
+					CubeDelivery::PushCube();
+					movementTimer.Reset();
+					movement++;
+
+					break;
+
+				case done:
+					autodone = true;
+					break;
+					}
+			}
+	}
+}
+
+
 void Autonomous::Exchange() {}
 void Autonomous::Switch () {}
 void Autonomous::Baseline() {}
-
 
 void Autonomous::AddOptions()
 {
@@ -228,13 +326,13 @@ std::cout << *(targetChooser->GetSelected()) << std::endl;
 	switch(*(positionChooser->GetSelected()))
 	{
 	case 0:
-		pos = center;
+		position = center;
 		break;
 	case 1:
-		pos = left;
+		position = left;
 		break;
 	case 2:
-		pos = right;
+		position = right;
 		break;
 	}
 
