@@ -58,7 +58,9 @@ private:
 	const float SAFETY_TIMEOUT = 0.5;
 	const float MAX_OUTPUT = 0.6;
 	const float AUTO_POWER = 0.9;
-	const float TURN_POWER = 0.47;
+	const float TURN_POWER_Y = 0.47;
+	const float TURN_POWER_X = 1.0;
+	const float STRAIGHT_ADJUST = 0.1;
 };
 
 #endif /* SRC_DRIVESYSTEM_H_ */

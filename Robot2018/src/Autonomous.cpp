@@ -40,7 +40,7 @@ void Autonomous::AutoPeriodic()
 {
 	while (!autodone)
 	{
-std::cout << “position:” << position << “target:” << target << “movement:” << movement << std::endl;	
+std::cout << “AutoPeriodic position:” << position << “target:” << target << “movement:” << movement << std::endl;	
 		switch (autocommand[position][target][movement].command)
 		{
 			// Command is drive forward x.x feet

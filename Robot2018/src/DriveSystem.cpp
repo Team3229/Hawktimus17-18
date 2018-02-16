@@ -94,57 +94,63 @@ void DriveSystem::DriveStraight(bool direction)
 {
 	double gyroAngle = 0.0; //Holds the current angle of the gyro
 	double adjust = 0.0; //Holds the angle the robot will use to adjust
+	double power = 0.0;
 
+	// Set power to motor based on direction (forward or reverse)
+	if (direction)
+		power = AUTO_POWER;
+	else
+		power = -AUTO_POWER;
+
+	// Check the current heading
 	gyroAngle = gyro->GetAngle();
+	if (gyroAngle > 180)
+		gyroAngle = gyroAngle - 360;
 
+	// Adjust heading if necessary
 	if(gyroAngle < 0) //current robot angle is negative
-	{
-		adjust = 0.1; //move right, we are moving left
-		if(direction)
-			diffDrive->ArcadeDrive(AUTO_POWER, adjust); //Move forward
-		else
-			diffDrive->ArcadeDrive(-AUTO_POWER, adjust); //Move backward
-	}
+		adjust = STRAIGHT_ADJUST; //move right, we are moving left
 	else if(gyroAngle > 0) //current robot angle is positive
-	{
-		adjust = -0.1; //move left, we are moving right
-		if(direction)
-			diffDrive->ArcadeDrive(AUTO_POWER, adjust); //Move Forward
-		else
-			diffDrive->ArcadeDrive(-AUTO_POWER, adjust); //Move backward
-	}
+		adjust = -STRAIGHT_ADJUST; //move left, we are moving right
 	else if(gyro == 0) //We don't need to correct
-	{
 		adjust = 0.0;
-		if(direction)
-			diffDrive->ArcadeDrive(AUTO_POWER, adjust); //Move forward
-		else
-			diffDrive->ArcadeDrive(-AUTO_POWER, adjust); //Move backward
-	}
+
+	// Drive the next segment
+std::cout << “DriveStraight Gyro angle:" << gyroAngle << “power:” << power << “adjust:” << adjust << std::endl;	diffDrive->ArcadeDrive(power, adjust)
 }
 
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (double angle)
 {
 	double gyroAngle = 0.0;
+	double turnpowerY = 0.0;
+	double turnpowerX = 0.0;
 
-	if(angle > 180)
-		angle = angle - 360;
-
+	// Check the current heading
 	gyroAngle = gyro->GetAngle();
+	if(gyroAngle > 180)
+		gyroAngle = gyroAngle - 360;
 
-	if(gyroAngle < angle)
-	{
-		diffDrive->ArcadeDrive(TURN_POWER, 1.0);
-	}
-	if(gyroAngle > angle)
-	{
-		diffDrive->ArcadeDrive(TURN_POWER, -1.0);
-	}
+	// Check if we have reached the desired angle
+	if ((angle < 0) && (gyroAngle <= angle))
+		turnpowerY = 0.0;
+	else if ((angle > 0) && (gyroAngle >= angle))
+		turnpowerY = 0.0;
+
+	// if not, keep turning
 	else
-	{
-		Stop();
-	}
+		turnpowerY = TURN_POWER_Y;
+
+
+	// Which way are we turning
+	if (angle < 0)
+		turnpowerX = TURN_POWER_X;
+	else
+		turnpowerX = -TURN_POWER_X;
+
+	// Turn	
+std::cout << “DriveTurn Gyro angle:" << gyroAngle << “Angle:” << angle << “Yturn:” << turnpowerY << “XTurn:” << turnpowerX << std::endl;	
+	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
 void DriveSystem::TestGyro()
