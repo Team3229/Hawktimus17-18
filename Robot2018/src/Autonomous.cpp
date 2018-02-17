@@ -331,7 +331,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][rightswitch][M6].data = 2.0;
 	autocommand[right][rightswitch][M7].command = done;
 
-	// start = right, target = right switch
+	// start = right, target = left switch
 	autocommand[right][leftswitch][M1].command = drive;
 	autocommand[right][leftswitch][M1].data = 10.0;
 	autocommand[right][leftswitch][M2].command = turn;
@@ -346,4 +346,81 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][leftswitch][M7].command = lower;
 	autocommand[right][leftswitch][M7].data = 2.0;
 	autocommand[right][leftswitch][M8].command = done;
+
+	// start = center, target = left switch GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
+	autocommand[center][leftswitch][M1].command = drive;
+	autocommand[center][leftswitch][M1].data = 8.0;
+	autocommand[center][leftswitch][M2].command = done;
+
+	// start = center, target = right switch GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
+	autocommand[center][rightswitch][M1].command = drive;
+	autocommand[center][rightswitch][M1].data = 8.0;
+	autocommand[center][rightswitch][M2].command = done;
+
+	// start = center, target = left scale GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
+	autocommand[center][leftscale][M1].command = drive;
+	autocommand[center][leftscale][M1].data = 8.0;
+	autocommand[center][leftscale][M2].command = done;
+
+	// start = center, target = right scale GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
+	autocommand[center][rightscale][M1].command = drive;
+	autocommand[center][rightscale][M1].data = 8.0;
+	autocommand[center][rightscale][M2].command = done;
+
+	//start = left, target = left scale
+	autocommand[left][leftscale][M1].command = drive;
+	autocommand[left][leftscale][M1].data = 27;
+	autocommand[left][leftscale][M2].command = turn;
+	autocommand[left][leftscale][M2].data = 90;
+	autocommand[left][leftscale][M3].command = drive;
+	autocommand[left][leftscale][M3].data = 1;
+	autocommand[left][leftscale][M4].command = lift;
+	autocommand[left][leftscale][M4].data = 4;
+	autocommand[left][leftscale][M5].command = push;
+
+	//start = left, target = right scale
+	autocommand[left][rightscale][M1].command = drive;
+	autocommand[left][rightscale][M1].data = 20;
+	autocommand[left][rightscale][M2].command = turn;
+	autocommand[left][rightscale][M2].data = -90;
+	autocommand[left][rightscale][M3].command = drive;
+	autocommand[left][rightscale][M3].data = 22;
+	autocommand[left][rightscale][M4].command = turn;
+	autocommand[left][rightscale][M4].data = 90;
+	autocommand[left][rightscale][M5].command = drive;
+	autocommand[left][rightscale][M6].data = 2;
+	autocommand[left][rightscale][M7].command = turn;
+	autocommand[left][rightscale][M7].data = 90;
+	autocommand[left][rightscale][M8].command = lift;
+	autocommand[left][rightscale][M8].data = 4;
+	autocommand[left][rightscale][M9].command = push;
+
+	//start = right, target = right scale
+	autocommand[right][rightscale][M1].command = drive;
+	autocommand[right][rightscale][M1].data = 27;
+	autocommand[right][rightscale][M2].command = turn;
+	autocommand[right][rightscale][M2].data = -90;
+	autocommand[right][rightscale][M3].command = drive;
+	autocommand[right][rightscale][M3].data = 1;
+	autocommand[right][rightscale][M4].command = lift;
+	autocommand[right][rightscale][M4].data = 4;
+	autocommand[right][rightscale][M5].command = push;
+
+	//start = right, target = left scale
+	autocommand[right][leftscale][M1].command = drive;
+	autocommand[right][leftscale][M1].data = 20;
+	autocommand[right][leftscale][M2].command = turn;
+	autocommand[right][leftscale][M2].data = 90;
+	autocommand[right][leftscale][M3].command = drive;
+	autocommand[right][leftscale][M3].data = 22;
+	autocommand[right][leftscale][M4].command = turn;
+	autocommand[right][leftscale][M4].data = -90;
+	autocommand[right][leftscale][M5].command = drive;
+	autocommand[right][leftscale][M6].data = 2;
+	autocommand[right][leftscale][M7].command = turn;
+	autocommand[right][leftscale][M7].data = -90;
+	autocommand[right][leftscale][M8].command = lift;
+	autocommand[right][leftscale][M8].data = 4;
+	autocommand[right][leftscale][M9].command = push;
+
 }
