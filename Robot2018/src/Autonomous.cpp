@@ -11,12 +11,12 @@
 
 Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 {
-	positionChooser = new frc::SendableChooser<int*>();
-	targetChooser = new frc::SendableChooser<int*>();
-	delayChooser = new frc::SendableChooser<int*>();
+	positionChooser = new frc::SendableChooser<int>();
+	targetChooser = new frc::SendableChooser<int>();
+	delayChooser = new frc::SendableChooser<int>();
 	driveTrain = chasis;
 	gettinPoints = cube;
-	scaleColor = '\0';
+	scaleColor = '\0'; //Initialized so it wouldn't have a random value on declaration
 	switchColor = '\0';
 
 }
@@ -36,12 +36,20 @@ void Autonomous::AutoInit(std::string colors)
 	ReadStation();
 	SetupAutoCommands();
 	autoTimer.Reset();
+	movement = 0;
+	autodone = false;
 }
 
 void Autonomous::AutoPeriodic()
 {
+
 	while (!autodone)
 		{
+			std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
+			std::cout << "Data: " << autocommand[position][target][movement].data << std::endl;
+			std::cout << "Position: " << autocommand[position] << std::endl;
+			std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
+
 			switch (autocommand[position][target][movement].command)
 			{
 				case drive:
@@ -136,84 +144,71 @@ void Autonomous::AutoPeriodic()
 			}
 	}
 
-
-void Autonomous::Exchange() {}
-void Autonomous::Switch () {}
-void Autonomous::Baseline() {}
-
 void Autonomous::AddOptions()
 {
 	//Function called in constructor to set up dashboard options
 	int Center = 0; //3 variables for 3 options from chooser
 	int Left = 1;
 	int Right = 2;
-	positionChooser->AddDefault("Center", &Center); //Center will be selected by default
-	positionChooser->AddObject("Left", &Left); //Other 2 are other options under it
-	positionChooser->AddObject("Right", &Right);
+	positionChooser->AddDefault("Center", Center); //Center will be selected by default
+	positionChooser->AddObject("Left", Left); //Other 2 are other options under it
+	positionChooser->AddObject("Right", Right);
 	frc::SmartDashboard::PutData("Starting Position", positionChooser); //Labels the dropdown box.
 
 	int baseline = 1;
 	int exchange = 2; //5 variables for target chooser
 	int theSwitch = 3;
 	int scale = 4;
-	targetChooser->AddDefault("Baseline", &baseline); //Default option
-	targetChooser->AddObject("Exchange", &exchange); //Adds the other 4 target options to the chooser
-	targetChooser->AddObject("Switch", &theSwitch);
-	targetChooser->AddObject("Scale", &scale);
+	targetChooser->AddDefault("Baseline",baseline); //Default option
+	targetChooser->AddObject("Exchange", exchange); //Adds the other 4 target options to the chooser
+	targetChooser->AddObject("Switch", theSwitch);
+	targetChooser->AddObject("Scale", scale);
 	frc::SmartDashboard::PutData("Target", targetChooser); //Labels the dropdown box.
 
 	int No = 0; //Default is no, the 2 options for making the robot wait
 	int Yes = 1;
-	delayChooser->AddDefault("No", &No);
-	delayChooser->AddObject("Yes", &Yes);
+	delayChooser->AddDefault("No", No);
+	delayChooser->AddObject("Yes", Yes);
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
 
 //Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
-std::cout << *(targetChooser->GetSelected()) << std::endl;
+	std::cout << "TChooser: " << targetChooser->GetSelected() << std::endl;
+	std::cout << "PChooser: " << positionChooser->GetSelected() << std::endl;
 
-	//Decide target
-	switch(*(targetChooser->GetSelected()))
-	{
-	case 1:
+	int targetChoice = targetChooser->GetSelected();
+	int positionChoice = positionChooser->GetSelected();
+
+	if(targetChoice == 1)
 		target = baseline;
-		break;
-	case 2:
+	else if(targetChoice == 2)
 		target = exchange;
-		break;
-	case 3:
+	else if(targetChoice == 3)
+	{
 		if(switchColor == 'R')
 			target = rightswitch;
 		else
 			target = leftswitch;
-		break;
-
-	case 4:
+	}
+	else if(targetChoice == 4)
+	{
 		if(switchColor == 'R')
 			target = rightscale;
 		else
 			target = leftscale;
-		break;
 	}
 
-	//Decide position of robot
-	switch(*(positionChooser->GetSelected()))
-	{
-	case 0:
+	if(positionChoice == 0)
 		position = center;
-		break;
-	case 1:
+	else if(positionChoice == 1)
 		position = left;
-		break;
-	case 2:
+	else if(positionChoice == 2)
 		position = right;
-		break;
-	}
 
 	//Decide delay
-	if(*(delayChooser->GetSelected()) == 0)
+	if(delayChooser->GetSelected() == 0)
 		useDelay = false;
 	else
 		useDelay = true;
@@ -246,7 +241,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][exchange][M3].command = turn;
 	autocommand[left][exchange][M3].data = 90;
 	autocommand[left][exchange][M4].command = drive;
-	autocommand[left][exchange][M4].data = 3.0;
+	autocommand[left][exchange][M4].data = 1.0;
 	autocommand[left][exchange][M5].command = turn;
 	autocommand[left][exchange][M5].data = 90;
 	autocommand[left][exchange][M6].command = drive;

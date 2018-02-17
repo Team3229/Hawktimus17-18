@@ -128,6 +128,8 @@ public:
 		{
 			gettinPoints.StopLift();
 		}
+
+
 	}
 
 	//Test mode
