@@ -11,13 +11,14 @@
 
 Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 {
-	positionChooser = new frc::SendableChooser<int>();
-	targetChooser = new frc::SendableChooser<int>();
-	delayChooser = new frc::SendableChooser<int>();
+	positionChooser = new frc::SendableChooser<int*>();
+	targetChooser = new frc::SendableChooser<int*>();
+	delayChooser = new frc::SendableChooser<int*>();
 	driveTrain = chasis;
 	gettinPoints = cube;
-	scaleColor = '\0'; //Initialized so it wouldn't have a random value on declaration
+	scaleColor = '\0';
 	switchColor = '\0';
+
 }
 
 Autonomous::~Autonomous()
@@ -34,121 +35,111 @@ void Autonomous::AutoInit(std::string colors)
 	scaleColor = colors[1]; //get the4 color of the scale
 	ReadStation();
 	SetupAutoCommands();
-	autoTimer.Stop();
 	autoTimer.Reset();
-	movement = 0;
-	autodone = false;
 }
 
 void Autonomous::AutoPeriodic()
 {
 	while (!autodone)
 		{
-			std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
-			std::cout << "Data: " << autocommand[position][target][movement].data << std::endl;
-			std::cout << "Position: " << autocommand[position] << std::endl;
-			std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
-
-
-		switch (autocommand[position][target][movement].command)
-		{
-		case drive:
-
-			if (autoTimer.Get() == 0) {
-				driveTrain->ResetHeading();
-				timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC + COMPENSATE_TIME;
-				autoTimer.Start();
+			switch (autocommand[position][target][movement].command)
+			{
+				case drive:
+					if (autoTimer.Get() == 0) {
+						driveTrain->ResetHeading();
+						timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC;
+						autoTimer.Start();
 					}
-			if (autoTimer.Get() < timeLimit) {
-				driveTrain->DriveStraight(FORWARD);
-			}
-			else {
-				driveTrain->Stop();
-				autoTimer.Stop();
-				autoTimer.Reset();
-				movement++;
-			}
-		break;
-
-		case reverse:
-			if (autoTimer.Get() == 0) {
-				driveTrain->ResetHeading();
-				timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC + COMPENSATE_TIME;
-				autoTimer.Start();
-			}
-			if (autoTimer.Get() < timeLimit) {
-				driveTrain->DriveStraight(REVERSE);
-			}
-			else {
-				driveTrain->Stop();
-				autoTimer.Stop();
-				autoTimer.Reset();
-				movement++;
-			}
-			break;
-
-			case turn:
-				if (autoTimer.Get() == 0) {
-					driveTrain->ResetHeading();
-					autoTimer.Start();
-				}
-				if (autoTimer.Get() < TURN_TIMEOUT) {
-					driveTrain->DriveTurn(autocommand[position][target][movement].data); //Smoothing curve is turned off in here
-				}
+					if (autoTimer.Get() < timeLimit) {
+						driveTrain->DriveStraight(FORWARD);
+					}
 					else {
 						driveTrain->Stop();
-						driveTrain->SmoothCurveState(true); //Turns smoothing curve back on
-						autoTimer.Stop();
 						autoTimer.Reset();
 						movement++;
-				}
-				break;
+					}
+					break;
 
-			case lift:
-				if (autoTimer.Get() == 0) {
-					timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
-					autoTimer.Start();
-				}
-				if (autoTimer.Get() < timeLimit) {
-					gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
-				}
-				else {
-					gettinPoints->StopLift();
-					autoTimer.Stop();
+				case reverse:
+					if (autoTimer.Get() == 0) {
+						driveTrain->ResetHeading();
+						timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
+						autoTimer.Start();
+					}
+					if (autoTimer.Get() < timeLimit) {
+						driveTrain->DriveStraight(REVERSE);
+					}
+					else {
+						driveTrain->Stop();
+						autoTimer.Reset();
+						movement++;
+					}
+					break;
+
+				case turn:
+					if (autoTimer.Get() == 0) {
+						driveTrain->ResetHeading();
+						autoTimer.Start();
+					}
+					if (autoTimer.Get() < TURN_TIMEOUT) {
+						driveTrain->DriveTurn(autocommand[position][target][movement].data);
+					}
+						else {
+							driveTrain->Stop();
+							autoTimer.Reset();
+							movement++;
+					}
+					break;
+
+				case lift:
+					if (autoTimer.Get() == 0) {
+						timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+						autoTimer.Start();
+					}
+					if (autoTimer.Get() < timeLimit) {
+						gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
+					}
+					else {
+						gettinPoints->StopLift();
+						autoTimer.Reset();
+						movement++;
+					}
+					break;
+
+				case lower:
+					if (autoTimer.Get() == 0) {
+						timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+						autoTimer.Start();
+					}
+					if (autoTimer.Get() < timeLimit) {
+						gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
+					}
+					else {
+						gettinPoints->StopLift();
+						autoTimer.Reset();
+						movement++;
+					}
+
+					break;
+
+				case push:
+					gettinPoints->PushCube();
 					autoTimer.Reset();
 					movement++;
-				}
-				break;
 
-			case lower:
-				if (autoTimer.Get() == 0) {
-					timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
-					autoTimer.Start();
-				}
-				if (autoTimer.Get() < timeLimit) {
-					gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
-				}
-				else {
-					gettinPoints->StopLift();
-					autoTimer.Stop();
-					autoTimer.Reset();
-					movement++;
-				}
-				break;
+					break;
 
-			case push:
-				gettinPoints->PushCube();
-				autoTimer.Stop();
-				autoTimer.Reset();
-				movement++;
-				break;
+				case done:
+					autodone = true;
+					break;
+					}
+			}
+	}
 
-			case done:
-				autodone = true;
-				break;
-				}
-		}
-}
+
+void Autonomous::Exchange() {}
+void Autonomous::Switch () {}
+void Autonomous::Baseline() {}
 
 void Autonomous::AddOptions()
 {
@@ -156,65 +147,73 @@ void Autonomous::AddOptions()
 	int Center = 0; //3 variables for 3 options from chooser
 	int Left = 1;
 	int Right = 2;
-	positionChooser->AddDefault("Center", Center); //Center will be selected by default
-	positionChooser->AddObject("Left", Left); //Other 2 are other options under it
-	positionChooser->AddObject("Right", Right);
+	positionChooser->AddDefault("Center", &Center); //Center will be selected by default
+	positionChooser->AddObject("Left", &Left); //Other 2 are other options under it
+	positionChooser->AddObject("Right", &Right);
 	frc::SmartDashboard::PutData("Starting Position", positionChooser); //Labels the dropdown box.
 
 	int baseline = 1;
 	int exchange = 2; //5 variables for target chooser
 	int theSwitch = 3;
 	int scale = 4;
-	targetChooser->AddDefault("Baseline",baseline); //Default option
-	targetChooser->AddObject("Exchange", exchange); //Adds the other 4 target options to the chooser
-	targetChooser->AddObject("Switch", theSwitch);
-	targetChooser->AddObject("Scale", scale);
+	targetChooser->AddDefault("Baseline", &baseline); //Default option
+	targetChooser->AddObject("Exchange", &exchange); //Adds the other 4 target options to the chooser
+	targetChooser->AddObject("Switch", &theSwitch);
+	targetChooser->AddObject("Scale", &scale);
 	frc::SmartDashboard::PutData("Target", targetChooser); //Labels the dropdown box.
 
 	int No = 0; //Default is no, the 2 options for making the robot wait
 	int Yes = 1;
-	delayChooser->AddDefault("No", No);
-	delayChooser->AddObject("Yes", Yes);
+	delayChooser->AddDefault("No", &No);
+	delayChooser->AddObject("Yes", &Yes);
 	frc::SmartDashboard::PutData("Delay?", delayChooser); //Labels the dropdown box.
 }
 
 //Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
-	std::cout << "TChooser: " << targetChooser->GetSelected() << std::endl;
-	std::cout << "PChooser: " << positionChooser->GetSelected() << std::endl;
+std::cout << *(targetChooser->GetSelected()) << std::endl;
 
-	int targetChoice = targetChooser->GetSelected();
-	int positionChoice = positionChooser->GetSelected();
-
-	if(targetChoice == 1)
-		target = baseline;
-	else if(targetChoice == 2)
-		target = exchange;
-	else if(targetChoice == 3)
+	//Decide target
+	switch(*(targetChooser->GetSelected()))
 	{
+	case 1:
+		target = baseline;
+		break;
+	case 2:
+		target = exchange;
+		break;
+	case 3:
 		if(switchColor == 'R')
 			target = rightswitch;
 		else
 			target = leftswitch;
-	}
-	else if(targetChoice == 4)
-	{
+		break;
+
+	case 4:
 		if(switchColor == 'R')
 			target = rightscale;
 		else
 			target = leftscale;
+		break;
 	}
 
-	if(positionChoice == 0)
+	//Decide position of robot
+	switch(*(positionChooser->GetSelected()))
+	{
+	case 0:
 		position = center;
-	else if(positionChoice == 1)
+		break;
+	case 1:
 		position = left;
-	else if(positionChoice == 2)
+		break;
+	case 2:
 		position = right;
+		break;
+	}
 
 	//Decide delay
-	if(delayChooser->GetSelected() == 0)
+	if(*(delayChooser->GetSelected()) == 0)
 		useDelay = false;
 	else
 		useDelay = true;
@@ -377,6 +376,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftscale][M4].command = lift;
 	autocommand[left][leftscale][M4].data = 4;
 	autocommand[left][leftscale][M5].command = push;
+	autocommand[left][leftscale][M6].command = done;
 
 	//start = left, target = right scale
 	autocommand[left][rightscale][M1].command = drive;
@@ -394,6 +394,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][rightscale][M8].command = lift;
 	autocommand[left][rightscale][M8].data = 4;
 	autocommand[left][rightscale][M9].command = push;
+	autocommand[left][rightscale][M10].command = done;
 
 	//start = right, target = right scale
 	autocommand[right][rightscale][M1].command = drive;
@@ -405,6 +406,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][rightscale][M4].command = lift;
 	autocommand[right][rightscale][M4].data = 4;
 	autocommand[right][rightscale][M5].command = push;
+	autocommand[right][rightscale][M6].command = done;
 
 	//start = right, target = left scale
 	autocommand[right][leftscale][M1].command = drive;
@@ -422,4 +424,5 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][leftscale][M8].command = lift;
 	autocommand[right][leftscale][M8].data = 4;
 	autocommand[right][leftscale][M9].command = push;
+	autocommand[right][leftscale][M10].command = done;
 }

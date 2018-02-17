@@ -34,10 +34,7 @@ public:
 	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
 	void DriveStraight(bool direction); //Used for driving the robot straight during autonomous
 	void DriveTurn (double angle); //Used for driving the robot at an angle during autonomous.
-	void SmoothCurveState(bool state); //Turns the smoothing curve on or off
 	void TestGyro();
-
-	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
 
 private:
 	//TalonSRX's
@@ -47,7 +44,7 @@ private:
 	WPI_TalonSRX * rightFollower; //Back right, follower
 
 	DifferentialDrive * diffDrive; //Drivetrain
-	ADXRS450_Gyro * gyro; //Instantiate gyro
+	ADXRS450_Gyro * gyro; //Instantiate gyro and initialize its port
 	frc::Timer driveTime{};
 
 	//Constants for ports and unique id
@@ -57,13 +54,13 @@ private:
 	const unsigned int RIGHT_FOLLOWER_ID = 4;
 
 	//Constants for driving
+	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
 	const float SAFETY_TIMEOUT = 0.5;
 	const float MAX_OUTPUT = 0.6;
 	const float AUTO_POWER = 0.9;
 	const float TURN_POWER_Y = 0.47;
-	const float TURN_POWER_X = 0.7;
+	const float TURN_POWER_X = 1.0;
 	const float STRAIGHT_ADJUST = 0.1;
-	bool firstTurn = true;
 };
 
 #endif /* SRC_DRIVESYSTEM_H_ */

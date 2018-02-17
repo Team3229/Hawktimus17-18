@@ -32,7 +32,10 @@ DriveSystem::DriveSystem()
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 
 	//Sets smoothing curve to talons
-	SmoothCurveState(true);
+	leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
+	rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 
 	//Clears sticky faults
 	leftLead->ClearStickyFaults(0);
@@ -120,11 +123,6 @@ void DriveSystem::DriveStraight(bool direction)
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (double angle)
 {
-	if (firstTurn) {
-		SmoothCurveState(false);
-		firstTurn = false;
-	}
-
 	double gyroAngle = 0.0;
 	double turnpowerY = 0.0;
 	double turnpowerX = 0.0;
@@ -145,37 +143,17 @@ void DriveSystem::DriveTurn (double angle)
 
 	// Which way are we turning
 	if (angle < 0)
-		turnpowerX = -TURN_POWER_X;
-	else
 		turnpowerX = TURN_POWER_X;
+	else
+		turnpowerX = -TURN_POWER_X;
 
 	// Turn
 	std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
-	diffDrive->CurvatureDrive(turnpowerY, turnpowerX, true);
+	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
 void DriveSystem::TestGyro()
 {
 	double angle = gyro->GetAngle();
 	std::cout << "Gyro angle: " << angle << std::endl;
-}
-
-void DriveSystem::SmoothCurveState(bool state)
-{
-	if (state == true) {
-		//Sets smoothing curve to talons
-		leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
-		rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-		leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-		rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-		std::cout << "Smoothing Curve On at " << SMOOTH_TIME << " sedonds" << std::endl;
-	}
-	else if (state == false) {
-		//Turns off smoothing curve for turning
-		leftLead->ConfigOpenloopRamp(0, 0);
-		rightLead->ConfigOpenloopRamp(0, 0);
-		leftFollower->ConfigOpenloopRamp(0, 0);
-		rightFollower->ConfigOpenloopRamp(0, 0);
-		std::cout << "Smoothing Curve Off" << std::endl;
-	}
 }

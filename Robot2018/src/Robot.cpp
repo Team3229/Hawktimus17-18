@@ -54,7 +54,7 @@ public:
 		std::cout << "AutonomousInit()" << std::endl;
 
 		//Get the Autonomous Selection from the Driver Station, pass in Game string for random colors.
-		autoMode.AutoInit("RL"/*frc::DriverStation::GetInstance().GetGameSpecificMessage()*/);
+		autoMode.AutoInit(frc::DriverStation::GetInstance().GetGameSpecificMessage());
 	}
 
 	//Runs continually during Autonomous
@@ -78,6 +78,8 @@ public:
 	{
 		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
+
+		//Autonomous::autodone = false;
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.
