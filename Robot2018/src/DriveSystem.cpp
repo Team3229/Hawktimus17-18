@@ -168,7 +168,7 @@ void DriveSystem::SmoothCurveState(bool state)
 		rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 		leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 		rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-		std::cout << "Smoothing Curve On" << std::endl;
+		std::cout << "Smoothing Curve On at " << SMOOTH_TIME << " sedonds" << std::endl;
 	}
 	else if (state == false) {
 		//Turns off smoothing curve for turning
