@@ -422,5 +422,4 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][leftscale][M8].command = lift;
 	autocommand[right][leftscale][M8].data = 4;
 	autocommand[right][leftscale][M9].command = push;
-
 }
