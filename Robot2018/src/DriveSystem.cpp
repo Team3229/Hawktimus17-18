@@ -15,7 +15,7 @@
 DriveSystem::DriveSystem()
 {
 	//Initialize the gyro and reset to zero
-	gyro = new frc::ADXRS450_Gyro{frc::SPI::kOnboardCS0};
+	gyro = new ADXRS450_Gyro{frc::SPI::kOnboardCS0};
 	gyro->Calibrate();
 	gyro->Reset();
 
