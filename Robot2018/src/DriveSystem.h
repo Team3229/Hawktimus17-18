@@ -59,7 +59,7 @@ private:
 	const float MAX_OUTPUT = 0.6;
 	const float AUTO_POWER = 0.9;
 	const float TURN_POWER_Y = 0.47;
-	const float TURN_POWER_X = 1.0;
+	const float TURN_POWER_X = 0.7;
 	const float STRAIGHT_ADJUST = 0.1;
 };
 

@@ -10,9 +10,9 @@
 #ifndef SRC_AUTONOMOUS_H
 #define SRC_AUTONOMOUS_H
 
-#define FORWARD 0.6
-#define REVERSE -0.6
-#define DRIVE_FT_SEC 4.0
+#define FORWARD true
+#define REVERSE false
+#define DRIVE_FT_SEC 6.0
 #define LIFT_FT_SEC 4.0
 #define TURN_TIMEOUT 1.0
 
@@ -49,9 +49,9 @@ private:
 	char scaleColor; //color of scale
 
 	//Choosing bois
-	frc::SendableChooser<int*> * positionChooser; //Receiving from the smart dashboard
-	frc::SendableChooser<int*> * targetChooser;
-	frc::SendableChooser<int*> * delayChooser;
+	frc::SendableChooser<int> * positionChooser; //Receiving from the smart dashboard
+	frc::SendableChooser<int> * targetChooser;
+	frc::SendableChooser<int> * delayChooser;
 
 	enum positions {left, center, right};
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
@@ -68,7 +68,7 @@ private:
 
 	bool autodone = false; //Is movement done?
 	bool useDelay = false; //Delay our auto?
-	int movement = M1; //What movement are we on?
+	int movement = 0; //What movement are we on?
 	targets target = baseline;
 	positions position = center;
 
@@ -79,12 +79,8 @@ public:
 	void AutoInit(std::string colors);
 	void ReadStation();
 	void AutoPeriodic();
-	void Exchange();
-	void Switch ();
-	void Baseline();
 	void AddOptions();
 	void SetupAutoCommands();
-
 };
 
 #endif /*SRC_AUTONOMOUS_H*/

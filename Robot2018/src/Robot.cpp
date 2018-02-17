@@ -54,7 +54,7 @@ public:
 		std::cout << "AutonomousInit()" << std::endl;
 
 		//Get the Autonomous Selection from the Driver Station, pass in Game string for random colors.
-		autoMode.AutoInit(frc::DriverStation::GetInstance().GetGameSpecificMessage());
+		autoMode.AutoInit("RL"/*frc::DriverStation::GetInstance().GetGameSpecificMessage()*/);
 	}
 
 	//Runs continually during Autonomous
