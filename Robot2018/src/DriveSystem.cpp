@@ -15,7 +15,7 @@
 DriveSystem::DriveSystem()
 {
 	//Initialize the gyro and reset to zero
-	gyro = new ADXRS450_Gyro{frc::SPI::kOnboardCS0};
+	gyro = new frc::ADXRS450_Gyro{frc::SPI::kOnboardCS0};
 	gyro->Calibrate();
 	gyro->Reset();
 
@@ -168,6 +168,7 @@ void DriveSystem::SmoothCurveState(bool state)
 		rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 		leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 		rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+		std::cout << "Smoothing Curve On" << std::endl;
 	}
 	else if (state == false) {
 		//Turns off smoothing curve for turning
@@ -175,5 +176,6 @@ void DriveSystem::SmoothCurveState(bool state)
 		rightLead->ConfigOpenloopRamp(0, 0);
 		leftFollower->ConfigOpenloopRamp(0, 0);
 		rightFollower->ConfigOpenloopRamp(0, 0);
+		std::cout << "Smoothing Curve Off" << std::endl;
 	}
 }
