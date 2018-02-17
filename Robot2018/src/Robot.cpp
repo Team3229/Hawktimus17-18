@@ -126,8 +126,6 @@ public:
 		{
 			gettinPoints.StopLift();
 		}
-
-		Wait(0.05);
 	}
 
 	//Test mode

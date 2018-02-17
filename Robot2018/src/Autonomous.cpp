@@ -50,99 +50,99 @@ void Autonomous::AutoPeriodic()
 			std::cout << "Position: " << autocommand[position] << std::endl;
 			std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
 
-			switch (autocommand[position][target][movement].command)
-			{
-				case drive:
-					if (autoTimer.Get() == 0) {
-						driveTrain->ResetHeading();
-						timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC;
-						autoTimer.Start();
+
+		switch (autocommand[position][target][movement].command)
+		{
+		case drive:
+
+			if (autoTimer.Get() == 0) {
+				driveTrain->ResetHeading();
+				timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC;
+				autoTimer.Start();
 					}
-					if (autoTimer.Get() < timeLimit) {
-						driveTrain->DriveStraight(FORWARD);
-					}
+			if (autoTimer.Get() < timeLimit) {
+				driveTrain->DriveStraight(FORWARD);
+			}
+			else {
+				driveTrain->Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+		break;
+
+		case reverse:
+			if (autoTimer.Get() == 0) {
+				driveTrain->ResetHeading();
+				timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
+				autoTimer.Start();
+			}
+			if (autoTimer.Get() < timeLimit) {
+				driveTrain->DriveStraight(REVERSE);
+			}
+			else {
+				driveTrain->Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+			case turn:
+				if (autoTimer.Get() == 0) {
+					driveTrain->ResetHeading();
+					autoTimer.Start();
+				}
+				if (autoTimer.Get() < TURN_TIMEOUT) {
+					driveTrain->DriveTurn(autocommand[position][target][movement].data);
+				}
 					else {
 						driveTrain->Stop();
 						autoTimer.Reset();
 						movement++;
-					}
-					break;
+				}
+				break;
 
-				case reverse:
-					if (autoTimer.Get() == 0) {
-						driveTrain->ResetHeading();
-						timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						driveTrain->DriveStraight(REVERSE);
-					}
-					else {
-						driveTrain->Stop();
-						autoTimer.Reset();
-						movement++;
-					}
-					break;
-
-				case turn:
-					if (autoTimer.Get() == 0) {
-						driveTrain->ResetHeading();
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < TURN_TIMEOUT) {
-						driveTrain->DriveTurn(autocommand[position][target][movement].data);
-					}
-						else {
-							driveTrain->Stop();
-							autoTimer.Reset();
-							movement++;
-					}
-					break;
-
-				case lift:
-					if (autoTimer.Get() == 0) {
-						timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
-					}
-					else {
-						gettinPoints->StopLift();
-						autoTimer.Reset();
-						movement++;
-					}
-					break;
-
-				case lower:
-					if (autoTimer.Get() == 0) {
-						timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
-					}
-					else {
-						gettinPoints->StopLift();
-						autoTimer.Reset();
-						movement++;
-					}
-
-					break;
-
-				case push:
-					gettinPoints->PushCube();
+			case lift:
+				if (autoTimer.Get() == 0) {
+					timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+					autoTimer.Start();
+				}
+				if (autoTimer.Get() < timeLimit) {
+					gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
+				}
+				else {
+					gettinPoints->StopLift();
 					autoTimer.Reset();
 					movement++;
+				}
+				break;
 
-					break;
+			case lower:
+				if (autoTimer.Get() == 0) {
+					timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+					autoTimer.Start();
+				}
+				if (autoTimer.Get() < timeLimit) {
+					gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
+				}
+				else {
+					gettinPoints->StopLift();
+					autoTimer.Reset();
+					movement++;
+				}
+				break;
 
-				case done:
-					autodone = true;
-					break;
-					}
-			}
-	}
+			case push:
+				gettinPoints->PushCube();
+				autoTimer.Reset();
+				movement++;
+				break;
+
+			case done:
+				autodone = true;
+				break;
+				}
+		}
+}
 
 void Autonomous::AddOptions()
 {
