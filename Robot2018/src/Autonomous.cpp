@@ -18,7 +18,6 @@ Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 	gettinPoints = cube;
 	scaleColor = '\0'; //Initialized so it wouldn't have a random value on declaration
 	switchColor = '\0';
-
 }
 
 Autonomous::~Autonomous()
@@ -57,7 +56,7 @@ void Autonomous::AutoPeriodic()
 
 			if (autoTimer.Get() == 0) {
 				driveTrain->ResetHeading();
-				timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC;
+				timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC + COMPENSATE_TIME;
 				autoTimer.Start();
 					}
 			if (autoTimer.Get() < timeLimit) {
