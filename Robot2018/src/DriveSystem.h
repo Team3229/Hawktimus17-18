@@ -63,6 +63,7 @@ private:
 	const float TURN_POWER_Y = 0.47;
 	const float TURN_POWER_X = 0.7;
 	const float STRAIGHT_ADJUST = 0.1;
+	bool firstTurn = true;
 };
 
 #endif /* SRC_DRIVESYSTEM_H_ */

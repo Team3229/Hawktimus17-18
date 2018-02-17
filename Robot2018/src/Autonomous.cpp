@@ -73,7 +73,7 @@ void Autonomous::AutoPeriodic()
 		case reverse:
 			if (autoTimer.Get() == 0) {
 				driveTrain->ResetHeading();
-				timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
+				timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC + COMPENSATE_TIME;
 				autoTimer.Start();
 			}
 			if (autoTimer.Get() < timeLimit) {
@@ -93,10 +93,11 @@ void Autonomous::AutoPeriodic()
 					autoTimer.Start();
 				}
 				if (autoTimer.Get() < TURN_TIMEOUT) {
-					driveTrain->DriveTurn(autocommand[position][target][movement].data);
+					driveTrain->DriveTurn(autocommand[position][target][movement].data); //Smoothing curve is turned off in here
 				}
 					else {
 						driveTrain->Stop();
+						driveTrain->SmoothCurveState(true); //Turns smoothing curve back on
 						autoTimer.Stop();
 						autoTimer.Reset();
 						movement++;

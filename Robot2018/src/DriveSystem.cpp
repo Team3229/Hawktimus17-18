@@ -120,6 +120,11 @@ void DriveSystem::DriveStraight(bool direction)
 //Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (double angle)
 {
+	if (firstTurn) {
+		SmoothCurveState(false);
+		firstTurn = false;
+	}
+
 	double gyroAngle = 0.0;
 	double turnpowerY = 0.0;
 	double turnpowerX = 0.0;
