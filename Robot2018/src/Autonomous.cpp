@@ -35,6 +35,7 @@ void Autonomous::AutoInit(std::string colors)
 	scaleColor = colors[1]; //get the4 color of the scale
 	ReadStation();
 	SetupAutoCommands();
+	autoTimer.Stop();
 	autoTimer.Reset();
 	movement = 0;
 	autodone = false;
@@ -42,7 +43,6 @@ void Autonomous::AutoInit(std::string colors)
 
 void Autonomous::AutoPeriodic()
 {
-
 	while (!autodone)
 		{
 			std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
@@ -65,6 +65,7 @@ void Autonomous::AutoPeriodic()
 			}
 			else {
 				driveTrain->Stop();
+				autoTimer.Stop();
 				autoTimer.Reset();
 				movement++;
 			}
@@ -81,6 +82,7 @@ void Autonomous::AutoPeriodic()
 			}
 			else {
 				driveTrain->Stop();
+				autoTimer.Stop();
 				autoTimer.Reset();
 				movement++;
 			}
@@ -96,6 +98,7 @@ void Autonomous::AutoPeriodic()
 				}
 					else {
 						driveTrain->Stop();
+						autoTimer.Stop();
 						autoTimer.Reset();
 						movement++;
 				}
@@ -111,6 +114,7 @@ void Autonomous::AutoPeriodic()
 				}
 				else {
 					gettinPoints->StopLift();
+					autoTimer.Stop();
 					autoTimer.Reset();
 					movement++;
 				}
@@ -126,6 +130,7 @@ void Autonomous::AutoPeriodic()
 				}
 				else {
 					gettinPoints->StopLift();
+					autoTimer.Stop();
 					autoTimer.Reset();
 					movement++;
 				}
@@ -133,6 +138,7 @@ void Autonomous::AutoPeriodic()
 
 			case push:
 				gettinPoints->PushCube();
+				autoTimer.Stop();
 				autoTimer.Reset();
 				movement++;
 				break;
