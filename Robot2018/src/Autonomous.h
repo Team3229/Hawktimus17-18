@@ -44,7 +44,7 @@ private:
 	const static int POSITION_SIZE = 3;
 	const static int TARGET_SIZE = 6;
 	const static int MOVEMENT_SIZE = 10;
-	const float COMPENSATE_TIME = (1/2) * driveTrain->SMOOTH_TIME;
+	const float COMPENSATE_TIME = (1/2) * driveTrain->SMOOTH_TIME; //Should cancel out ramp up time for driving straight
 
 	char switchColor; //Color of the switch
 	char scaleColor; //color of scale

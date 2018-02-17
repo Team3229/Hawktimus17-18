@@ -32,10 +32,7 @@ DriveSystem::DriveSystem()
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 
 	//Sets smoothing curve to talons
-	leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
-	rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-	leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-	rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	SmoothCurveState(true);
 
 	//Clears sticky faults
 	leftLead->ClearStickyFaults(0);
@@ -156,4 +153,22 @@ void DriveSystem::TestGyro()
 {
 	double angle = gyro->GetAngle();
 	std::cout << "Gyro angle: " << angle << std::endl;
+}
+
+void DriveSystem::SmoothCurveState(bool state)
+{
+	if (state == true) {
+		//Sets smoothing curve to talons
+		leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
+		rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+		leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+		rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	}
+	else if (state == false) {
+		//Turns off smoothing curve for turning
+		leftLead->ConfigOpenloopRamp(0, 0);
+		rightLead->ConfigOpenloopRamp(0, 0);
+		leftFollower->ConfigOpenloopRamp(0, 0);
+		rightFollower->ConfigOpenloopRamp(0, 0);
+	}
 }

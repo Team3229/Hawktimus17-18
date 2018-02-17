@@ -34,6 +34,7 @@ public:
 	void Drive(double& Y, double& X); //Drive the robot forward given the current coordinates from the xbox controller
 	void DriveStraight(bool direction); //Used for driving the robot straight during autonomous
 	void DriveTurn (double angle); //Used for driving the robot at an angle during autonomous.
+	void SmoothCurveState(bool state); //Turns the smoothing curve on or off
 	void TestGyro();
 
 	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
