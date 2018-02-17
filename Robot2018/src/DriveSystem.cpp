@@ -149,7 +149,7 @@ void DriveSystem::DriveTurn (double angle)
 
 	// Turn
 	std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
-	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
+	diffDrive->CurvatureDrive(turnpowerY, turnpowerX, true);
 }
 
 void DriveSystem::TestGyro()
