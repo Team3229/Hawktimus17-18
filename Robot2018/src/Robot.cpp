@@ -46,6 +46,7 @@ public:
 		std::cout << "RobotInit()" << std::endl;
 		//gettinPoints.ResetLift();
 		autoMode.AddOptions();
+		autoMode.SetupAutoCommands();
 	}
 
 	//Runs once when Autonomous starts
@@ -129,7 +130,17 @@ public:
 			gettinPoints.StopLift();
 		}
 
-
+		//2 buttons to switch between high and low power
+		if (xbox.GetAButton()) //A button
+		{
+			//Sets higher power (normal)
+			chasis.ChangeSpeed(true);
+		}
+		if (xbox.GetBButton()) //B button
+		{
+			//Sets the lower power mode
+			chasis.ChangeSpeed(false);
+		}
 	}
 
 	//Test mode

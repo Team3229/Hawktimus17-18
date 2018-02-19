@@ -152,6 +152,21 @@ void DriveSystem::DriveTurn (double angle)
 	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
+void DriveSystem::ChangeSpeed(bool speed)
+{
+	//Currently used only during TeleOp
+	if (speed == true)
+	{
+		diffDrive->SetMaxOutput(MAX_OUTPUT); //Sets motors to max output
+		std::cout << "Robot set to max power at " << MAX_OUTPUT << std::endl;
+	}
+	else if (speed == false)
+	{
+		diffDrive->SetMaxOutput(LOW_OUTPUT); //Sets motors to lower output
+		std::cout << "Robot set to lower power at " << LOW_OUTPUT << std::endl;
+	}
+}
+
 void DriveSystem::TestGyro()
 {
 	double angle = gyro->GetAngle();

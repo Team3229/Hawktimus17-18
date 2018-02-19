@@ -33,8 +33,7 @@ void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
 	scaleColor = colors[1]; //get the4 color of the scale
-	ReadStation();
-	SetupAutoCommands();
+	ReadStation(); //Setup commands moved to robot init
 	autoTimer.Reset();
 	movement = 0;
 	autodone = false;
@@ -42,107 +41,118 @@ void Autonomous::AutoInit(std::string colors)
 
 void Autonomous::AutoPeriodic()
 {
-
 	while (!autodone)
+	{
+		std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
+		std::cout << "Data: " << autocommand[position][target][movement].data << std::endl;
+		std::cout << "Position: " << autocommand[position] << std::endl;
+		std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
+
+		switch (autocommand[position][target][movement].command)
 		{
-			std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
-			std::cout << "Data: " << autocommand[position][target][movement].data << std::endl;
-			std::cout << "Position: " << autocommand[position] << std::endl;
-			std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
-
-			switch (autocommand[position][target][movement].command)
-			{
-				case drive:
-					if (autoTimer.Get() == 0) {
-						driveTrain->ResetHeading();
-						timeLimit = autocommand[position][target][movement].data / DRIVE_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						driveTrain->DriveStraight(FORWARD);
-					}
-					else {
-						driveTrain->Stop();
-						autoTimer.Reset();
-						movement++;
-					}
-					break;
-
-				case reverse:
-					if (autoTimer.Get() == 0) {
-						driveTrain->ResetHeading();
-						timeLimit = autocommand[position][target][movement].data/DRIVE_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						driveTrain->DriveStraight(REVERSE);
-					}
-					else {
-						driveTrain->Stop();
-						autoTimer.Reset();
-						movement++;
-					}
-					break;
-
-				case turn:
-					if (autoTimer.Get() == 0) {
-						driveTrain->ResetHeading();
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < TURN_TIMEOUT) {
-						driveTrain->DriveTurn(autocommand[position][target][movement].data);
-					}
-						else {
-							driveTrain->Stop();
-							autoTimer.Reset();
-							movement++;
-					}
-					break;
-
-				case lift:
-					if (autoTimer.Get() == 0) {
-						timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
-					}
-					else {
-						gettinPoints->StopLift();
-						autoTimer.Reset();
-						movement++;
-					}
-					break;
-
-				case lower:
-					if (autoTimer.Get() == 0) {
-						timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
-						autoTimer.Start();
-					}
-					if (autoTimer.Get() < timeLimit) {
-						gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
-					}
-					else {
-						gettinPoints->StopLift();
-						autoTimer.Reset();
-						movement++;
-					}
-
-					break;
-
-				case push:
-					gettinPoints->PushCube();
-					autoTimer.Reset();
-					movement++;
-
-					break;
-
-				case done:
-					autodone = true;
-					break;
-					}
+		case drive:
+			if (autoTimer.Get() == 0) {
+				driveTrain->ResetHeading();
+				timeLimit = (autocommand[position][target][movement].data / DRIVE_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
+				autoTimer.Start();
 			}
+			if (autoTimer.Get() < timeLimit) {
+				driveTrain->DriveStraight(FORWARD);
+			}
+			else {
+				driveTrain->Stop();
+				autoTimer.Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+		case reverse:
+			if (autoTimer.Get() == 0) {
+				driveTrain->ResetHeading();
+				timeLimit = (autocommand[position][target][movement].data/DRIVE_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
+				autoTimer.Start();
+			}
+			if (autoTimer.Get() < timeLimit) {
+				driveTrain->DriveStraight(REVERSE);
+			}
+			else {
+				driveTrain->Stop();
+				autoTimer.Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+		case turn:
+			if (autoTimer.Get() == 0) {
+				driveTrain->ResetHeading();
+				autoTimer.Start();
+			}
+			if (autoTimer.Get() < TURN_TIMEOUT) {
+				driveTrain->DriveTurn(autocommand[position][target][movement].data);
+			}
+			else {
+				driveTrain->Stop();
+				autoTimer.Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+		case lift:
+			if (autoTimer.Get() == 0) {
+				timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+				autoTimer.Start();
+			}
+			if (autoTimer.Get() < timeLimit) {
+				gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
+			}
+			else {
+				gettinPoints->StopLift();
+				autoTimer.Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+		case lower:
+			if (autoTimer.Get() == 0) {
+				timeLimit = autocommand[position][target][movement].data/LIFT_FT_SEC;
+				autoTimer.Start();
+			}
+			if (autoTimer.Get() < timeLimit) {
+				gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
+			}
+			else {
+				gettinPoints->StopLift();
+				autoTimer.Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+		case push:
+			if (autoTimer.Get() == 0) {
+				autoTimer.Start();
+			}
+			if (autoTimer.Get() < PUSH_TIME) {
+				gettinPoints->PushCube();
+			}
+			else {
+				gettinPoints->StopConveyor();
+				autoTimer.Stop();
+				autoTimer.Reset();
+				movement++;
+			}
+			break;
+
+		case done:
+			autodone = true;
+			break;
+		}
 	}
+}
 
 void Autonomous::AddOptions()
 {
@@ -369,7 +379,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftscale][M3].command = drive;
 	autocommand[left][leftscale][M3].data = 1;
 	autocommand[left][leftscale][M4].command = lift;
-	autocommand[left][leftscale][M4].data = 4;
+	autocommand[left][leftscale][M4].data = 6;
 	autocommand[left][leftscale][M5].command = push;
 	autocommand[left][leftscale][M6].command = done;
 
@@ -387,7 +397,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][rightscale][M7].command = turn;
 	autocommand[left][rightscale][M7].data = 90;
 	autocommand[left][rightscale][M8].command = lift;
-	autocommand[left][rightscale][M8].data = 4;
+	autocommand[left][rightscale][M8].data = 6;
 	autocommand[left][rightscale][M9].command = push;
 	autocommand[left][rightscale][M10].command = done;
 
@@ -399,7 +409,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][rightscale][M3].command = drive;
 	autocommand[right][rightscale][M3].data = 1;
 	autocommand[right][rightscale][M4].command = lift;
-	autocommand[right][rightscale][M4].data = 4;
+	autocommand[right][rightscale][M4].data = 6;
 	autocommand[right][rightscale][M5].command = push;
 	autocommand[right][rightscale][M6].command = done;
 
@@ -417,7 +427,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][leftscale][M7].command = turn;
 	autocommand[right][leftscale][M7].data = -90;
 	autocommand[right][leftscale][M8].command = lift;
-	autocommand[right][leftscale][M8].data = 4;
+	autocommand[right][leftscale][M8].data = 6;
 	autocommand[right][leftscale][M9].command = push;
 	autocommand[right][leftscale][M10].command = done;
 }

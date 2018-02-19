@@ -12,8 +12,8 @@
 
 #define FORWARD true
 #define REVERSE false
-#define DRIVE_FT_SEC 6.0
-#define LIFT_FT_SEC 4.0
+#define DRIVE_FT_SEC 5.5
+#define LIFT_FT_SEC 1.0
 #define TURN_TIMEOUT 1.0
 
 //Standard Includes
@@ -41,6 +41,7 @@ private:
 
 	const double TIME_LIMIT = 0.0; //Move for how long?
 	double timeLimit = 0.0;
+	const float PUSH_TIME = 2.0;
 	const static int POSITION_SIZE = 3;
 	const static int TARGET_SIZE = 6;
 	const static int MOVEMENT_SIZE = 10;
