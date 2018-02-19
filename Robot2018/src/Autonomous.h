@@ -56,7 +56,7 @@ private:
 
 	enum positions {left, center, right};
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
-	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
+	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10};
 
 	enum commands {drive, reverse, turn, lift, lower, push, done};
 
