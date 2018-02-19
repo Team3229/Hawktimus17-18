@@ -41,7 +41,7 @@ private:
 
 	const double TIME_LIMIT = 0.0; //Move for how long?
 	double timeLimit = 0.0;
-	const float PUSH_TIME = 2.0;
+	const float PUSH_TIME = 2.0; //Time to push the cube
 	const static int POSITION_SIZE = 3;
 	const static int TARGET_SIZE = 6;
 	const static int MOVEMENT_SIZE = 10;
@@ -56,7 +56,7 @@ private:
 
 	enum positions {left, center, right};
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
-	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10};
+	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
 
 	enum commands {drive, reverse, turn, lift, lower, push, done};
 

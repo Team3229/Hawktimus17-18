@@ -18,7 +18,6 @@ Autonomous::Autonomous(DriveSystem * chasis, CubeDelivery * cube)
 	gettinPoints = cube;
 	scaleColor = '\0'; //Initialized so it wouldn't have a random value on declaration
 	switchColor = '\0';
-
 }
 
 Autonomous::~Autonomous()
