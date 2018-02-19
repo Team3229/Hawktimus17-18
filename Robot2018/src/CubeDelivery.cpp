@@ -14,7 +14,6 @@
 CubeDelivery::CubeDelivery()
 {
 	//Passes in parameters to instantiated objects
-	topSwitch = new frc::DigitalInput(TOPSWITCH_DIO); //Might have to use == true/false NEEDS TESTING
 	bottomSwitch = new frc::DigitalInput(BOTTOMSWITCH_DIO);
 	myLift = new frc::Spark(LIFT_PWM);
 	myConveyor = new frc::Spark(CONVEYOR_PWM);
@@ -23,7 +22,6 @@ CubeDelivery::CubeDelivery()
 CubeDelivery::~CubeDelivery()
 {
 	//Deletes pointers to free up space
-	delete topSwitch;
 	delete bottomSwitch;
 	delete myLift;
 	delete myConveyor;
@@ -66,7 +64,7 @@ void CubeDelivery::StopLift()
 	//Stops lift when button is not pressed
 	myLift->StopMotor();
 }
-/*
+
 void CubeDelivery::ResetLift()
 {
 	//Used to reset the lift to its lowest point
@@ -81,39 +79,10 @@ void CubeDelivery::ResetLift()
 	}
 }
 
-void CubeDelivery::LiftToScale()
-{
-	//Gets lift down to the lowest point only the first time
-	if (firstScale)
-	{
-		ResetLift();
-		firstScale = false;
-	}
-
-	//Commands to lift scale, timer handled in autonomous
-	std::cout << "LiftToScale()" << std::endl;
-	myLift->Set(-LIFT_POWER); //Move lift up
-}
-
-void CubeDelivery::LiftToSwitch()
-{
-	//Gets lift down to the lowest point only the first time
-	if (firstSwitch)
-	{
-		ResetLift();
-		firstSwitch = false;
-	}
-
-	//Comands to lift to switch, timer handled in autonomous
-	std::cout << "LiftToSwitch()" << std::endl;
-	myLift->Set(-LIFT_POWER); //Move lift up
-}
-*/
 void CubeDelivery::TestLimitSwitch()
 {
 	using namespace std;
 	cout << "TestLimitSwitch()" << endl;
 
-	cout << "Top Switch = " << topSwitch->Get() << endl; //Outputs to console the state of the top limit switch
 	cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
 }

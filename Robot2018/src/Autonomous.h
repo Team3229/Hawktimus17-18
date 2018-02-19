@@ -10,12 +10,6 @@
 #ifndef SRC_AUTONOMOUS_H
 #define SRC_AUTONOMOUS_H
 
-#define FORWARD true
-#define REVERSE false
-#define DRIVE_FT_SEC 5.5
-#define LIFT_FT_SEC 1.0
-#define TURN_TIMEOUT 1.0
-
 //Standard Includes
 #include <iostream>
 #include <string>
@@ -39,15 +33,20 @@ private:
 	CubeDelivery * gettinPoints;
 	Timer autoTimer{};
 
-	const double TIME_LIMIT = 0.0; //Move for how long?
 	double timeLimit = 0.0;
+	char switchColor; //Color of the switch
+	char scaleColor; //color of scale
+
+	//Constants
 	const float PUSH_TIME = 2.0; //Time to push the cube
 	const static int POSITION_SIZE = 3;
 	const static int TARGET_SIZE = 6;
 	const static int MOVEMENT_SIZE = 10;
-
-	char switchColor; //Color of the switch
-	char scaleColor; //color of scale
+	const bool FORWARD = true;
+	const bool REVERSE = false;
+	const float DRIVE_FT_SEC = 5.5;
+	const float LIFT_FT_SEC = 1.0;
+	const float TURN_TIMEOUT = 1.0;
 
 	//Choosing bois
 	frc::SendableChooser<int> * positionChooser; //Receiving from the smart dashboard
@@ -85,11 +84,3 @@ public:
 };
 
 #endif /*SRC_AUTONOMOUS_H*/
-
-//Ultrasonic output WORKING
-		/* double currentDistance = ultra.GetValue() * ValueToInches;
-		std::cout << "Ultrasonic distance: " << currentDistance << std::endl; */
-
-		//Gyro testing area WORKING
-		/* int currentAngle = gyro->GetAngle();
-		std::cout << "Gyro reading: " << currentAngle << std::endl; */

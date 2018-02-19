@@ -27,7 +27,6 @@ Autonomous::~Autonomous()
 	delete delayChooser;
 }
 
-
 void Autonomous::AutoInit(std::string colors)
 {
 	switchColor = colors[0]; //Get the color of the switch
@@ -40,6 +39,12 @@ void Autonomous::AutoInit(std::string colors)
 
 void Autonomous::AutoPeriodic()
 {
+	if (useDelay)
+	{
+		Wait(5);
+		useDelay = false;
+	}
+
 	while (!autodone)
 	{
 		std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;

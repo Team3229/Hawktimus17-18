@@ -37,11 +37,8 @@ public:
 	//Automated functions
 	void PushCube();
 	void ResetLift();
-	void LiftToScale();
-	void LiftToSwitch();
 
 private:
-	frc::DigitalInput * topSwitch; //Instantiate switch at top of the robot
 	frc::DigitalInput * bottomSwitch; //Instantiate switch at bottom of the robot
 
 	frc::Spark * myLift; //Instantiate lift motor
@@ -51,8 +48,7 @@ private:
 	frc::Timer scaleTime{};
 
 	//Constants for PWM ports
-	const short TOPSWITCH_DIO = 0;
-	const short BOTTOMSWITCH_DIO = 1;
+	const short BOTTOMSWITCH_DIO = 0;
 	const short LIFT_PWM = 2;
 	const short CONVEYOR_PWM = 0;
 
@@ -64,8 +60,6 @@ private:
 	const float PUSH_TIME = 1.0; //Time the conveyor will run to push the cube out
 	const float SC_LIFT_TIME = 1.0; //Time it takes to move lift from lowest to the height of the scale
 	const float SW_LIFT_TIME = 1.0; //Time it takes to move lift from lowest point to the height of the switch
-	bool firstSwitch = true;
-	bool firstScale = true;
 };
 
 #endif /* SRC_CUBEDELIVERY_H_ */

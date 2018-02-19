@@ -20,6 +20,13 @@ private:
 	const float DEAD_BAND_RIGHT = 0.075;
 	const int XBOX_USB_PORT = 0;
 
+	//Constants for resetting lift
+	const float RESET_TIME = 2.5;
+	bool firstReset = true;
+
+	//Timer for resetting lift
+	frc::Timer resetTimer{};
+
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
 
@@ -44,7 +51,6 @@ public:
 	void RobotInit()
 	{
 		std::cout << "RobotInit()" << std::endl;
-		//gettinPoints.ResetLift();
 		autoMode.AddOptions();
 		autoMode.SetupAutoCommands();
 	}
@@ -63,10 +69,27 @@ public:
 	{
 		std::cout << "AutonomousPeriodic()" << std::endl;
 
+		while (firstReset)
+		{
+			//Resets lift to lowest
+			resetTimer.Reset();
+			if (resetTimer.Get() == 0) {
+				resetTimer.Start();
+			}
+			if (resetTimer.Get() < RESET_TIME) {
+				gettinPoints.ResetLift();
+			}
+			else {
+				gettinPoints.StopLift();
+				resetTimer.Stop();
+				resetTimer.Reset();
+				firstReset = false;
+			}
+		}
+
 		autoMode.AutoPeriodic();
 		//While autonomous movements are not done (because it is re-entrant)
 	}
-
 
 	//Runs once Teleop starts
 	void TeleopInit()
