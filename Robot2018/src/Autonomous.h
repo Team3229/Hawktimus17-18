@@ -13,7 +13,6 @@
 //Standard Includes
 #include <iostream>
 #include <string>
-#include <Math.h>
 
 //FRC-Defined includes
 #include <Timer.h>

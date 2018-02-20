@@ -25,12 +25,13 @@ class CubeDelivery
 {
 public:
 	enum LiftDirection {Up, Down};
+	enum ConveyorDirection {In, Out};
 
 	CubeDelivery();
 	~CubeDelivery();
 	void Lift(LiftDirection directon);
 	void StopLift();
-	void Conveyor(double& conveyorPower);
+	void Conveyor(ConveyorDirection direction);
 	void StopConveyor();
 	void TestLimitSwitch();
 

@@ -17,7 +17,7 @@ class Robot : public frc::IterativeRobot
 private:
 	//Constants for controller
 	const float DEAD_BAND_LEFT = 0.1;
-	const float DEAD_BAND_RIGHT = 0.075;
+	const float DEAD_BAND_RIGHT = 0.1;
 	const int XBOX_USB_PORT = 0;
 
 	//Constants for resetting lift
@@ -130,27 +130,32 @@ public:
 
 		//Map right joystick for the conveyor
 		rightY = xbox.GetRawAxis(5);
-		if(abs(rightY) > DEAD_BAND_RIGHT)
+		if (abs(rightY) > DEAD_BAND_RIGHT)
 		{
-			gettinPoints.Conveyor(rightY); //Move conveyor at the speed of the joystick
+			if (rightY < DEAD_BAND_RIGHT) {
+				gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move the lift system up
+			}
+			else {
+				gettinPoints.Lift(CubeDelivery::LiftDirection::Up); //Move the lift system up
+			}
 		}
 		else
 		{
-			gettinPoints.StopConveyor();
+			gettinPoints.StopLift();
 		}
 
 		//Map the left and right bumper to the climbers
 		if(xbox.GetBumper(GenericHID::kRightHand))
 		{
-			gettinPoints.Lift(CubeDelivery::LiftDirection::Up); //Move the lift system up
+			gettinPoints.Conveyor(CubeDelivery::ConveyorDirection::Out); //Push cube out
 		}
 		else if(xbox.GetBumper(GenericHID::kLeftHand))
 		{
-			gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move lift system down
+			gettinPoints.Conveyor(CubeDelivery::ConveyorDirection::In); //Succ cube in
 		}
 		else
 		{
-			gettinPoints.StopLift();
+			gettinPoints.StopConveyor();
 		}
 
 		//2 buttons to switch between high and low power
