@@ -61,9 +61,12 @@ private:
 	const float MAX_OUTPUT = 0.6;
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
 	const float AUTO_POWER = 0.9;
-	const float TURN_POWER_X = 0.2;
-	const float TURN_POWER_Z = 0.2; //Was 1.0
-	const float STRAIGHT_ADJUST = 0.1;
+
+	//Turn powers for turning in autonomous
+	const float TURN_POWER_Y = 0.0;
+	const float TURN_POWER_X = 0.67;
+	const float STRAIGHT_ADJUST = 0.3;
+
 };
 
 #endif /* SRC_DRIVESYSTEM_H_ */

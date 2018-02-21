@@ -81,7 +81,7 @@ public:
 		double leftY, leftX, rightY; //An x and y coordinate.
 		std::cout << "TeleopPeriodic()" << std::endl;
 
-		//Autonomous::autodone = false;
+		//autoMode.autodone = true;
 
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.

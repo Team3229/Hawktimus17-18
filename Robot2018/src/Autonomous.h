@@ -45,7 +45,10 @@ private:
 	const bool REVERSE = false;
 	const float DRIVE_FT_SEC = 5.5;
 	const float LIFT_FT_SEC = 1.0;
-	const float TURN_TIMEOUT = 1.0;
+	const float TURN_TIMEOUT = 2.5;
+
+	//Constants for initial lift
+	const float START_LIFT_TIME = 1.0;
 
 	//Choosing bois
 	frc::SendableChooser<int> * positionChooser; //Receiving from the smart dashboard
@@ -54,7 +57,7 @@ private:
 
 	enum positions {left, center, right};
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
-	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10};
+	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
 
 	enum commands {drive, reverse, turn, lift, lower, push, done};
 
