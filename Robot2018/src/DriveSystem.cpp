@@ -120,12 +120,12 @@ void DriveSystem::DriveStraight(bool direction)
 	diffDrive->ArcadeDrive(power, adjust);
 }
 
-//Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
+///Turns the specified angle (in positive of negative degrees from zero) only in autonomous.
 void DriveSystem::DriveTurn (double angle)
 {
 	double gyroAngle = 0.0;
-	double turnpowerY = 0.0;
 	double turnpowerX = 0.0;
+	double turnpowerZ = 0.0;
 
 	// Check the current heading
 	gyroAngle = gyro->GetAngle();
@@ -134,22 +134,30 @@ void DriveSystem::DriveTurn (double angle)
 
 	// Check if we have reached the desired angle
 	if ((angle < 0) && (gyroAngle <= angle))
-		turnpowerY = 0.0;
+	{
+		turnpowerX = 0.0;
+		turnpowerZ = 0.0;
+	}
 	else if ((angle > 0) && (gyroAngle >= angle))
-		turnpowerY = 0.0;
+	{
+		turnpowerX = 0.0;
+		turnpowerZ = 0.0;
+	}
 	// if not, keep turning
 	else
-		turnpowerY = TURN_POWER_Y;
-
-	// Which way are we turning
-	if (angle < 0)
+	{
 		turnpowerX = TURN_POWER_X;
-	else
-		turnpowerX = -TURN_POWER_X;
+
+		// Which way are we turning
+			if (angle < 0)
+				turnpowerZ = -TURN_POWER_Z;
+			else
+				turnpowerZ = TURN_POWER_Z;
+	}
 
 	// Turn
-	std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
-	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
+	std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerX << "XTurn:" << turnpowerZ << std::endl;
+	diffDrive->ArcadeDrive(turnpowerX, turnpowerZ);
 }
 
 void DriveSystem::ChangeSpeed(bool speed)
