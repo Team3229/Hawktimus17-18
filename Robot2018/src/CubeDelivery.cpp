@@ -30,10 +30,10 @@ CubeDelivery::~CubeDelivery()
 void CubeDelivery::Conveyor(ConveyorDirection direction)
 {
 	if (direction == ConveyorDirection::Out) {
-		myConveyor->Set(-CONVEYOR_POWER); //Pushes cube out
+		myConveyor->Set(CONVEYOR_POWER); //Pushes cube out
 	}
 	else if (direction == ConveyorDirection::In) {
-		myConveyor->Set(CONVEYOR_POWER); //Sucks cube in
+		myConveyor->Set(-CONVEYOR_POWER); //Sucks cube in
 	}
 	std::cout << "Conveyor()" << std::endl;
 }

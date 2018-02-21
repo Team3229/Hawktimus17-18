@@ -238,9 +238,11 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][baseline][M2].command = done;
 
 	// start = center, target = baseline
-	autocommand[center][baseline][M1].command = drive;
-	autocommand[center][baseline][M1].data = 8.0;
-	autocommand[center][baseline][M2].command = done;
+	autocommand[center][baseline][M1].command = lift;
+	autocommand[center][baseline][M1].data = 1.0;
+	autocommand[center][baseline][M2].command = drive;
+	autocommand[center][baseline][M2].data = 8.0;
+	autocommand[center][baseline][M3].command = done;
 
 	// start = right, target = baseline
 	autocommand[right][baseline][M1].command = drive;

@@ -61,7 +61,7 @@ private:
 	const float MAX_OUTPUT = 0.6;
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
 	const float AUTO_POWER = 0.9;
-	const float TURN_POWER_Y = 0.47;
+	const float TURN_POWER_Y = -0.6;
 	const float TURN_POWER_X = 0.47; //Was 1.0
 	const float STRAIGHT_ADJUST = 0.1;
 };

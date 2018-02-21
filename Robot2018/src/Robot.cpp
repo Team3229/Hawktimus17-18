@@ -20,10 +20,6 @@ private:
 	const float DEAD_BAND_RIGHT = 0.1;
 	const int XBOX_USB_PORT = 0;
 
-	//Constants for resetting lift
-	const float RESET_TIME = 2.5;
-	bool firstReset = true;
-
 	//Timer for resetting lift
 	frc::Timer resetTimer{};
 
@@ -68,24 +64,6 @@ public:
 	void AutonomousPeriodic()
 	{
 		std::cout << "AutonomousPeriodic()" << std::endl;
-
-		while (firstReset)
-		{
-			//Resets lift to lowest
-			resetTimer.Reset();
-			if (resetTimer.Get() == 0) {
-				resetTimer.Start();
-			}
-			if (resetTimer.Get() < RESET_TIME) {
-				gettinPoints.ResetLift();
-			}
-			else {
-				gettinPoints.StopLift();
-				resetTimer.Stop();
-				resetTimer.Reset();
-				firstReset = false;
-			}
-		}
 
 		autoMode.AutoPeriodic();
 		//While autonomous movements are not done (because it is re-entrant)
@@ -133,10 +111,10 @@ public:
 		if (abs(rightY) > DEAD_BAND_RIGHT)
 		{
 			if (rightY < DEAD_BAND_RIGHT) {
-				gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move the lift system up
+				gettinPoints.Lift(CubeDelivery::LiftDirection::Up); //Move the lift system up
 			}
 			else {
-				gettinPoints.Lift(CubeDelivery::LiftDirection::Up); //Move the lift system up
+				gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move the lift system down
 			}
 		}
 		else
@@ -145,11 +123,11 @@ public:
 		}
 
 		//Map the left and right bumper to the climbers
-		if(xbox.GetBumper(GenericHID::kRightHand))
+		if(xbox.GetBumper(GenericHID::kRightHand)) //Right bumper
 		{
 			gettinPoints.Conveyor(CubeDelivery::ConveyorDirection::Out); //Push cube out
 		}
-		else if(xbox.GetBumper(GenericHID::kLeftHand))
+		else if(xbox.GetBumper(GenericHID::kLeftHand)) //Left bumper
 		{
 			gettinPoints.Conveyor(CubeDelivery::ConveyorDirection::In); //Succ cube in
 		}
