@@ -160,18 +160,23 @@ void DriveSystem::DriveTurn (double angle)
 	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
-void DriveSystem::ChangeSpeed(bool speed)
+void DriveSystem::ChangeSpeed(MotorSpeed change)
 {
 	//Currently used only during TeleOp
-	if (speed == true)
+	if (change == MotorSpeed::Normal)
 	{
 		diffDrive->SetMaxOutput(MAX_OUTPUT); //Sets motors to max output
 		std::cout << "Robot set to max power at " << MAX_OUTPUT << std::endl;
 	}
-	else if (speed == false)
+	else if (change == MotorSpeed::Low)
 	{
 		diffDrive->SetMaxOutput(LOW_OUTPUT); //Sets motors to lower output
 		std::cout << "Robot set to lower power at " << LOW_OUTPUT << std::endl;
+	}
+	else if (change == MotorSpeed::High) //Autonomus for scales
+	{
+		diffDrive->SetMaxOutput(HIGH_OUTPUT);
+		std::cout << "Robot set to max power at " << HIGH_OUTPUT << std::endl;
 	}
 }
 

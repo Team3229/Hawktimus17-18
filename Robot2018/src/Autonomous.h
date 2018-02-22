@@ -33,19 +33,27 @@ private:
 	Timer autoTimer{};
 
 	double timeLimit = 0.0;
+	double speedChange = 0.0;
 	char switchColor; //Color of the switch
 	char scaleColor; //color of scale
 
 	//Constants
-	const float PUSH_TIME = 2.0; //Time to push the cube
 	const static int POSITION_SIZE = 3;
 	const static int TARGET_SIZE = 6;
 	const static int MOVEMENT_SIZE = 10;
 	const bool FORWARD = true;
 	const bool REVERSE = false;
-	const float DRIVE_FT_SEC = 5.5;
+	const float PUSH_TIME = 2.0; //Time to push the cube
+
+	const float DRIVE_FT_SEC = 5.5; //Noraml speed feet/second
+	const float FAST_FT_SEC = 8.0; //High speed feet/second
 	const float LIFT_FT_SEC = 1.0;
 	const float TURN_TIMEOUT = 2.5;
+
+	//Placeholders for changing motor power
+	//THE VALUES ASSIGNED ARE NOT THE ACTUAL MOTOR POWER
+	const float NORMAL_POWER = 0.0;
+	const float HIGH_POWER = 1.0;
 
 	//Constants for initial lift
 	const float START_LIFT_TIME = 1.0;
@@ -59,7 +67,7 @@ private:
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
 	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
 
-	enum commands {drive, reverse, turn, lift, lower, push, done};
+	enum commands {drive, reverse, turn, lift, lower, push, done, power};
 
 	struct cmd {
 		commands command;

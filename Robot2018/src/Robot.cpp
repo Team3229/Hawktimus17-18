@@ -139,13 +139,18 @@ public:
 		//2 buttons to switch between high and low power
 		if (xbox.GetAButton()) //A button
 		{
-			//Sets higher power (normal)
-			chasis.ChangeSpeed(true);
+			//Sets normal speed
+			chasis.ChangeSpeed(DriveSystem::MotorSpeed::Normal);
 		}
 		if (xbox.GetBButton()) //B button
 		{
 			//Sets the lower power mode
-			chasis.ChangeSpeed(false);
+			chasis.ChangeSpeed(DriveSystem::MotorSpeed::Low);
+		}
+		if (xbox.GetXButton()) //X button
+		{
+			//Sets high power mode
+			chasis.ChangeSpeed(DriveSystem::MotorSpeed::High);
 		}
 	}
 

@@ -27,6 +27,8 @@
 class DriveSystem
 {
 public:
+	enum MotorSpeed {Low, Normal, High};
+
 	DriveSystem();
 	~DriveSystem();
 	void ResetHeading(); //Resets the gyro
@@ -35,7 +37,7 @@ public:
 	void DriveStraight(bool direction); //Used for driving the robot straight during autonomous
 	void DriveTurn (double angle); //Used for driving the robot at an angle during autonomous.
 	void TestGyro();
-	void ChangeSpeed(bool speed); //Used to change the robot speed during TeleOp
+	void ChangeSpeed(MotorSpeed change); //Used to change the robot speed during TeleOp
 
 	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
 
@@ -61,6 +63,7 @@ private:
 	const float MAX_OUTPUT = 0.6;
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
 	const float AUTO_POWER = 0.9;
+	const float HIGH_OUTPUT = 0.9;
 
 	//Turn powers for turning in autonomous
 	const float TURN_POWER_Y = 0.0;
