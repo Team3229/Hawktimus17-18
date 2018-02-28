@@ -167,11 +167,11 @@ void Autonomous::AutoPeriodic()
 		case power:
 			//For data use the constants NORMAL_POWER or HIGH_POWER
 			speedChange = autocommand[position][target][movement].data;
-			if (speedChange == 0.0) //Normal power mode
+			if (speedChange == NORMAL_POWER) //Normal power mode
 			{
 				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Normal);
 			}
-			else if (speedChange == 1.0) //High power mode
+			else if (speedChange == HIGH_POWER) //High power mode
 			{
 				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::High);
 			}
