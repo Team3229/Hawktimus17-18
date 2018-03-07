@@ -147,11 +147,11 @@ public:
 			//Sets the lower power mode
 			chasis.ChangeSpeed(DriveSystem::MotorSpeed::Low);
 		}
-		if (xbox.GetXButton()) //X button
+		/*if (xbox.GetXButton()) //X button
 		{
 			//Sets high power mode
 			chasis.ChangeSpeed(DriveSystem::MotorSpeed::High);
-		}
+		}*/
 	}
 
 	//Test mode
