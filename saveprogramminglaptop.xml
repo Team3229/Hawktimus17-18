@@ -1,0 +1,33 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="16" y="23"/>
+		<width>827</width>
+		<height>510</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="1006" y="135"/>
+		<property name="Text" value="Target"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="1134" y="134"/>
+		<property name="Text" value="Delay 5s?"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="892" y="136"/>
+		<property name="Text" value="Position"/>
+	</static-widget>
+	<widget field="Target" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="990" y="155"/>
+	</widget>
+	<widget field="Starting Position" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="876" y="158"/>
+	</widget>
+	<widget field="Delay?" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="1125" y="156"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
