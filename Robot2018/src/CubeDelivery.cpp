@@ -35,12 +35,12 @@ void CubeDelivery::Conveyor(ConveyorDirection direction)
 	else if (direction == ConveyorDirection::In) {
 		myConveyor->Set(-CONVEYOR_POWER); //Sucks cube in
 	}
-	std::cout << "Conveyor()" << std::endl;
+	//std::cout << "Conveyor()" << std::endl;
 }
 
 void CubeDelivery::PushCube()
 {
-	std::cout << "PushCube()" << std::endl;
+	//std::cout << "PushCube()" << std::endl;
 	myConveyor->Set(CONVEYOR_POWER); //Moves conveyor to push cube out
 }
 
@@ -54,12 +54,12 @@ void CubeDelivery::Lift(LiftDirection direction)
 {
 	if (direction == LiftDirection::Up) //&& !topSwitch->Get()) //True = up as long as top switch isn't pressed
 	{
-		std::cout << "LiftUp()" << std::endl;
+		//std::cout << "LiftUp()" << std::endl;
 		myLift->Set(LIFT_POWER); //Moves lift up
 	}
 	else if (direction == LiftDirection::Down) //&& !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
 	{
-		std::cout << "LiftDown()" << std::endl;
+		//std::cout << "LiftDown()" << std::endl;
 		myLift->Set(-LIFT_POWER); //Moves lift down
 	}
 }
@@ -73,7 +73,7 @@ void CubeDelivery::StopLift()
 void CubeDelivery::ResetLift()
 {
 	//Used to reset the lift to its lowest point
-	std::cout << "ResetLift()" << std::endl;
+	//std::cout << "ResetLift()" << std::endl;
 	if (!bottomSwitch->Get()) //Moves the lift to its lowest point
 	{
 		myLift->Set(LIFT_POWER);
@@ -87,7 +87,7 @@ void CubeDelivery::ResetLift()
 void CubeDelivery::TestLimitSwitch()
 {
 	using namespace std;
-	cout << "TestLimitSwitch()" << endl;
+	//cout << "TestLimitSwitch()" << endl;
 
-	cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
+	//cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
 }

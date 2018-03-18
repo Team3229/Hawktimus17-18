@@ -84,7 +84,7 @@ void DriveSystem::Drive (double& Y, double& X)
 	//is opposite of the XBoxController
 	Y = -Y;
 
-	std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
+	//std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
 	diffDrive->ArcadeDrive(Y, X);
 }
 
@@ -116,7 +116,7 @@ void DriveSystem::DriveStraight(bool direction)
 		adjust = 0.0;
 
 	// Drive the next segment
-	std::cout << "DriveStraight Gyro angle:" << gyroAngle << "power:" << power << "adjust:" << adjust << std::endl;
+	//std::cout << "DriveStraight Gyro angle:" << gyroAngle << "power:" << power << "adjust:" << adjust << std::endl;
 	diffDrive->ArcadeDrive(power, adjust);
 }
 
@@ -156,7 +156,7 @@ void DriveSystem::DriveTurn (double angle)
 			turnpowerX = TURN_POWER_X;
 	}
 	// Turn
-	std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
+	//std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
 	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
@@ -166,17 +166,17 @@ void DriveSystem::ChangeSpeed(MotorSpeed change)
 	if (change == MotorSpeed::Normal)
 	{
 		diffDrive->SetMaxOutput(MAX_OUTPUT); //Sets motors to max output
-		std::cout << "Robot set to max power at " << MAX_OUTPUT << std::endl;
+		//std::cout << "Robot set to max power at " << MAX_OUTPUT << std::endl;
 	}
 	else if (change == MotorSpeed::Low)
 	{
 		diffDrive->SetMaxOutput(LOW_OUTPUT); //Sets motors to lower output
-		std::cout << "Robot set to lower power at " << LOW_OUTPUT << std::endl;
+		//std::cout << "Robot set to lower power at " << LOW_OUTPUT << std::endl;
 	}
 	else if (change == MotorSpeed::High) //Autonomus for scales
 	{
 		diffDrive->SetMaxOutput(HIGH_OUTPUT);
-		std::cout << "Robot set to max power at " << HIGH_OUTPUT << std::endl;
+		//std::cout << "Robot set to max power at " << HIGH_OUTPUT << std::endl;
 	}
 }
 

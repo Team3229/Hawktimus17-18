@@ -46,7 +46,7 @@ public:
 	//Runs once on first boot of Robot
 	void RobotInit()
 	{
-		std::cout << "RobotInit()" << std::endl;
+		//std::cout << "RobotInit()" << std::endl;
 		autoMode.AddOptions();
 		autoMode.SetupAutoCommands();
 	}
@@ -54,7 +54,7 @@ public:
 	//Runs once when Autonomous starts
 	void AutonomousInit() override //Override - overrides the base class's autonomous given an object with polymorphic behaviors
 	{
-		std::cout << "AutonomousInit()" << std::endl;
+		//std::cout << "AutonomousInit()" << std::endl;
 
 		//Get the Autonomous Selection from the Driver Station, pass in Game string for random colors.
 		autoMode.AutoInit(frc::DriverStation::GetInstance().GetGameSpecificMessage());
@@ -63,7 +63,7 @@ public:
 	//Runs continually during Autonomous
 	void AutonomousPeriodic()
 	{
-		std::cout << "AutonomousPeriodic()" << std::endl;
+		//std::cout << "AutonomousPeriodic()" << std::endl;
 
 		autoMode.AutoPeriodic();
 		//While autonomous movements are not done (because it is re-entrant)
@@ -72,14 +72,14 @@ public:
 	//Runs once Teleop starts
 	void TeleopInit()
 	{
-		std::cout << "TeleopInit()" << std::endl;
+		//std::cout << "TeleopInit()" << std::endl;
 	}
 
 	//Runs continually during Teleop
 	void TeleopPeriodic()
 	{
 		double leftY, leftX, rightY; //An x and y coordinate.
-		std::cout << "TeleopPeriodic()" << std::endl;
+		//std::cout << "TeleopPeriodic()" << std::endl;
 
 		//autoMode.autodone = true;
 
@@ -147,11 +147,12 @@ public:
 			//Sets the lower power mode
 			chasis.ChangeSpeed(DriveSystem::MotorSpeed::Low);
 		}
-		if (xbox.GetXButton()) //X button
+		/*if (xbox.GetXButton()) //X button
 		{
 			//Sets high power mode
 			//chasis.ChangeSpeed(DriveSystem::MotorSpeed::High);
-		}
+		}*/
+		Wait(0.05);
 	}
 
 	//Test mode

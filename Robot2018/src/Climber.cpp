@@ -22,6 +22,6 @@ void Climber::Stop()
 void Climber::Climb()
 {
 	//At full climb we have 32" below us
-	std::cout << "Climb()" << std::endl;
+	//std::cout << "Climb()" << std::endl;
 	myClimber->Set(CLIMBER_POWER); //Climbs
 }

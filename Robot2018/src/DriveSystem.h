@@ -39,7 +39,7 @@ public:
 	void TestGyro();
 	void ChangeSpeed(MotorSpeed change); //Used to change the robot speed during TeleOp
 
-	const float SMOOTH_TIME = .5; //Sets time in seconds the motors take to get from neutral to full power
+	const float SMOOTH_TIME = 0.4; //Sets time in seconds the motors take to get from neutral to full power
 
 private:
 	//TalonSRX's
@@ -59,7 +59,7 @@ private:
 	const unsigned int RIGHT_FOLLOWER_ID = 4;
 
 	//Constants for driving
-	const float SAFETY_TIMEOUT = 0.5;
+	const float SAFETY_TIMEOUT = 1.0;
 	const float MAX_OUTPUT = 0.6;
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
 	const float AUTO_POWER = 0.9;

@@ -48,12 +48,12 @@ void Autonomous::AutoPeriodic()
 	//For best results, use a fully charged battery
 	while (!autodone)
 	{
-		std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
+		/*std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
 		std::cout << "Data: " << autocommand[position][target][movement].data << std::endl;
 		std::cout << "Position: " << autocommand[position] << std::endl;
 		std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
 		std::cout << "Movement: " << movement << std::endl;
-		std::cout << "Auto timer: " << autoTimer.Get() << std::endl;
+		std::cout << "Auto timer: " << autoTimer.Get() << std::endl;*/
 
 		switch (autocommand[position][target][movement].command)
 		{
@@ -216,8 +216,8 @@ void Autonomous::AddOptions()
 //Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
-	std::cout << "TChooser: " << targetChooser->GetSelected() << std::endl;
-	std::cout << "PChooser: " << positionChooser->GetSelected() << std::endl;
+	//std::cout << "TChooser: " << targetChooser->GetSelected() << std::endl;
+	//std::cout << "PChooser: " << positionChooser->GetSelected() << std::endl;
 
 	int targetChoice = targetChooser->GetSelected();
 	int positionChoice = positionChooser->GetSelected();
@@ -257,7 +257,7 @@ void Autonomous::ReadStation()
 
 void Autonomous::SetupAutoCommands()
 {
-	std::cout << "SetupAutoCommands()" << std::endl;
+	//std::cout << "SetupAutoCommands()" << std::endl;
 
 	// start = left, target = baseline
 	autocommand[left][baseline][M1].command = lift;
@@ -342,7 +342,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftswitch][M3].command = turn;
 	autocommand[left][leftswitch][M3].data = 90;
 	autocommand[left][leftswitch][M4].command = drive;
-	autocommand[left][leftswitch][M4].data = 1.0;
+	autocommand[left][leftswitch][M4].data = 1.5;
 	autocommand[left][leftswitch][M5].command = lift;
 	autocommand[left][leftswitch][M5].data = 2.5;
 	autocommand[left][leftswitch][M6].command = push;
@@ -358,7 +358,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][rightswitch][M3].command = turn;
 	autocommand[left][rightswitch][M3].data = 90;
 	autocommand[left][rightswitch][M4].command = drive;
-	autocommand[left][rightswitch][M4].data = 15.0;
+	autocommand[left][rightswitch][M4].data = 15.5;
 	autocommand[left][rightswitch][M5].command = turn;
 	autocommand[left][rightswitch][M5].data = 90;
 	autocommand[left][rightswitch][M6].command = lift;
@@ -396,7 +396,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][leftswitch][M5].command = turn;
 	autocommand[right][leftswitch][M5].data = -90;
 	autocommand[right][leftswitch][M6].command = drive;
-	autocommand[right][leftswitch][M6].data = 1.0;
+	autocommand[right][leftswitch][M6].data = 1.5;
 	autocommand[right][leftswitch][M7].command = lift;
 	autocommand[right][leftswitch][M7].data = 2.5;
 	autocommand[right][leftswitch][M8].command = push;
@@ -412,11 +412,11 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][leftswitch][M3].command = turn;
 	autocommand[center][leftswitch][M3].data = -90;
 	autocommand[center][leftswitch][M4].command = drive;
-	autocommand[center][leftswitch][M4].data = 5.5;
+	autocommand[center][leftswitch][M4].data = 6.25;
 	autocommand[center][leftswitch][M5].command = turn;
 	autocommand[center][leftswitch][M5].data = 90;
 	autocommand[center][leftswitch][M6].command = drive;
-	autocommand[center][leftswitch][M6].data = 3.0;
+	autocommand[center][leftswitch][M6].data = 3.5;
 	autocommand[center][leftswitch][M7].command = lift;
 	autocommand[center][leftswitch][M7].data = 2.5;
 	autocommand[center][leftswitch][M8].command = push;
@@ -432,11 +432,11 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][rightswitch][M3].command = turn;
 	autocommand[center][rightswitch][M3].data = 90;
 	autocommand[center][rightswitch][M4].command = drive;
-	autocommand[center][rightswitch][M4].data = 2.0;
+	autocommand[center][rightswitch][M4].data = 2.75;
 	autocommand[center][rightswitch][M5].command = turn;
 	autocommand[center][rightswitch][M5].data = -90;
 	autocommand[center][rightswitch][M6].command = drive;
-	autocommand[center][rightswitch][M6].data = 3.0;
+	autocommand[center][rightswitch][M6].data = 3.5;
 	autocommand[center][rightswitch][M7].command = lift;
 	autocommand[center][rightswitch][M7].data = 2.5;
 	autocommand[center][rightswitch][M8].command = push;
