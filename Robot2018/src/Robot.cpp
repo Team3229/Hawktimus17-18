@@ -30,8 +30,10 @@ private:
 	//Driver 2 controller
 	//XboxController driver2Xbox{DRIVER2_XBOX_USB_PORT};
 
-	//Instantiate Climber
+	//Instantiate Climber and it's timer
 	Climber climberMotor{};
+	const float START_LOCK_TIME = 1.5;
+	frc::Timer climbTimer{};
 
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
@@ -101,7 +103,23 @@ public:
 		//Climber (right hand "bumper" button)
 		if (xbox.GetYButton()) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
 		{
-			climberMotor.Climb(); //Climb
+			/*if (climbTimer.Get() == 0)
+			{
+				climbTimer.Start();
+			}
+			if (climbTimer.Get() > START_LOCK_TIME)
+			{
+				//Locks lift while we climb
+				climberMotor.Climb();
+				gettinPoints.LockLift();
+			}
+			else //Timer not exceeded
+			{
+				climberMotor.Climb(); //Climbs normally
+				climbTimer.Stop();
+				climbTimer.Reset();
+			}*/
+			climberMotor.Climb();
 		}
 		else
 		{

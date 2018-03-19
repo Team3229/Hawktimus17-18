@@ -67,7 +67,14 @@ void CubeDelivery::Lift(LiftDirection direction)
 void CubeDelivery::StopLift()
 {
 	//Stops lift when button is not pressed
-	myLift->StopMotor();
+	//myLift->StopMotor();
+	myLift->Set(HOLD_POWER);
+}
+
+void CubeDelivery::LockLift()
+{
+	//Applies current constant to prevent falling
+	myLift->Set(-HOLD_POWER);
 }
 
 /*void CubeDelivery::ResetLift()

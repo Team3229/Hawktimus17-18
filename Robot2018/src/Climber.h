@@ -13,7 +13,6 @@
 #include <iostream>
 #include <memory>
 #include <string>
-
 #include <Spark.h>
 
 class Climber
@@ -30,6 +29,7 @@ public:
 
 private:
 	frc::Spark * myClimber;
+
 	const double CLIMBER_POWER = -1.0; //More effective going backwards
 	const int CLIMBER_PWM = 1;
 };

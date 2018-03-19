@@ -50,11 +50,6 @@ private:
 	const float LIFT_FT_SEC = 1.0;
 	const float TURN_TIMEOUT = 2.5;
 
-	//Placeholders for changing motor power
-	//THE VALUES ASSIGNED ARE NOT THE ACTUAL MOTOR POWER
-	const float NORMAL_POWER = 0.0;
-	const float HIGH_POWER = 1.0;
-
 	//Constants for initial lift
 	const float START_LIFT_TIME = 1.0;
 
@@ -67,7 +62,7 @@ private:
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
 	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
 
-	enum commands {drive, reverse, turn, lift, lower, push, done, power};
+	enum commands {drive, reverse, turn, lift, lower, push, done};
 
 	struct cmd {
 		commands command;

@@ -164,20 +164,6 @@ void Autonomous::AutoPeriodic()
 			}
 			break;
 
-		/*case power:
-			//For data use the constants NORMAL_POWER or HIGH_POWER
-			speedChange = autocommand[position][target][movement].data;
-			if (speedChange == NORMAL_POWER) //Normal power mode
-			{
-
-			}
-			else if (speedChange == HIGH_POWER) //High power mode
-			{
-
-			}
-			movement++;
-			break;*/
-
 		case done:
 			autodone = true;
 			break;

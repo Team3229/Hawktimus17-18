@@ -33,6 +33,7 @@ public:
 	void StopLift();
 	void Conveyor(ConveyorDirection direction);
 	void StopConveyor();
+	void LockLift();
 	void TestLimitSwitch();
 
 	//Automated functions
@@ -52,12 +53,9 @@ private:
 
 	//Constants for power and max power
 	const float LIFT_POWER = 1.0;
+	const float HOLD_POWER = 0.1;
 	const float CONVEYOR_POWER = 1.0; //Conveyor forward at max power
 
-	//Time constants PLACEHOLDERS
-	const float PUSH_TIME = 1.0; //Time the conveyor will run to push the cube out
-	const float SC_LIFT_TIME = 1.0; //Time it takes to move lift from lowest to the height of the scale
-	const float SW_LIFT_TIME = 1.0; //Time it takes to move lift from lowest point to the height of the switch
 };
 
 #endif /* SRC_CUBEDELIVERY_H_ */
