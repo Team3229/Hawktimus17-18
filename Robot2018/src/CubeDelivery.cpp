@@ -70,7 +70,7 @@ void CubeDelivery::StopLift()
 	myLift->StopMotor();
 }
 
-void CubeDelivery::ResetLift()
+/*void CubeDelivery::ResetLift()
 {
 	//Used to reset the lift to its lowest point
 	//std::cout << "ResetLift()" << std::endl;
@@ -82,12 +82,12 @@ void CubeDelivery::ResetLift()
 	{
 		StopLift();
 	}
-}
+}*/
 
-void CubeDelivery::TestLimitSwitch()
+/*void CubeDelivery::TestLimitSwitch()
 {
 	using namespace std;
-	//cout << "TestLimitSwitch()" << endl;
+	cout << "TestLimitSwitch()" << endl;
 
-	//cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
-}
+	cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
+}*/

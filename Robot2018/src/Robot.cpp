@@ -158,7 +158,7 @@ public:
 	//Test mode
 	void TestPeriodic()
 	{
-		std::cout << "TestPeriodic()" << std::endl;
+		//std::cout << "TestPeriodic()" << std::endl;
 	}
 };
 

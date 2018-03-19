@@ -59,7 +59,7 @@ private:
 	const unsigned int RIGHT_FOLLOWER_ID = 4;
 
 	//Constants for driving
-	const float SAFETY_TIMEOUT = 1.0;
+	const float SAFETY_TIMEOUT = 2.0;
 	const float MAX_OUTPUT = 0.6;
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
 	const float AUTO_POWER = 0.9;

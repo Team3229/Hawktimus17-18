@@ -51,7 +51,8 @@ DriveSystem::DriveSystem()
 	diffDrive = new frc::DifferentialDrive(*leftLead, *rightLead);
 
 	//Implement drive train safety
-	diffDrive->SetExpiration(SAFETY_TIMEOUT); //Set safety
+	diffDrive->SetExpiration(SAFETY_TIMEOUT); //Set safety timer
+	diffDrive->SetSafetyEnabled(false); //added 3/18 turns off safety check
 	diffDrive->SetMaxOutput(MAX_OUTPUT);
 
 }
