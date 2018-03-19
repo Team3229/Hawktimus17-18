@@ -53,7 +53,7 @@ DriveSystem::DriveSystem()
 	//Implement drive train safety
 	diffDrive->SetExpiration(SAFETY_TIMEOUT); //Set safety timer
 	diffDrive->SetSafetyEnabled(false); //added 3/18 turns off safety check
-	diffDrive->SetMaxOutput(MAX_OUTPUT);
+	diffDrive->SetMaxOutput(MAX_OUTPUT); //Sets motor max power
 
 }
 

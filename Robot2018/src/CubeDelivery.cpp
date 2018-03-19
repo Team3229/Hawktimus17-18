@@ -14,7 +14,6 @@
 CubeDelivery::CubeDelivery()
 {
 	//Passes in parameters to instantiated objects
-	bottomSwitch = new frc::DigitalInput(BOTTOMSWITCH_DIO);
 	myLift = new frc::Spark(LIFT_PWM);
 	myConveyor = new frc::Spark(CONVEYOR_PWM);
 }
@@ -22,17 +21,18 @@ CubeDelivery::CubeDelivery()
 CubeDelivery::~CubeDelivery()
 {
 	//Deletes pointers to free up space
-	delete bottomSwitch;
 	delete myLift;
 	delete myConveyor;
 }
 
 void CubeDelivery::Conveyor(ConveyorDirection direction)
 {
-	if (direction == ConveyorDirection::Out) {
+	if (direction == ConveyorDirection::Out)
+	{
 		myConveyor->Set(CONVEYOR_POWER); //Pushes cube out
 	}
-	else if (direction == ConveyorDirection::In) {
+	else if (direction == ConveyorDirection::In)
+	{
 		myConveyor->Set(-CONVEYOR_POWER); //Sucks cube in
 	}
 	//std::cout << "Conveyor()" << std::endl;
@@ -52,12 +52,12 @@ void CubeDelivery::StopConveyor()
 
 void CubeDelivery::Lift(LiftDirection direction)
 {
-	if (direction == LiftDirection::Up) //&& !topSwitch->Get()) //True = up as long as top switch isn't pressed
+	if (direction == LiftDirection::Up)
 	{
 		//std::cout << "LiftUp()" << std::endl;
 		myLift->Set(LIFT_POWER); //Moves lift up
 	}
-	else if (direction == LiftDirection::Down) //&& !bottomSwitch->Get()) //False = down as long as bottom switch isn't pressed
+	else if (direction == LiftDirection::Down)
 	{
 		//std::cout << "LiftDown()" << std::endl;
 		myLift->Set(-LIFT_POWER); //Moves lift down

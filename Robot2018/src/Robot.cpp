@@ -18,13 +18,17 @@ private:
 	//Constants for controller
 	const float DEAD_BAND_LEFT = 0.1;
 	const float DEAD_BAND_RIGHT = 0.1;
-	const int XBOX_USB_PORT = 0;
+	const int XBOX_USB_PORT = 0; //Current Driver 1 port
+	//const int DRIVER2_XBOX_USB_PORT = 1;
 
 	//Timer for resetting lift
 	frc::Timer resetTimer{};
 
 	//Instantiate XBOX Controller
 	XboxController xbox{XBOX_USB_PORT};
+
+	//Driver 2 controller
+	//XboxController driver2Xbox{DRIVER2_XBOX_USB_PORT};
 
 	//Instantiate Climber
 	Climber climberMotor{};
@@ -81,8 +85,6 @@ public:
 		double leftY, leftX, rightY; //An x and y coordinate.
 		//std::cout << "TeleopPeriodic()" << std::endl;
 
-		//autoMode.autodone = true;
-
 		//Drive (left hand joystick on the controller)
 		//Get both the x and y coordinates from the left joystick.
 		leftY = xbox.GetY(GenericHID::kLeftHand);
@@ -110,10 +112,12 @@ public:
 		rightY = xbox.GetRawAxis(5);
 		if (abs(rightY) > DEAD_BAND_RIGHT)
 		{
-			if (rightY < DEAD_BAND_RIGHT) {
+			if (rightY < DEAD_BAND_RIGHT)
+			{
 				gettinPoints.Lift(CubeDelivery::LiftDirection::Up); //Move the lift system up
 			}
-			else {
+			else
+			{
 				gettinPoints.Lift(CubeDelivery::LiftDirection::Down); //Move the lift system down
 			}
 		}
@@ -147,11 +151,11 @@ public:
 			//Sets the lower power mode
 			chasis.ChangeSpeed(DriveSystem::MotorSpeed::Low);
 		}
-		/*if (xbox.GetXButton()) //X button
+		if (xbox.GetXButton()) //X button
 		{
 			//Sets high power mode
-			//chasis.ChangeSpeed(DriveSystem::MotorSpeed::High);
-		}*/
+			chasis.ChangeSpeed(DriveSystem::MotorSpeed::High);
+		}
 		Wait(0.05);
 	}
 

@@ -40,8 +40,6 @@ public:
 	void ResetLift();
 
 private:
-	frc::DigitalInput * bottomSwitch; //Instantiate switch at bottom of the robot
-
 	frc::Spark * myLift; //Instantiate lift motor
 	frc::Spark * myConveyor; //Instantiate conveyor motor
 
@@ -49,7 +47,6 @@ private:
 	frc::Timer scaleTime{};
 
 	//Constants for PWM ports
-	const short BOTTOMSWITCH_DIO = 0;
 	const short LIFT_PWM = 2;
 	const short CONVEYOR_PWM = 0;
 
