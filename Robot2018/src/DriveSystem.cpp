@@ -32,10 +32,10 @@ DriveSystem::DriveSystem()
 	leftFollower->Set(ControlMode::PercentOutput, 0);
 
 	//Sets smoothing curve to talons
-	leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
+	/*leftLead->ConfigOpenloopRamp(SMOOTH_TIME, 0); //passes in seconds from neutral to full and timeout in miliseconds
 	rightLead->ConfigOpenloopRamp(SMOOTH_TIME, 0);
 	leftFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
-	rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);
+	rightFollower->ConfigOpenloopRamp(SMOOTH_TIME, 0);*/
 
 	//Clears sticky faults
 	leftLead->ClearStickyFaults(0);
@@ -78,11 +78,12 @@ void DriveSystem::Stop()
 	diffDrive->ArcadeDrive(0, 0);
 }
 
-
 void DriveSystem::Drive (double& Y, double& X)
 {
-	//Flip the Y value because of the RobotDrive.Drive function
-	//is opposite of the XBoxController
+	//Applies smoothing curve to driving
+	Y = (pow(MAX_OUTPUT, Y) * Y);
+
+	//Flip the Y value because of the RobotDrive.Drive function is opposite of the XBoxController
 	Y = -Y;
 
 	//std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y

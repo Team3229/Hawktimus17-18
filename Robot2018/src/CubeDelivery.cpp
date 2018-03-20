@@ -66,14 +66,14 @@ void CubeDelivery::Lift(LiftDirection direction)
 
 void CubeDelivery::StopLift()
 {
-	//Stops lift when button is not pressed
+	//Stops lift when button is not pressed by applying constant current
 	//myLift->StopMotor();
 	myLift->Set(HOLD_POWER);
 }
 
 void CubeDelivery::LockLift()
 {
-	//Applies current constant to prevent falling
+	//Applies current constant to prevent lift from extending farther while climbing
 	myLift->Set(-HOLD_POWER);
 }
 
@@ -89,9 +89,9 @@ void CubeDelivery::LockLift()
 	{
 		StopLift();
 	}
-}*/
+}
 
-/*void CubeDelivery::TestLimitSwitch()
+void CubeDelivery::TestLimitSwitch()
 {
 	using namespace std;
 	cout << "TestLimitSwitch()" << endl;
