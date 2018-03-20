@@ -28,6 +28,7 @@ public:
 
 private:
 	cs::VideoSource camera;
+	cs::VideoSource camera2;
 
 	// Constants for Camera Settings
 	const int FPS = 12;
