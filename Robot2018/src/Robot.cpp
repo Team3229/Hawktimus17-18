@@ -61,7 +61,7 @@ public:
 	void AutonomousInit() override //Override - overrides the base class's autonomous given an object with polymorphic behaviors
 	{
 		//std::cout << "AutonomousInit()" << std::endl;
-
+		chasis.ChangeSpeed(DriveSystem::MotorSpeed::Normal);
 		//Get the Autonomous Selection from the Driver Station, pass in Game string for random colors.
 		autoMode.AutoInit(frc::DriverStation::GetInstance().GetGameSpecificMessage());
 	}

@@ -60,16 +60,16 @@ private:
 
 	//Constants for driving
 	const float SAFETY_TIMEOUT = 2.0;
-	const float AUTO_POWER = 0.9; //Multiplier of max output for autonomous
+	const float AUTO_POWER = 1.0; //Multiplier of max output for autonomous //Was:.9
 
 	//Changable powers
-	const float MAX_OUTPUT = 0.6;
+	const float MAX_OUTPUT = 0.7; //Was 0.6
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
-	const float HIGH_OUTPUT = 0.8;
+	const float HIGH_OUTPUT = 0.9;
 
 	//Turn powers for turning in autonomous
 	const float TURN_POWER_Y = 0.0;
-	const float TURN_POWER_X = 0.67;
+	const float TURN_POWER_X = 0.57; //Was:0.67
 	const float STRAIGHT_ADJUST = 0.3;
 
 };

@@ -18,7 +18,6 @@ Camera::Camera()
 	camera.SetWhiteBalanceAuto();
 	camera.SetExposureAuto();
 	camera.SetBrightness(BRIGHTNESS);
-	CameraServer::GetInstance()->StartAutomaticCapture(0);
 
 	//2nd camera here
 	cs::AxisCamera camera2 = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
@@ -26,5 +25,7 @@ Camera::Camera()
 	camera2.SetWhiteBalanceAuto();
 	camera2.SetExposureAuto();
 	camera2.SetBrightness(BRIGHTNESS);
+
+	CameraServer::GetInstance()->StartAutomaticCapture(0);
 	CameraServer::GetInstance()->StartAutomaticCapture(1);
 }

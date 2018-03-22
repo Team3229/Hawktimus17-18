@@ -445,16 +445,12 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][rightscale][M3].command = done;
 
 	//start = left, target = left scale
-	//autocommand[left][leftscale][M1].command = power;
-	//autocommand[left][leftscale][M1].data = HIGH_POWER;
 	autocommand[left][leftscale][M1].command = lift;
 	autocommand[left][leftscale][M1].data = START_LIFT_TIME;
 	autocommand[left][leftscale][M2].command = drive;
 	autocommand[left][leftscale][M2].data = 29.5;
 	autocommand[left][leftscale][M3].command = turn;
 	autocommand[left][leftscale][M3].data = 90;
-	//autocommand[left][leftscale][M4].command = power;
-	//autocommand[left][leftscale][M4].data = NORMAL_POWER;
 	autocommand[left][leftscale][M4].command = drive;
 	autocommand[left][leftscale][M4].data = 0.07;
 	autocommand[left][leftscale][M5].command = lift;
