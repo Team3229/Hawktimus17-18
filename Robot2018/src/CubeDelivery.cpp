@@ -71,12 +71,6 @@ void CubeDelivery::StopLift()
 	myLift->Set(HOLD_POWER);
 }
 
-void CubeDelivery::LockLift()
-{
-	//Applies current constant to prevent lift from extending farther while climbing
-	myLift->Set(-HOLD_POWER);
-}
-
 /*void CubeDelivery::ResetLift()
 {
 	//Used to reset the lift to its lowest point

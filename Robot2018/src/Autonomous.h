@@ -45,9 +45,8 @@ private:
 	const bool REVERSE = false;
 	const float PUSH_TIME = 2.0; //Time to push the cube
 
-	const float DRIVE_FT_SEC = 9.2; //Noraml speed feet/second //Old:5.5
-	const float FAST_FT_SEC = 8.0; //High speed feet/second
-	const float LIFT_FT_SEC = 1.36;
+	const float DRIVE_FT_SEC = 9.1; //Noraml speed feet/second //Old:5.5
+	const float LIFT_FT_SEC = 1.51;
 	const float TURN_TIMEOUT = 2.5;
 
 	//Constants for initial lift

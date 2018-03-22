@@ -33,7 +33,6 @@ private:
 
 	//Instantiate Climber and it's timer
 	Climber climberMotor{};
-	frc::Timer climbTimer{};
 
 	//Instantiate Chasis (drive train)
 	DriveSystem chasis{};
@@ -100,26 +99,10 @@ public:
 			chasis.Stop();
 		}
 
-		//Climber (right hand "bumper" button)
+		//Climber (right hand "Y" button)
 		if (xbox.GetYButton()) //Map the right hand "bumper" (trigger) button to the climber PWM, button is pressed.
 		{
-			/*if (climbTimer.Get() == 0)
-			{
-				climbTimer.Start();
-			}
-			if (climbTimer.Get() > START_LOCK_TIME)
-			{
-				//Locks lift while we climb
-				climberMotor.Climb();
-				gettinPoints.LockLift();
-			}
-			else //Timer not exceeded
-			{
-				climberMotor.Climb(); //Climbs normally
-				climbTimer.Stop();
-				climbTimer.Reset();
-			}*/
-			climberMotor.Climb();
+			climberMotor.Climb(); //Climbs
 		}
 		else
 		{

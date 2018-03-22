@@ -65,12 +65,13 @@ private:
 	//Changable powers
 	const float MAX_OUTPUT = 0.7; //Was 0.6
 	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
-	const float HIGH_OUTPUT = 0.9;
+	const float HIGH_OUTPUT = 1.0;
 
 	//Turn powers for turning in autonomous
 	const float TURN_POWER_Y = 0.0;
-	const float TURN_POWER_X = 0.57; //Was:0.67
-	const float STRAIGHT_ADJUST = 0.3;
+	const float LEFT_TURN_POWER_X = -0.57;
+	const float RIGHT_TURN_POWER_X = 0.55; //Was:0.67
+	const float STRAIGHT_ADJUST = 0.4;
 
 };
 

@@ -33,7 +33,6 @@ public:
 	void StopLift();
 	void Conveyor(ConveyorDirection direction);
 	void StopConveyor();
-	void LockLift();
 	void TestLimitSwitch();
 
 	//Automated functions

@@ -150,9 +150,9 @@ void DriveSystem::DriveTurn (double angle)
 
 		// Which way are we turning
 		if (angle < 0)
-			turnpowerX = -TURN_POWER_X;
+			turnpowerX = LEFT_TURN_POWER_X;
 		else
-			turnpowerX = TURN_POWER_X;
+			turnpowerX = RIGHT_TURN_POWER_X;
 	}
 	// Turn
 	//std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;

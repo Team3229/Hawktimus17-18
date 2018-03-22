@@ -60,12 +60,7 @@ void Autonomous::AutoPeriodic()
 		case drive:
 			if (autoTimer.Get() == 0) {
 				driveTrain->ResetHeading();
-				if (target == leftscale || target == rightscale) {
-					timeLimit = (autocommand[position][target][movement].data/FAST_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
-				}
-				else {
-					timeLimit = (autocommand[position][target][movement].data/DRIVE_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
-				}
+				timeLimit = (autocommand[position][target][movement].data/DRIVE_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
 				autoTimer.Start();
 			}
 			if (autoTimer.Get() < timeLimit) {
@@ -82,12 +77,7 @@ void Autonomous::AutoPeriodic()
 		case reverse:
 			if (autoTimer.Get() == 0) {
 				driveTrain->ResetHeading();
-				if (target == leftscale || target == rightscale) {
-					timeLimit = (autocommand[position][target][movement].data/FAST_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
-				}
-				else {
-					timeLimit = (autocommand[position][target][movement].data/DRIVE_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
-				}
+				timeLimit = (autocommand[position][target][movement].data/DRIVE_FT_SEC) + (driveTrain->SMOOTH_TIME / 2);
 				autoTimer.Start();
 			}
 			if (autoTimer.Get() < timeLimit) {
@@ -324,7 +314,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftswitch][M1].command = lift;
 	autocommand[left][leftswitch][M1].data = START_LIFT_TIME;
 	autocommand[left][leftswitch][M2].command = drive;
-	autocommand[left][leftswitch][M2].data = 13.0;
+	autocommand[left][leftswitch][M2].data = 14.5;
 	autocommand[left][leftswitch][M3].command = turn;
 	autocommand[left][leftswitch][M3].data = 90;
 	autocommand[left][leftswitch][M4].command = drive;
@@ -448,17 +438,15 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftscale][M1].command = lift;
 	autocommand[left][leftscale][M1].data = START_LIFT_TIME;
 	autocommand[left][leftscale][M2].command = drive;
-	autocommand[left][leftscale][M2].data = 29.5;
+	autocommand[left][leftscale][M2].data = 31.5;
 	autocommand[left][leftscale][M3].command = turn;
 	autocommand[left][leftscale][M3].data = 90;
-	autocommand[left][leftscale][M4].command = drive;
-	autocommand[left][leftscale][M4].data = 0.07;
-	autocommand[left][leftscale][M5].command = lift;
-	autocommand[left][leftscale][M5].data = 6;
-	autocommand[left][leftscale][M6].command = push;
-	autocommand[left][leftscale][M7].command = lower;
-	autocommand[left][leftscale][M7].data = 5;
-	autocommand[left][leftscale][M8].command = done;
+	autocommand[left][leftscale][M4].command = lift;
+	autocommand[left][leftscale][M4].data = 5.5;
+	autocommand[left][leftscale][M5].command = push;
+	autocommand[left][leftscale][M6].command = lower;
+	autocommand[left][leftscale][M6].data = 5.5;
+	autocommand[left][leftscale][M7].command = done;
 
 	//start = left, target = right scale NOT DOING GO FOR BASELINE
 	autocommand[left][rightscale][M1].command = lift;
@@ -468,24 +456,18 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][rightscale][M3].command = done;
 
 	//start = right, target = right scale
-	//autocommand[right][rightscale][M1].command = power;
-	//autocommand[right][rightscale][M1].data = HIGH_POWER;
 	autocommand[right][rightscale][M1].command = lift;
 	autocommand[right][rightscale][M1].data = START_LIFT_TIME;
 	autocommand[right][rightscale][M2].command = drive;
-	autocommand[right][rightscale][M2].data = 29.5;
+	autocommand[right][rightscale][M2].data = 31.5;
 	autocommand[right][rightscale][M3].command = turn;
 	autocommand[right][rightscale][M3].data = -90;
-	//autocommand[right][rightscale][M1].command = power;
-	//autocommand[right][rightscale][M1].data = NORMAL_POWER;
-	autocommand[right][rightscale][M4].command = drive;
-	autocommand[right][rightscale][M4].data = 0.07;
-	autocommand[right][rightscale][M5].command = lift;
-	autocommand[right][rightscale][M5].data = 6;
-	autocommand[right][rightscale][M6].command = push;
-	autocommand[right][rightscale][M7].command = lower;
-	autocommand[right][rightscale][M7].data = 5;
-	autocommand[right][rightscale][M8].command = done;
+	autocommand[right][rightscale][M4].command = lift;
+	autocommand[right][rightscale][M4].data = 5.5;
+	autocommand[right][rightscale][M5].command = push;
+	autocommand[right][rightscale][M6].command = lower;
+	autocommand[right][rightscale][M6].data = 5.5;
+	autocommand[right][rightscale][M7].command = done;
 
 	//start = right, target = left scale NOT DOING GO FOR BASELINE
 	autocommand[right][leftscale][M1].command = lift;
