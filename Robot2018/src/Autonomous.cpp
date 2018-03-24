@@ -388,11 +388,11 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][leftswitch][M3].command = turn;
 	autocommand[center][leftswitch][M3].data = -90;
 	autocommand[center][leftswitch][M4].command = drive;
-	autocommand[center][leftswitch][M4].data = 6.25;
+	autocommand[center][leftswitch][M4].data = 6.5;
 	autocommand[center][leftswitch][M5].command = turn;
 	autocommand[center][leftswitch][M5].data = 90;
 	autocommand[center][leftswitch][M6].command = drive;
-	autocommand[center][leftswitch][M6].data = 4.0;
+	autocommand[center][leftswitch][M6].data = 3.25;
 	autocommand[center][leftswitch][M7].command = lift;
 	autocommand[center][leftswitch][M7].data = 2.5;
 	autocommand[center][leftswitch][M8].command = push;
@@ -412,7 +412,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][rightswitch][M5].command = turn;
 	autocommand[center][rightswitch][M5].data = -90;
 	autocommand[center][rightswitch][M6].command = drive;
-	autocommand[center][rightswitch][M6].data = 4.0;
+	autocommand[center][rightswitch][M6].data = 3.25;
 	autocommand[center][rightswitch][M7].command = lift;
 	autocommand[center][rightswitch][M7].data = 2.5;
 	autocommand[center][rightswitch][M8].command = push;
