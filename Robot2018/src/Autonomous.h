@@ -49,8 +49,13 @@ private:
 	const float LIFT_FT_SEC = 1.51;
 	const float TURN_TIMEOUT = 2.5;
 
+	//Changing powers NOT ACTUAL VALUES
+	const float LOW_POWER = 0.0;
+	const float NORMAL_PWOER = 1.0;
+	const float HIGH_POWER = 2.0;
+
 	//Constants for initial lift
-	const float START_LIFT_TIME = 1.0;
+	const float START_LIFT_DISTANCE = 1.0;
 
 	//Choosing bois
 	frc::SendableChooser<int> * positionChooser; //Receiving from the smart dashboard
@@ -61,7 +66,7 @@ private:
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
 	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
 
-	enum commands {drive, reverse, turn, lift, lower, push, done};
+	enum commands {drive, reverse, turn, lift, lower, push, power, done};
 
 	struct cmd {
 		commands command;
@@ -70,7 +75,6 @@ private:
 
 	cmd autocommand [POSITION_SIZE] /* position */ [TARGET_SIZE] /* target */ [MOVEMENT_SIZE]; /* movement */
 
-	bool autodone = false; //Is movement done?
 	bool useDelay = false; //Delay our auto?
 	int movement = 0; //What movement are we on?
 	targets target = baseline;
@@ -85,6 +89,8 @@ public:
 	void AutoPeriodic();
 	void AddOptions();
 	void SetupAutoCommands();
+
+	bool autodone = false; //Is movement done?
 };
 
 #endif /*SRC_AUTONOMOUS_H*/

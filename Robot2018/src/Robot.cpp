@@ -77,6 +77,7 @@ public:
 	//Runs once Teleop starts
 	void TeleopInit()
 	{
+		autoMode.autodone = true;
 		//std::cout << "TeleopInit()" << std::endl;
 	}
 

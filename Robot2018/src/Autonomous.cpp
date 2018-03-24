@@ -154,6 +154,23 @@ void Autonomous::AutoPeriodic()
 			}
 			break;
 
+		case power:
+			speedChange = autocommand[position][target][movement].data;
+			if (speedChange == LOW_POWER)
+			{
+				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Low); //Puts robot in low power mode
+			}
+			else if (speedChange == HIGH_POWER)
+			{
+				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::High); //Puts robot in high power mode
+			}
+			else //Normal power
+			{
+				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Normal);
+			}
+			movement++;
+			break;
+
 		case done:
 			autodone = true;
 			break;
@@ -237,28 +254,28 @@ void Autonomous::SetupAutoCommands()
 
 	// start = left, target = baseline
 	autocommand[left][baseline][M1].command = lift;
-	autocommand[left][baseline][M1].data = START_LIFT_TIME;
+	autocommand[left][baseline][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][baseline][M2].command = drive;
 	autocommand[left][baseline][M2].data = 8.0;
 	autocommand[left][baseline][M3].command = done;
 
 	// start = center, target = baseline
 	autocommand[center][baseline][M1].command = lift;
-	autocommand[center][baseline][M1].data = START_LIFT_TIME;
+	autocommand[center][baseline][M1].data = START_LIFT_DISTANCE;
 	autocommand[center][baseline][M2].command = drive;
 	autocommand[center][baseline][M2].data = 8.0;
 	autocommand[center][baseline][M3].command = done;
 
 	// start = right, target = baseline
 	autocommand[right][baseline][M1].command = lift;
-	autocommand[right][baseline][M1].data = START_LIFT_TIME;
+	autocommand[right][baseline][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][baseline][M2].command = drive;
 	autocommand[right][baseline][M2].data = 8.0;
 	autocommand[right][baseline][M3].command = done;
 
 	// start = left, target = exchange
 	autocommand[left][exchange][M1].command = lift;
-	autocommand[left][exchange][M1].data = START_LIFT_TIME;
+	autocommand[left][exchange][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][exchange][M2].command = drive;
 	autocommand[left][exchange][M2].data = 8.5;
 	autocommand[left][exchange][M3].command = reverse;
@@ -276,7 +293,7 @@ void Autonomous::SetupAutoCommands()
 
 	//start = center, target = exchange
 	autocommand[center][exchange][M1].command = lift;
-	autocommand[center][exchange][M1].data = START_LIFT_TIME;
+	autocommand[center][exchange][M1].data = START_LIFT_DISTANCE;
 	autocommand[center][exchange][M2].command = drive;
 	autocommand[center][exchange][M2].data = 8.5;
 	autocommand[center][exchange][M3].command = reverse;
@@ -294,7 +311,7 @@ void Autonomous::SetupAutoCommands()
 
 	//start = right, target = exchange
 	autocommand[right][exchange][M1].command = lift;
-	autocommand[right][exchange][M1].data = START_LIFT_TIME;
+	autocommand[right][exchange][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][exchange][M2].command = drive;
 	autocommand[right][exchange][M2].data = 8.5;
 	autocommand[right][exchange][M3].command = reverse;
@@ -312,7 +329,7 @@ void Autonomous::SetupAutoCommands()
 
 	// start = left, target = left switch
 	autocommand[left][leftswitch][M1].command = lift;
-	autocommand[left][leftswitch][M1].data = START_LIFT_TIME;
+	autocommand[left][leftswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][leftswitch][M2].command = drive;
 	autocommand[left][leftswitch][M2].data = 14.5;
 	autocommand[left][leftswitch][M3].command = turn;
@@ -328,7 +345,7 @@ void Autonomous::SetupAutoCommands()
 
 	// start = left, target = right switch
 	autocommand[left][rightswitch][M1].command = lift;
-	autocommand[left][rightswitch][M1].data = START_LIFT_TIME;
+	autocommand[left][rightswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][rightswitch][M2].command = drive;
 	autocommand[left][rightswitch][M2].data = 21.0;
 	autocommand[left][rightswitch][M3].command = turn;
@@ -346,7 +363,7 @@ void Autonomous::SetupAutoCommands()
 
 	// start = right, target = right switch
 	autocommand[right][rightswitch][M1].command = lift;
-	autocommand[right][rightswitch][M1].data = START_LIFT_TIME;
+	autocommand[right][rightswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][rightswitch][M2].command = drive;
 	autocommand[right][rightswitch][M2].data = 14;
 	autocommand[right][rightswitch][M3].command = turn;
@@ -362,7 +379,7 @@ void Autonomous::SetupAutoCommands()
 
 	// start = right, target = left switch
 	autocommand[right][leftswitch][M1].command = lift;
-	autocommand[right][leftswitch][M1].data = START_LIFT_TIME;
+	autocommand[right][leftswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][leftswitch][M2].command = drive;
 	autocommand[right][leftswitch][M2].data = 20.0;
 	autocommand[right][leftswitch][M3].command = turn;
@@ -382,7 +399,7 @@ void Autonomous::SetupAutoCommands()
 
 	// start = center, target = left switch
 	autocommand[center][leftswitch][M1].command = lift;
-	autocommand[center][leftswitch][M1].data = START_LIFT_TIME;
+	autocommand[center][leftswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[center][leftswitch][M2].command = drive;
 	autocommand[center][leftswitch][M2].data = 4.0;
 	autocommand[center][leftswitch][M3].command = turn;
@@ -391,18 +408,20 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][leftswitch][M4].data = 6.5;
 	autocommand[center][leftswitch][M5].command = turn;
 	autocommand[center][leftswitch][M5].data = 90;
-	autocommand[center][leftswitch][M6].command = drive;
-	autocommand[center][leftswitch][M6].data = 3.25;
-	autocommand[center][leftswitch][M7].command = lift;
-	autocommand[center][leftswitch][M7].data = 2.5;
-	autocommand[center][leftswitch][M8].command = push;
-	autocommand[center][leftswitch][M9].command = lower;
-	autocommand[center][leftswitch][M9].data = 2.5;
-	autocommand[center][leftswitch][M10].command = done;
+	autocommand[center][leftswitch][M6].command = power;
+	autocommand[center][leftswitch][M6].data = LOW_POWER;
+	autocommand[center][leftswitch][M7].command = drive;
+	autocommand[center][leftswitch][M7].data = 4.0;
+	autocommand[center][leftswitch][M8].command = lift;
+	autocommand[center][leftswitch][M8].data = 2.5;
+	autocommand[center][leftswitch][M9].command = push;
+	autocommand[center][leftswitch][M10].command = lower;
+	autocommand[center][leftswitch][M10].data = 2.5;
+	autocommand[center][leftswitch][M11].command = done;
 
 	// start = center, target = right switch
 	autocommand[center][rightswitch][M1].command = lift;
-	autocommand[center][rightswitch][M1].data = START_LIFT_TIME;
+	autocommand[center][rightswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[center][rightswitch][M2].command = drive;
 	autocommand[center][rightswitch][M2].data = 4.0;
 	autocommand[center][rightswitch][M3].command = turn;
@@ -411,32 +430,34 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][rightswitch][M4].data = 2.75;
 	autocommand[center][rightswitch][M5].command = turn;
 	autocommand[center][rightswitch][M5].data = -90;
-	autocommand[center][rightswitch][M6].command = drive;
-	autocommand[center][rightswitch][M6].data = 3.25;
-	autocommand[center][rightswitch][M7].command = lift;
-	autocommand[center][rightswitch][M7].data = 2.5;
-	autocommand[center][rightswitch][M8].command = push;
-	autocommand[center][rightswitch][M9].command = lower;
-	autocommand[center][rightswitch][M9].data = 2.5;
-	autocommand[center][rightswitch][M10].command = done;
+	autocommand[center][rightswitch][M6].command = power;
+	autocommand[center][rightswitch][M6].data = LOW_POWER;
+	autocommand[center][rightswitch][M7].command = drive;
+	autocommand[center][rightswitch][M7].data = 4.0;
+	autocommand[center][rightswitch][M8].command = lift;
+	autocommand[center][rightswitch][M8].data = 2.5;
+	autocommand[center][rightswitch][M9].command = push;
+	autocommand[center][rightswitch][M10].command = lower;
+	autocommand[center][rightswitch][M10].data = 2.5;
+	autocommand[center][rightswitch][M11].command = done;
 
 	// start = center, target = left scale GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
 	autocommand[center][leftscale][M1].command = lift;
-	autocommand[center][leftscale][M1].data = START_LIFT_TIME;
+	autocommand[center][leftscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[center][leftscale][M2].command = drive;
 	autocommand[center][leftscale][M2].data = 8.0;
 	autocommand[center][leftscale][M3].command = done;
 
 	// start = center, target = right scale GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
 	autocommand[center][rightscale][M1].command = lift;
-	autocommand[center][rightscale][M1].data = START_LIFT_TIME;
+	autocommand[center][rightscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[center][rightscale][M2].command = drive;
 	autocommand[center][rightscale][M2].data = 8.0;
 	autocommand[center][rightscale][M3].command = done;
 
 	//start = left, target = left scale
 	autocommand[left][leftscale][M1].command = lift;
-	autocommand[left][leftscale][M1].data = START_LIFT_TIME;
+	autocommand[left][leftscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][leftscale][M2].command = drive;
 	autocommand[left][leftscale][M2].data = 31.5;
 	autocommand[left][leftscale][M3].command = turn;
@@ -450,14 +471,14 @@ void Autonomous::SetupAutoCommands()
 
 	//start = left, target = right scale NOT DOING GO FOR BASELINE
 	autocommand[left][rightscale][M1].command = lift;
-	autocommand[left][rightscale][M1].data = START_LIFT_TIME;
+	autocommand[left][rightscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][rightscale][M2].command = drive;
 	autocommand[left][rightscale][M2].data = 8.0;
 	autocommand[left][rightscale][M3].command = done;
 
 	//start = right, target = right scale
 	autocommand[right][rightscale][M1].command = lift;
-	autocommand[right][rightscale][M1].data = START_LIFT_TIME;
+	autocommand[right][rightscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][rightscale][M2].command = drive;
 	autocommand[right][rightscale][M2].data = 31.5;
 	autocommand[right][rightscale][M3].command = turn;
@@ -471,7 +492,7 @@ void Autonomous::SetupAutoCommands()
 
 	//start = right, target = left scale NOT DOING GO FOR BASELINE
 	autocommand[right][leftscale][M1].command = lift;
-	autocommand[right][leftscale][M1].data = START_LIFT_TIME;
+	autocommand[right][leftscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][leftscale][M2].command = drive;
 	autocommand[right][leftscale][M2].data = 8.0;
 	autocommand[right][leftscale][M3].command = done;
