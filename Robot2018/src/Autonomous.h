@@ -51,7 +51,7 @@ private:
 
 	//Changing powers NOT ACTUAL VALUES
 	const float LOW_POWER = 0.0;
-	const float NORMAL_PWOER = 1.0;
+	const float NORMAL_POWER = 1.0;
 	const float HIGH_POWER = 2.0;
 
 	//Constants for initial lift

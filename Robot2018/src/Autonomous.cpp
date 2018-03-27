@@ -157,17 +157,12 @@ void Autonomous::AutoPeriodic()
 		case power:
 			speedChange = autocommand[position][target][movement].data;
 			if (speedChange == LOW_POWER)
-			{
 				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Low); //Puts robot in low power mode
-			}
 			else if (speedChange == HIGH_POWER)
-			{
 				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::High); //Puts robot in high power mode
-			}
-			else //Normal power
-			{
-				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Normal);
-			}
+			else if (speedChange == NORMAL_POWER)
+				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Normal); //Puts robot in normal power mode
+
 			movement++;
 			break;
 
@@ -228,7 +223,7 @@ void Autonomous::ReadStation()
 	}
 	else if(targetChoice == 4)
 	{
-		if(switchColor == 'R')
+		if(scaleColor == 'R')
 			target = rightscale;
 		else
 			target = leftscale;
@@ -408,16 +403,14 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][leftswitch][M4].data = 6.5;
 	autocommand[center][leftswitch][M5].command = turn;
 	autocommand[center][leftswitch][M5].data = 90;
-	autocommand[center][leftswitch][M6].command = power;
-	autocommand[center][leftswitch][M6].data = LOW_POWER;
-	autocommand[center][leftswitch][M7].command = drive;
-	autocommand[center][leftswitch][M7].data = 4.0;
-	autocommand[center][leftswitch][M8].command = lift;
-	autocommand[center][leftswitch][M8].data = 2.5;
-	autocommand[center][leftswitch][M9].command = push;
-	autocommand[center][leftswitch][M10].command = lower;
-	autocommand[center][leftswitch][M10].data = 2.5;
-	autocommand[center][leftswitch][M11].command = done;
+	autocommand[center][leftswitch][M6].command = drive;
+	autocommand[center][leftswitch][M6].data = 3.25;
+	autocommand[center][leftswitch][M7].command = lift;
+	autocommand[center][leftswitch][M7].data = 2.5;
+	autocommand[center][leftswitch][M8].command = push;
+	autocommand[center][leftswitch][M9].command = lower;
+	autocommand[center][leftswitch][M9].data = 2.5;
+	autocommand[center][leftswitch][M10].command = done;
 
 	// start = center, target = right switch
 	autocommand[center][rightswitch][M1].command = lift;
@@ -430,16 +423,14 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][rightswitch][M4].data = 2.75;
 	autocommand[center][rightswitch][M5].command = turn;
 	autocommand[center][rightswitch][M5].data = -90;
-	autocommand[center][rightswitch][M6].command = power;
-	autocommand[center][rightswitch][M6].data = LOW_POWER;
-	autocommand[center][rightswitch][M7].command = drive;
-	autocommand[center][rightswitch][M7].data = 4.0;
-	autocommand[center][rightswitch][M8].command = lift;
-	autocommand[center][rightswitch][M8].data = 2.5;
-	autocommand[center][rightswitch][M9].command = push;
-	autocommand[center][rightswitch][M10].command = lower;
-	autocommand[center][rightswitch][M10].data = 2.5;
-	autocommand[center][rightswitch][M11].command = done;
+	autocommand[center][rightswitch][M6].command = drive;
+	autocommand[center][rightswitch][M6].data = 3.25;
+	autocommand[center][rightswitch][M7].command = lift;
+	autocommand[center][rightswitch][M7].data = 2.5;
+	autocommand[center][rightswitch][M8].command = push;
+	autocommand[center][rightswitch][M9].command = lower;
+	autocommand[center][rightswitch][M9].data = 2.5;
+	autocommand[center][rightswitch][M10].command = done;
 
 	// start = center, target = left scale GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
 	autocommand[center][leftscale][M1].command = lift;
