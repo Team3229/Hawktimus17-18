@@ -13,14 +13,18 @@ using namespace frc;
 Camera::Camera()
 {
 	//1st camera settings
-	cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
+	//cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
+	cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+	camera.SetResolution(640, 480);
 	camera.SetFPS(FPS);
 	camera.SetWhiteBalanceAuto();
 	camera.SetExposureAuto();
 	camera.SetBrightness(BRIGHTNESS);
 
 	//2nd camera here
-	cs::AxisCamera camera2 = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
+	//cs::AxisCamera camera2 = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
+	cs::UsbCamera camera2 = CameraServer::GetInstance()->StartAutomaticCapture();
+	camera2.SetResolution(640, 480);
 	camera2.SetFPS(FPS);
 	camera2.SetWhiteBalanceAuto();
 	camera2.SetExposureAuto();
