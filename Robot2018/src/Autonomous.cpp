@@ -403,13 +403,13 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][leftswitch][M4].data = 6.5;
 	autocommand[center][leftswitch][M5].command = turn;
 	autocommand[center][leftswitch][M5].data = 90;
-	autocommand[center][leftswitch][M6].command = drive;
-	autocommand[center][leftswitch][M6].data = 3.25;
-	autocommand[center][leftswitch][M7].command = lift;
-	autocommand[center][leftswitch][M7].data = 2.5;
-	autocommand[center][leftswitch][M8].command = push;
-	autocommand[center][leftswitch][M9].command = lower;
-	autocommand[center][leftswitch][M9].data = 2.5;
+	autocommand[center][leftswitch][M6].command = power;
+	autocommand[center][leftswitch][M6].data = LOW_POWER;
+	autocommand[center][leftswitch][M7].command = drive;
+	autocommand[center][leftswitch][M7].data = 20.0; //Massive because slow
+	autocommand[center][leftswitch][M8].command = lift;
+	autocommand[center][leftswitch][M8].data = 2.5;
+	autocommand[center][leftswitch][M9].command = push;
 	autocommand[center][leftswitch][M10].command = done;
 
 	// start = center, target = right switch
@@ -423,13 +423,13 @@ void Autonomous::SetupAutoCommands()
 	autocommand[center][rightswitch][M4].data = 2.75;
 	autocommand[center][rightswitch][M5].command = turn;
 	autocommand[center][rightswitch][M5].data = -90;
-	autocommand[center][rightswitch][M6].command = drive;
-	autocommand[center][rightswitch][M6].data = 3.25;
-	autocommand[center][rightswitch][M7].command = lift;
-	autocommand[center][rightswitch][M7].data = 2.5;
-	autocommand[center][rightswitch][M8].command = push;
-	autocommand[center][rightswitch][M9].command = lower;
-	autocommand[center][rightswitch][M9].data = 2.5;
+	autocommand[center][rightswitch][M6].command = power;
+	autocommand[center][rightswitch][M6].data = LOW_POWER;
+	autocommand[center][rightswitch][M7].command = drive;
+	autocommand[center][rightswitch][M7].data = 20.0; //Massive because slow
+	autocommand[center][rightswitch][M8].command = lift;
+	autocommand[center][rightswitch][M8].data = 2.5;
+	autocommand[center][rightswitch][M9].command = push;
 	autocommand[center][rightswitch][M10].command = done;
 
 	// start = center, target = left scale GO FOR BASLINE BECAUSE CENTER SWITCH IS BAD
@@ -450,14 +450,14 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftscale][M1].command = lift;
 	autocommand[left][leftscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][leftscale][M2].command = drive;
-	autocommand[left][leftscale][M2].data = 31.5;
+	autocommand[left][leftscale][M2].data = 30.0;
 	autocommand[left][leftscale][M3].command = turn;
-	autocommand[left][leftscale][M3].data = 90;
+	autocommand[left][leftscale][M3].data = 80;
 	autocommand[left][leftscale][M4].command = lift;
-	autocommand[left][leftscale][M4].data = 5.5;
+	autocommand[left][leftscale][M4].data = 5.7;
 	autocommand[left][leftscale][M5].command = push;
 	autocommand[left][leftscale][M6].command = lower;
-	autocommand[left][leftscale][M6].data = 5.5;
+	autocommand[left][leftscale][M6].data = 5.7;
 	autocommand[left][leftscale][M7].command = done;
 
 	//start = left, target = right scale NOT DOING GO FOR BASELINE
@@ -471,14 +471,14 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][rightscale][M1].command = lift;
 	autocommand[right][rightscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][rightscale][M2].command = drive;
-	autocommand[right][rightscale][M2].data = 31.5;
+	autocommand[right][rightscale][M2].data = 31.0;
 	autocommand[right][rightscale][M3].command = turn;
-	autocommand[right][rightscale][M3].data = -90;
+	autocommand[right][rightscale][M3].data = -80;
 	autocommand[right][rightscale][M4].command = lift;
-	autocommand[right][rightscale][M4].data = 5.5;
+	autocommand[right][rightscale][M4].data = 5.7;
 	autocommand[right][rightscale][M5].command = push;
 	autocommand[right][rightscale][M6].command = lower;
-	autocommand[right][rightscale][M6].data = 5.5;
+	autocommand[right][rightscale][M6].data = 5.7;
 	autocommand[right][rightscale][M7].command = done;
 
 	//start = right, target = left scale NOT DOING GO FOR BASELINE

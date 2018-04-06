@@ -69,8 +69,10 @@ public:
 	void AutonomousPeriodic()
 	{
 		//std::cout << "AutonomousPeriodic()" << std::endl;
-
-		autoMode.AutoPeriodic();
+		while (!autoMode.autodone)
+		{
+			autoMode.AutoPeriodic();
+		}
 		//While autonomous movements are not done (because it is re-entrant)
 	}
 
@@ -79,6 +81,7 @@ public:
 	{
 		autoMode.autodone = true;
 		//std::cout << "TeleopInit()" << std::endl;
+		chasis.ChangeSpeed(DriveSystem::MotorSpeed::Normal);
 	}
 
 	//Runs continually during Teleop

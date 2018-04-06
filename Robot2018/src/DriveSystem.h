@@ -64,7 +64,7 @@ private:
 
 	//Changable powers
 	const float MAX_OUTPUT = 0.7; //Was 0.6
-	const float LOW_OUTPUT = 0.3; //Lower output for TeleOp
+	const float LOW_OUTPUT = 0.4; //Lower output for TeleOp
 	const float HIGH_OUTPUT = 1.0;
 
 	//Turn powers for turning in autonomous

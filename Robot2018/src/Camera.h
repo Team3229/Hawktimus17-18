@@ -41,9 +41,6 @@ private:
 	const float INITIAL_TILT = 0.5;
 	const float PANTILT_RATE = 0.05;
 
-	//camera resolution test
-	const int width = 1920;
-	const int height = 1080;
 };
 
 #endif /* SRC_CAMERA_H_ */

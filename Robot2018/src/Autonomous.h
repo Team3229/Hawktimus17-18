@@ -43,7 +43,7 @@ private:
 	const static int MOVEMENT_SIZE = 10;
 	const bool FORWARD = true;
 	const bool REVERSE = false;
-	const float PUSH_TIME = 2.0; //Time to push the cube
+	const float PUSH_TIME = 0.5; //Time to push the cube
 
 	const float DRIVE_FT_SEC = 9.1; //Noraml speed feet/second //Old:5.5
 	const float LIFT_FT_SEC = 1.51;
@@ -65,7 +65,6 @@ private:
 	enum positions {left, center, right};
 	enum targets {baseline, exchange, leftswitch, rightswitch, leftscale, rightscale};
 	enum movements {M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11};
-
 	enum commands {drive, reverse, turn, lift, lower, push, power, done};
 
 	struct cmd {
@@ -79,7 +78,6 @@ private:
 	int movement = 0; //What movement are we on?
 	targets target = baseline;
 	positions position = center;
-
 
 public:
 	Autonomous(DriveSystem * chasis, CubeDelivery * cube);
