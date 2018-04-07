@@ -452,7 +452,7 @@ void Autonomous::SetupAutoCommands()
 	autocommand[left][leftscale][M2].command = drive;
 	autocommand[left][leftscale][M2].data = 30.0;
 	autocommand[left][leftscale][M3].command = turn;
-	autocommand[left][leftscale][M3].data = 80;
+	autocommand[left][leftscale][M3].data = 70;
 	autocommand[left][leftscale][M4].command = lift;
 	autocommand[left][leftscale][M4].data = 5.7;
 	autocommand[left][leftscale][M5].command = push;
@@ -471,9 +471,9 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][rightscale][M1].command = lift;
 	autocommand[right][rightscale][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][rightscale][M2].command = drive;
-	autocommand[right][rightscale][M2].data = 31.0;
+	autocommand[right][rightscale][M2].data = 30.0;
 	autocommand[right][rightscale][M3].command = turn;
-	autocommand[right][rightscale][M3].data = -80;
+	autocommand[right][rightscale][M3].data = -70;
 	autocommand[right][rightscale][M4].command = lift;
 	autocommand[right][rightscale][M4].data = 5.7;
 	autocommand[right][rightscale][M5].command = push;
