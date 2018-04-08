@@ -322,75 +322,51 @@ void Autonomous::SetupAutoCommands()
 	autocommand[right][exchange][M8].command = push;
 	autocommand[right][exchange][M9].command = done;
 
-	// start = left, target = left switch
+	// start = left, target = left switch ADD SLOW
 	autocommand[left][leftswitch][M1].command = lift;
 	autocommand[left][leftswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][leftswitch][M2].command = drive;
 	autocommand[left][leftswitch][M2].data = 14.5;
 	autocommand[left][leftswitch][M3].command = turn;
 	autocommand[left][leftswitch][M3].data = 90;
-	autocommand[left][leftswitch][M4].command = drive;
-	autocommand[left][leftswitch][M4].data = 1.5;
-	autocommand[left][leftswitch][M5].command = lift;
-	autocommand[left][leftswitch][M5].data = 2.5;
-	autocommand[left][leftswitch][M6].command = push;
-	autocommand[left][leftswitch][M7].command = lower;
-	autocommand[left][leftswitch][M7].data = 2.5;
+	autocommand[left][leftswitch][M4].command = power;
+	autocommand[left][leftswitch][M4].data = LOW_POWER;
+	autocommand[left][leftswitch][M5].command = drive;
+	autocommand[left][leftswitch][M5].data = 7.0;
+	autocommand[left][leftswitch][M6].command = lift;
+	autocommand[left][leftswitch][M6].data = 2.0;
+	autocommand[left][leftswitch][M7].command = push;
 	autocommand[left][leftswitch][M8].command = done;
 
-	// start = left, target = right switch
+	// start = left, target = right switch JUST BASELINE
 	autocommand[left][rightswitch][M1].command = lift;
 	autocommand[left][rightswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[left][rightswitch][M2].command = drive;
-	autocommand[left][rightswitch][M2].data = 21.0;
-	autocommand[left][rightswitch][M3].command = turn;
-	autocommand[left][rightswitch][M3].data = 90;
-	autocommand[left][rightswitch][M4].command = drive;
-	autocommand[left][rightswitch][M4].data = 15.5;
-	autocommand[left][rightswitch][M5].command = turn;
-	autocommand[left][rightswitch][M5].data = 90;
-	autocommand[left][rightswitch][M6].command = lift;
-	autocommand[left][rightswitch][M6].data = 2.5;
-	autocommand[left][rightswitch][M7].command = push;
-	autocommand[left][rightswitch][M8].command = lower;
-	autocommand[left][rightswitch][M8].data = 2.5;
-	autocommand[left][rightswitch][M9].command = done;
+	autocommand[left][rightswitch][M2].data = 8.0;
+	autocommand[left][rightswitch][M3].command = done;
 
-	// start = right, target = right switch
+	// start = right, target = right switch ADD SLOW
 	autocommand[right][rightswitch][M1].command = lift;
 	autocommand[right][rightswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][rightswitch][M2].command = drive;
-	autocommand[right][rightswitch][M2].data = 14;
+	autocommand[right][rightswitch][M2].data = 14.5;
 	autocommand[right][rightswitch][M3].command = turn;
 	autocommand[right][rightswitch][M3].data = -90;
-	autocommand[right][rightswitch][M4].command = drive;
-	autocommand[right][rightswitch][M4].data = 1.5;
-	autocommand[right][rightswitch][M5].command = lift;
-	autocommand[right][rightswitch][M5].data = 2.5;
-	autocommand[right][rightswitch][M6].command = push;
-	autocommand[right][rightswitch][M7].command = lower;
-	autocommand[right][rightswitch][M7].data = 2.5;
+	autocommand[right][rightswitch][M4].command = power;
+	autocommand[right][rightswitch][M4].data = LOW_POWER;
+	autocommand[right][rightswitch][M5].command = drive;
+	autocommand[right][rightswitch][M5].data = 7.0;
+	autocommand[right][rightswitch][M6].command = lift;
+	autocommand[right][rightswitch][M6].data = 2.0;
+	autocommand[right][rightswitch][M7].command = push;
 	autocommand[right][rightswitch][M8].command = done;
 
-	// start = right, target = left switch
+	// start = right, target = left switch JUST BASELINE
 	autocommand[right][leftswitch][M1].command = lift;
 	autocommand[right][leftswitch][M1].data = START_LIFT_DISTANCE;
 	autocommand[right][leftswitch][M2].command = drive;
-	autocommand[right][leftswitch][M2].data = 20.0;
-	autocommand[right][leftswitch][M3].command = turn;
-	autocommand[right][leftswitch][M3].data = -90;
-	autocommand[right][leftswitch][M4].command = drive;
-	autocommand[right][leftswitch][M4].data = 15.0;
-	autocommand[right][leftswitch][M5].command = turn;
-	autocommand[right][leftswitch][M5].data = -90;
-	autocommand[right][leftswitch][M6].command = drive;
-	autocommand[right][leftswitch][M6].data = 1.5;
-	autocommand[right][leftswitch][M7].command = lift;
-	autocommand[right][leftswitch][M7].data = 2.5;
-	autocommand[right][leftswitch][M8].command = push;
-	autocommand[right][leftswitch][M9].command = lower;
-	autocommand[right][leftswitch][M9].data = 2.5;
-	autocommand[right][leftswitch][M10].command = done;
+	autocommand[right][leftswitch][M2].data = 8.0;
+	autocommand[right][leftswitch][M3].command = done;
 
 	// start = center, target = left switch
 	autocommand[center][leftswitch][M1].command = lift;
