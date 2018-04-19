@@ -31,7 +31,7 @@ private:
 	cs::VideoSource camera2;
 
 	// Constants for Camera Settings
-	const int FPS = 30;
+	const int FPS = 10;
 	const int BRIGHTNESS = 40;
 
 	// Constants for Pan/Tilt Servos

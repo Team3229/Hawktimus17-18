@@ -12,10 +12,11 @@ using namespace frc;
 
 Camera::Camera()
 {
+	//Make resolution low to reduce bandwidth and rio cpu %
 	//1st camera settings
 	//cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
 	cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-	camera.SetResolution(640, 480);
+	camera.SetResolution(160, 120);
 	camera.SetFPS(FPS);
 	camera.SetWhiteBalanceAuto();
 	camera.SetExposureAuto();
@@ -24,7 +25,7 @@ Camera::Camera()
 	//2nd camera here
 	//cs::AxisCamera camera2 = CameraServer::GetInstance()->AddAxisCamera("axis-camera.local");
 	cs::UsbCamera camera2 = CameraServer::GetInstance()->StartAutomaticCapture();
-	camera2.SetResolution(640, 480);
+	camera2.SetResolution(160, 120);
 	camera2.SetFPS(FPS);
 	camera2.SetWhiteBalanceAuto();
 	camera2.SetExposureAuto();
