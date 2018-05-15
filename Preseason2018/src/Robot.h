@@ -14,6 +14,7 @@
 //Standard library includes
 #include <iostream>
 #include <string>
+#include <fstream>
 
 //Includes from the frc namespace
 #include <IterativeRobot.h>
@@ -39,6 +40,12 @@ public:
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
 	void TestPeriodic() override;
+	void WriteLogFile( const std::string &text )
+	{
+	    std::ofstream log_file(
+	        "log_file.txt", std::ios_base::out | std::ios_base::app );
+	    log_file << text << std::endl;
+	}
 
 private:
 	frc::SendableChooser<std::string> m_chooser;
