@@ -35,12 +35,12 @@ void CubeDelivery::Conveyor(ConveyorDirection direction)
 	{
 		myConveyor->Set(-CONVEYOR_POWER); //Sucks cube in
 	}
-	//std::cout << "Conveyor()" << std::endl;
+	debug("Conveyor()" << std::endl);
 }
 
 void CubeDelivery::PushCube()
 {
-	//std::cout << "PushCube()" << std::endl;
+	debug("PushCube()" << std::endl);
 	myConveyor->Set(CONVEYOR_POWER); //Moves conveyor to push cube out
 }
 
@@ -54,12 +54,12 @@ void CubeDelivery::Lift(LiftDirection direction)
 {
 	if (direction == LiftDirection::Up)
 	{
-		//std::cout << "LiftUp()" << std::endl;
+		debug("LiftUp()" << std::endl);
 		myLift->Set(LIFT_POWER); //Moves lift up
 	}
 	else if (direction == LiftDirection::Down)
 	{
-		//std::cout << "LiftDown()" << std::endl;
+		debug("LiftDown()" << std::endl);
 		myLift->Set(-LIFT_POWER); //Moves lift down
 	}
 }
@@ -74,7 +74,7 @@ void CubeDelivery::StopLift()
 /*void CubeDelivery::ResetLift()
 {
 	//Used to reset the lift to its lowest point
-	//std::cout << "ResetLift()" << std::endl;
+	debug("ResetLift()" << std::endl);
 	if (!bottomSwitch->Get()) //Moves the lift to its lowest point
 	{
 		myLift->Set(LIFT_POWER);
@@ -88,7 +88,7 @@ void CubeDelivery::StopLift()
 void CubeDelivery::TestLimitSwitch()
 {
 	using namespace std;
-	cout << "TestLimitSwitch()" << endl;
+	cout << "TestLimitSwitch()" << endl);
 
-	cout << "Bottom Switch = " << bottomSwitch->Get() << endl; //Outputs the state of the bottom switch
+	cout << "Bottom Switch = " << bottomSwitch->Get() << endl); //Outputs the state of the bottom switch
 }*/

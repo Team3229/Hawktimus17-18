@@ -15,7 +15,7 @@
 DriveSystem::DriveSystem()
 {
 	//Initialize the gyro and reset to zero
-	gyro = new ADXRS450_Gyro{frc::SPI::kOnboardCS0};
+	gyro = new frc::ADXRS450_Gyro{frc::SPI::kOnboardCS0};
 	gyro->Calibrate();
 	gyro->Reset();
 
@@ -83,7 +83,7 @@ void DriveSystem::Drive (double& Y, double& X)
 	//Flip the Y value because of the RobotDrive.Drive function is opposite of the XBoxController
 	Y = -Y;
 
-	//std::cout << "diffDrive Y: " << Y << " X: " << X << std::endl; //puts in console our x and y
+	debug("diffDrive Y: " << Y << " X: " << X << std::endl); //puts in console our x and y
 	diffDrive->ArcadeDrive(Y, X);
 }
 
@@ -115,7 +115,7 @@ void DriveSystem::DriveStraight(bool direction)
 		adjust = 0.0;
 
 	// Drive the next segment
-	//std::cout << "DriveStraight Gyro angle:" << gyroAngle << "power:" << power << "adjust:" << adjust << std::endl;
+	debug("DriveStraight Gyro angle:" << gyroAngle << "power:" << power << "adjust:" << adjust << std::endl);
 	diffDrive->ArcadeDrive(power, adjust);
 }
 
@@ -155,7 +155,7 @@ void DriveSystem::DriveTurn (double angle)
 			turnpowerX = RIGHT_TURN_POWER_X;
 	}
 	// Turn
-	//std::cout << "DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl;
+	debug("DriveTurn Gyro angle:" << gyroAngle << "Angle:" << angle << "Yturn:" << turnpowerY << "XTurn:" << turnpowerX << std::endl);
 	diffDrive->ArcadeDrive(turnpowerY, turnpowerX);
 }
 
@@ -165,22 +165,22 @@ void DriveSystem::ChangeSpeed(MotorSpeed change)
 	if (change == MotorSpeed::Normal)
 	{
 		diffDrive->SetMaxOutput(MAX_OUTPUT); //Sets motors to max output
-		//std::cout << "Robot set to max power at " << MAX_OUTPUT << std::endl;
+		debug("Robot set to max power at " << MAX_OUTPUT << std::endl);
 	}
 	else if (change == MotorSpeed::Low)
 	{
 		diffDrive->SetMaxOutput(LOW_OUTPUT); //Sets motors to lower output
-		//std::cout << "Robot set to lower power at " << LOW_OUTPUT << std::endl;
+		debug("Robot set to lower power at " << LOW_OUTPUT << std::endl);
 	}
 	else if (change == MotorSpeed::High) //Autonomus for scales
 	{
 		diffDrive->SetMaxOutput(HIGH_OUTPUT);
-		//std::cout << "Robot set to max power at " << HIGH_OUTPUT << std::endl;
+		debug("Robot set to max power at " << HIGH_OUTPUT << std::endl);
 	}
 }
 
 void DriveSystem::TestGyro()
 {
 	double angle = gyro->GetAngle();
-	std::cout << "Gyro angle: " << angle << std::endl;
+	debug("Gyro angle: " << angle << std::endl);
 }

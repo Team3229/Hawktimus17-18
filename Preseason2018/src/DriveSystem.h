@@ -23,6 +23,7 @@
 #include <ADXRS450_Gyro.h>
 #include <Drive/DifferentialDrive.h>
 #include "ctre/Phoenix.h"
+#include "Debug.h"
 
 class DriveSystem
 {
@@ -48,8 +49,8 @@ private:
 	WPI_TalonSRX * leftFollower; //Back left, follower
 	WPI_TalonSRX * rightFollower; //Back right, follower
 
-	DifferentialDrive * diffDrive; //Drivetrain
-	ADXRS450_Gyro * gyro; //Instantiate gyro and initialize its port
+	frc::DifferentialDrive * diffDrive; //Drivetrain
+	frc::ADXRS450_Gyro * gyro; //Instantiate gyro and initialize its port
 	frc::Timer driveTime{};
 
 	//Constants for ports and unique id

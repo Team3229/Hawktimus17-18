@@ -21,6 +21,6 @@ void Climber::Stop()
 
 void Climber::Climb()
 {
-	//std::cout << "Climb()" << std::endl;
+	debug("Climb()" << std::endl);
 	myClimber->Set(CLIMBER_POWER);
 }

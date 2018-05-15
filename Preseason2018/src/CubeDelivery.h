@@ -20,6 +20,7 @@
 //frc includes
 #include <WPILib.h>
 #include <Spark.h>
+#include "Debug.h"
 
 class CubeDelivery
 {

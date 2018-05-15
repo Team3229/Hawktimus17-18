@@ -14,6 +14,7 @@
 #include <memory>
 #include <string>
 #include <Spark.h>
+#include "Debug.h"
 
 class Climber
 {

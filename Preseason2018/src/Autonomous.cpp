@@ -46,14 +46,14 @@ void Autonomous::AutoPeriodic()
 	}
 
 	//For best results, use a fully charged battery
-	while (!autodone)
+	if (!autodone)
 	{
-		/*std::cout << "Command: " << autocommand[position][target][movement].command << std::endl;
-		std::cout << "Data: " << autocommand[position][target][movement].data << std::endl;
-		std::cout << "Position: " << autocommand[position] << std::endl;
-		std::cout << "Target: " << autocommand[position][target] << std::endl << std::endl;
-		std::cout << "Movement: " << movement << std::endl;
-		std::cout << "Auto timer: " << autoTimer.Get() << std::endl;*/
+		debug("Command: " << autocommand[position][target][movement].command << std::endl);
+		debug("Data: " << autocommand[position][target][movement].data << std::endl);
+		debug("Position: " << autocommand[position] << std::endl);
+		debug("Target: " << autocommand[position][target] << std::endl << std::endl);
+		debug("Movement: " << movement << std::endl);
+		debug("Auto timer: " << autoTimer.Get() << std::endl);
 
 		switch (autocommand[position][target][movement].command)
 		{
@@ -113,7 +113,7 @@ void Autonomous::AutoPeriodic()
 				autoTimer.Start();
 			}
 			if (autoTimer.Get() < timeLimit) {
-				gettinPoints->Lift(CubeDelivery::LiftDirection::Up);
+				gettinPoints->Lift(gettinPoints->LiftDirection::Up);
 			}
 			else {
 				gettinPoints->StopLift();
@@ -129,7 +129,7 @@ void Autonomous::AutoPeriodic()
 				autoTimer.Start();
 			}
 			if (autoTimer.Get() < timeLimit) {
-				gettinPoints->Lift(CubeDelivery::LiftDirection::Down);
+				gettinPoints->Lift(gettinPoints->LiftDirection::Down);
 			}
 			else {
 				gettinPoints->StopLift();
@@ -157,11 +157,11 @@ void Autonomous::AutoPeriodic()
 		case power:
 			speedChange = autocommand[position][target][movement].data;
 			if (speedChange == LOW_POWER)
-				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Low); //Puts robot in low power mode
+				driveTrain->ChangeSpeed(driveTrain->MotorSpeed::Low); //Puts robot in low power mode
 			else if (speedChange == HIGH_POWER)
-				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::High); //Puts robot in high power mode
+				driveTrain->ChangeSpeed(driveTrain->MotorSpeed::High); //Puts robot in high power mode
 			else if (speedChange == NORMAL_POWER)
-				driveTrain->ChangeSpeed(DriveSystem::MotorSpeed::Normal); //Puts robot in normal power mode
+				driveTrain->ChangeSpeed(driveTrain->MotorSpeed::Normal); //Puts robot in normal power mode
 
 			movement++;
 			break;
@@ -204,8 +204,8 @@ void Autonomous::AddOptions()
 //Reads values from the smart dashboard.
 void Autonomous::ReadStation()
 {
-	//std::cout << "TChooser: " << targetChooser->GetSelected() << std::endl;
-	//std::cout << "PChooser: " << positionChooser->GetSelected() << std::endl;
+	debug("TChooser: " << targetChooser->GetSelected() << std::endl);
+	debug("PChooser: " << positionChooser->GetSelected() << std::endl);
 
 	int targetChoice = targetChooser->GetSelected();
 	int positionChoice = positionChooser->GetSelected();
@@ -245,7 +245,7 @@ void Autonomous::ReadStation()
 
 void Autonomous::SetupAutoCommands()
 {
-	//std::cout << "SetupAutoCommands()" << std::endl;
+	debug("SetupAutoCommands()" << std::endl);
 
 	// start = left, target = baseline
 	autocommand[left][baseline][M1].command = lift;

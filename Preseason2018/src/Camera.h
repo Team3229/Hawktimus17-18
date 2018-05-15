@@ -20,6 +20,7 @@
 #include <Servo.h>
 #include <CameraServer.h>
 #include <cscore_oo.h>
+#include "Debug.h"
 
 class Camera
 {
